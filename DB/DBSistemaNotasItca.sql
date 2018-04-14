@@ -5,7 +5,7 @@ create database if not exists SistemaNotasItca;
 use SistemaNotasItca;
 
 create table Carrera(
-idCarrera int auto_increment not null comment 'foranea',
+idCarrera int auto_increment not null,
 nombreCarrera varchar(60) not null,
 primary key pkCarrera(idCarrera)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -18,7 +18,7 @@ primary key pkBuzonArchivos(idBuzonArchivos)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Grupo(
-idGrupo int auto_increment not null comment 'foranea',
+idGrupo int auto_increment not null,
 nombreGrupo varchar(10) not null,
 primary key pkGrupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
