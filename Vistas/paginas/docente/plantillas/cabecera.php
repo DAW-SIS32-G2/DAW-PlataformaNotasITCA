@@ -1,6 +1,11 @@
 <?php
 session_start();
+require_once getcwd()."/config/variables.php";
 $usuario = $_SESSION['usuario'];
+if(!isset($_SESSION['usuario']) || $_SESSION['tipo'] != "docente")
+{
+    header("location: ".urlBase);
+}
 // Acá deberá ir el código de sesión y fetching de base de datos
 ?>
 <!DOCTYPE html>
