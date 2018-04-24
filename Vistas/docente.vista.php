@@ -64,5 +64,13 @@
           include 'paginas/docente/plantillas/menu.php';
           require_once 'Vistas/paginas/docente/inscribir.php';
         }
+
+        function adminGrupo()
+        {
+          include 'paginas/docente/plantillas/cabecera.php';
+          include 'paginas/docente/plantillas/menu.php';
+          require_once 'Vistas/paginas/docente/adminGrupo.php';
+        }
+
     }
 ?>
