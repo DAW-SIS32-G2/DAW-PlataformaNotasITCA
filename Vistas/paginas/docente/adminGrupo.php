@@ -1,4 +1,6 @@
-<div>
+<div class="container">
+
+	<br><br><br>
 	
 	<table border="2px">
 		
@@ -27,7 +29,58 @@
 				
 				<form action="">
 					
-					span*
+					
+
+						<?php
+
+							$hola=new docenteModelo(); 
+							$ponderaciones=$hola->BuscarPonderaciones(); 
+
+							$i=0;
+							while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
+							{
+								$ponderacionesOrdenadas[$i]=$arrayPonderaciones['nombrePonderacion'];
+								$i++;
+							}
+
+							$ponderaciones=$hola->BuscarPonderaciones(); 
+
+							$i=0;
+							while($arrayPorcentajes=$ponderaciones->fetch_array(MYSQLI_ASSOC))
+							{
+								$porcentajesOrdenados[$i]=$arrayPorcentajes['porcentaje'];
+								$i++;
+							}
+
+							$cantidad=$ponderaciones->num_rows;
+
+							
+
+							for ($j=0;$j<$cantidad;$j++) 
+							{ 
+								?>
+										
+									<span>
+											
+										<?php echo '<input type="text" value="'.$ponderacionesOrdenadas[$j].'" style="width: 60px;" disabled> '; 
+
+										echo '<label><input type="number" value="'.$porcentajesOrdenados[$j].'" style="width: 30px;">%</label>'; ?>
+
+									</span>
+
+									<br>
+								<?php
+							}
+
+							?>
+							
+								<button>Guardar Ponderaciones</button>
+
+							<?php
+
+						?>
+							
+				
 
 				</form>
 
