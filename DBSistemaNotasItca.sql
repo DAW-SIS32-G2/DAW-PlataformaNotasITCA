@@ -4,10 +4,20 @@ create database if not exists SistemaNotasItca;
 
 use SistemaNotasItca;
 
+
+create table Departamento(
+idDepartamento int auto_increment not null,
+nombreDepartamento varchar(50) not null,
+primary key pkDepartamento(idDepartamento)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 create table Carrera(
 idCarrera int auto_increment not null,
 nombreCarrera varchar(60) not null,
-primary key pkCarrera(idCarrera)
+idDepartamento int not null,
+primary key pkCarrera(idCarrera),
+foreign key fkCarreraXDepartamento(idDepartamento) references Departamento(idDepartamento)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table BuzonArchivos(
@@ -24,6 +34,7 @@ primary key pkGrupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
 create table Usuario(
 idUsuario int auto_increment not null,
 carnet varchar(6) not null,
@@ -34,16 +45,30 @@ jornada varchar(12) null,
 sexo varchar(12) null,
 foto varchar(50) null,
 email varchar(50) null,
-contra varchar(256) not null,
+contra varchar(100) not null,
 anyoIngreso int not null,
-tipoUsuario varchar(15) not null comment 'alumno | docente | administrador',
-telefonoCasa varchar(12) null,
 permiteModificacion boolean not null comment 'campo para verificar si el usuario ya igreso por primera vez al sistema',
 idCarrera int not null comment 'foranea',
 idGrupo int not null comment 'foranea',
 primary key pkUsuario(idUsuario),
 foreign key fkUsuarioXCarrera(idCarrera) references Carrera(idCarrera),
 foreign key fkUsuarioXGrupo(idGrupo) references Grupo(idGrupo)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+create table Docente(
+idDocente int auto_increment not null,
+carnet varchar(20) NOT NULL,
+nombres varchar(50) not null,
+apellidos varchar(50) not null,
+tipoUsuario varchar(15) not null comment 'docente | administrador',
+telefonoMovil varchar(12) null,
+telefonoCasa varchar(12) null,
+email varchar(50) null,
+contra varchar(100) not null,
+idDepartamento int not null,
+primary key pkDocente(idDocente),
+foreign key fkDocenteXDepartamento(idDepartamento) references Departamento(idDepartamento)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Archivo(
@@ -80,7 +105,7 @@ foreign key fkHorarioXGrupo(idGrupo) references Grupo(idGrupo)
 create table Modulo(
 idModulo int auto_increment not null,
 nombreModulo varchar(50) not null,
-siglas varchar(6) not null,
+siglas varchar(20) not null,
 tipoModulo varchar(10) not null comment 'Practico | teorico',
 aula varchar(20) null,
 horaInicio time null,
@@ -150,3 +175,22 @@ idTarea int not null comment 'foranea',
 primary key pkNota(idNota),
 foreign key fkNotaXTarea(idTarea) references Tarea(idTarea)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/****************Select's de las tablas****************/
+
+select * from Grupo;
+select * from Horario;
+
+
+/****************Insercion de registros de prueba****************/
+
+insert into Grupo(nombreGrupo) values('SIS32');
+
+
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','1');
+
+insert into 
+Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario)
+values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','CC1','7:00','11:30','martes','1','abierto','1');
+
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','0','1');
