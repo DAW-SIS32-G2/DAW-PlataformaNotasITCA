@@ -180,9 +180,10 @@ foreign key fkNotaXTarea(idTarea) references Tarea(idTarea)
 
 select * from Grupo;
 select * from Horario;
+select * from Docente;
 
 
-/****************Insercion de registros de prueba****************/
+/****************Insercion de registros de prueba Roberto****************/
 
 insert into Grupo(nombreGrupo) values('SIS32');
 
@@ -194,3 +195,15 @@ Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo,
 values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','CC1','7:00','11:30','martes','1','abierto','1');
 
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','0','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','0','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP3','0','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EJP','0','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','0','1');
+
+insert into Departamento(nombreDepartamento) values('Sistemas');
+
+/****************Insercion de registros de prueba Marcelo****************/
+
+/****************Insercion de registros de prueba Daniel****************/
+
+/****************Insercion de registros de prueba Joaquin****************/

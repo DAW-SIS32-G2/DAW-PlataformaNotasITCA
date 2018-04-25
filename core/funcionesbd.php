@@ -15,12 +15,16 @@ class funcionesBD
 
 	}
 	//Funcion para registro de un docente nuevo SOLO para inicio de sesión
-	public function registroDocente($carnet,$pass)
+	public function registroDocente($carnet,$nombres,$apellidos,$tipoUsuario,$pass,$idDepartamento)
 	{
-		$consulta = "INSERT INTO docente (carnet, clave) VALUES ('$carnet', '$pass')";
-		if($this->bd->query($consulta) === TRUE)
+		$consulta = "INSERT into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('$carnet', '$nombres', '$apellidos', '$tipoUsuario', '$pass', $idDepartamento)";
+		if($this->bd->query($consulta))
 		{
-			echo "Docente Registrado correctamente";
+			return "Docente Registrado correctamente";
+		}
+		else
+		{
+			return "Error en la consulta: ". $this->db->error;
 		}
 		$this->bd->close();
 	}
@@ -28,13 +32,13 @@ class funcionesBD
 	//Función de inicio de sesión
 	public function logueo($carnet,$pass,$tabla)
 	{
-		$sql = "SELECT carnet, clave FROM $tabla WHERE carnet='$carnet'";
+		$sql = "SELECT carnet, contra FROM $tabla WHERE carnet='$carnet'";
 		$resultado = $this->bd->query($sql);
 
 		if($resultado->num_rows > 0)
 		{
 			$fila = $resultado->fetch_assoc();
-			if($pass == descifrar($fila['clave']))
+			if($pass == descifrar($fila['contra']))
 			{
 				return 1;
 			}
