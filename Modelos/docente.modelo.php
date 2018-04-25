@@ -15,7 +15,7 @@
 
         public function BuscarPonderaciones()
         {
-            @$conex=new mysqli('localhost','root','mysql','SistemaNotasItca');
+            @$conex=new mysqli('localhost','usuarioItca','12345','SistemaNotasItca');
 
             if($conex->connect_error)
             {
@@ -23,9 +23,13 @@
                 exit();
             }
 
-            $resultado=$conex->query('Select * from Ponderacion');
+            if(!$resultado=$conex->query('Select * from Ponderacion'))
+            {
+              echo "ERROR consulta";
+              exit();
+            }
 
-            
+
 
             return $resultado;
 

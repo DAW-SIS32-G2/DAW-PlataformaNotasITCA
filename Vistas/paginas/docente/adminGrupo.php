@@ -1,11 +1,11 @@
 <div class="container">
 
 	<br><br><br>
-	
+
 	<table border="2px">
-		
+
 		<tr>
-			
+
 			<th>ID</th>
 			<th>Grupo</th>
 			<th>Guias</th>
@@ -18,7 +18,7 @@
 		</tr>
 
 		<tr>
-			
+
 			<td>15</td>
 			<td>SIS32B-2018</td>
 			<td>*botno subir archivos*<br>*boton ver practicas*<br>*boton descargar todas las guias*</td>
@@ -26,24 +26,25 @@
 			<td>*boton Cerrar inscripciones en el grupo*</td>
 			<td>Desarrollo de Aplicaciones para la Web</td>
 			<td>
-				
+
 				<form action="">
-					
-					
+
+
 
 						<?php
 
-							$hola=new docenteModelo(); 
-							$ponderaciones=$hola->BuscarPonderaciones(); 
+							$hola=new docenteModelo();
+							$ponderaciones=$hola->BuscarPonderaciones();
 
 							$i=0;
+							
 							while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
 							{
 								$ponderacionesOrdenadas[$i]=$arrayPonderaciones['nombrePonderacion'];
 								$i++;
 							}
 
-							$ponderaciones=$hola->BuscarPonderaciones(); 
+							$ponderaciones=$hola->BuscarPonderaciones();
 
 							$i=0;
 							while($arrayPorcentajes=$ponderaciones->fetch_array(MYSQLI_ASSOC))
@@ -54,15 +55,15 @@
 
 							$cantidad=$ponderaciones->num_rows;
 
-							
 
-							for ($j=0;$j<$cantidad;$j++) 
-							{ 
+
+							for ($j=0;$j<$cantidad;$j++)
+							{
 								?>
-										
+
 									<span>
-											
-										<?php echo '<input type="text" value="'.$ponderacionesOrdenadas[$j].'" style="width: 60px;" disabled> '; 
+
+										<?php echo '<input type="text" value="'.$ponderacionesOrdenadas[$j].'" style="width: 60px;" disabled> ';
 
 										echo '<label><input type="number" value="'.$porcentajesOrdenados[$j].'" style="width: 30px;">%</label>'; ?>
 
@@ -73,14 +74,14 @@
 							}
 
 							?>
-							
+
 								<button>Guardar Ponderaciones</button>
 
 							<?php
 
 						?>
-							
-				
+
+
 
 				</form>
 
@@ -98,7 +99,7 @@
 <?php
 
 
-	 echo "<br><br>administrfacion de ponderaciones prro"; 
+	 echo "<br><br>administrfacion de ponderaciones prro";
 
 
 
