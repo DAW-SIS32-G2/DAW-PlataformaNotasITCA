@@ -6,16 +6,17 @@ define('DATABASE','SistemaNotasItca');
 
 class BaseDatos
 {
-	private $pdo;
+	private $bd;
 
 	public static function conexion()
 	{
-		try {
-			$pdo = new PDO('mysql:host='.HOST.';dbname='.DATABASE, USER, PASS);
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			return $pdo;
-		} catch (PDOException $e) {
-			return 'No se pudo conectar a la BD';
+		$bd = new mysqli(HOST,USER,PASS,DATABASE);
+		if($bd->connect_error)
+		{
+			die("La conexión ha fallado: ". $bd->connect_error);
+		}
+		else {
+			return $bd;
 		}
 	}
 }

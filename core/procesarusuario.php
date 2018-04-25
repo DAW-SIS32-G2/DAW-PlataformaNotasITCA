@@ -1,8 +1,9 @@
 <?php
   session_start();
-  require_once "../config/variables.php";
-  require_once "../config/bd.php";
-  require_once "../core/funcionesbd.php";
+  define("__ROOT__", dirname(dirname(__FILE__)));
+  require_once __ROOT__."/config/variables.php";
+  require_once __ROOT__."/config/bd.php";
+  require_once __ROOT__."/core/funcionesbd.php";
   $_SESSION['usuario'] = $_POST['carnet'];
   //Carnet que servirá para hacer la consulta en la BD
   $carnet = $_POST['carnet'];
@@ -47,12 +48,5 @@
       </script>
       <?php
     }
-  }
-
-  //Funcion que procesará el login según la BD
-  //$tipo se refiere a si es docente o alumno
-  function procesar($tipo)
-  {
-
   }
 ?>
