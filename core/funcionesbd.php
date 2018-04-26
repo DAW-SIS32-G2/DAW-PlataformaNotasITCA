@@ -116,6 +116,43 @@ class funcionesBD
 	}
 
 	//Funcion para actualizar registros
+
+	//Funcion de consulta general
+	public function ConsultaGeneral($tabla,$condicion)
+	{
+		if ($condicion!="")
+		{
+			$resultado=$this->bd->query("SELECT * from $tabla where $condicion");
+		}
+		else
+		{
+			$resultado=$this->bd->query("SELECT * from $tabla");
+		}
+		
+		if ($resultado)
+		{
+			return $resultado;
+		}
+		else
+		{
+			return "Error en la consulta: ". $this->bd->error;
+		}
+
+	}
+
+	public function ConsultaPerzonalizada($sql)
+	{
+		$resultado=$this->bd->query($sql);
+
+		if ($resultado)
+		{
+			return $resultado;
+		}
+		else
+		{
+			return "Error en la consulta: ". $this->bd->error;
+		}
+	}
 	
 }
 ?>

@@ -17,78 +17,123 @@
 
 		</tr>
 
-		<tr>
+		<?php 
 
-			<td>15</td>
-			<td>SIS32B-2018</td>
-			<td>*botno subir archivos*<br>*boton ver practicas*<br>*boton descargar todas las guias*</td>
-			<td>Grupo Activo<br>*boton ponerle clave al grupo*</td>
-			<td>*boton Cerrar inscripciones en el grupo*</td>
-			<td>Desarrollo de Aplicaciones para la Web</td>
-			<td>
+			require_once('././././core/funcionesbd.php');
 
-				<form action="">
+			$objDocenteModelo=new docenteModelo();
+
+			$resultado=$objDocenteModelo->CargarGrupos();
+
+			$cantidad=$resultado->num_rows;
 
 
-
-						<?php
-
-							$hola=new docenteModelo();
-							$ponderaciones=$hola->BuscarPonderaciones();
-
-							$i=0;
-							
-							while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
-							{
-								$ponderacionesOrdenadas[$i]=$arrayPonderaciones['nombrePonderacion'];
-								$i++;
-							}
-
-							$ponderaciones=$hola->BuscarPonderaciones();
-
-							$i=0;
-							while($arrayPorcentajes=$ponderaciones->fetch_array(MYSQLI_ASSOC))
-							{
-								$porcentajesOrdenados[$i]=$arrayPorcentajes['porcentaje'];
-								$i++;
-							}
-
-							$cantidad=$ponderaciones->num_rows;
+			
+			/*Guardando los grupos en un array*/
+			$i=0;
+			while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+			{
+				$idModulo[$i]=$arrayGrupos['idModulo'];
+				$nombreGrupos[$i]=$arrayGrupos['nombreGrupo'];
+				$anyoGrupos[$i]=$arrayGrupos['anyo'];
+				$nombreModulos[$i]=$arrayGrupos['nombreModulo'];
+				$i++;
+			}
 
 
 
-							for ($j=0;$j<$cantidad;$j++)
-							{
-								?>
+			for ($k=0;$k<$cantidad;$k++)
+			{
+			
+		 	?>
 
-									<span>
+			<tr>
 
-										<?php echo '<input type="text" value="'.$ponderacionesOrdenadas[$j].'" style="width: 60px;" disabled> ';
+				<td>
+					<?php echo $idModulo[$k]; ?>
+				</td>
 
-										echo '<label><input type="number" value="'.$porcentajesOrdenados[$j].'" style="width: 30px;">%</label>'; ?>
+				<td>
+					<?php echo $nombreGrupos[$k]."-".$anyoGrupos[$k]; ?>
+				</td>
 
-									</span>
+				<td>*botno subir archivos*<br>*boton ver practicas*<br>*boton descargar todas las guias*</td>
 
-									<br>
-								<?php
-							}
+				<td>Grupo Activo<br>*boton ponerle clave al grupo*</td>
 
-							?>
+				<td>*boton Cerrar inscripciones en el grupo*</td>
 
-								<button>Guardar Ponderaciones</button>
+				<td>
+					<?php echo $nombreModulos[$k]; ?>
+				</td>
+
+				<td>
+
+					<form action="">
+
+
 
 							<?php
 
-						?>
+								$ponderaciones=$objDocenteModelo->BuscarPonderaciones($idModulo[$k]);
+
+								if (gettype($ponderaciones)=="string")
+								{
+									echo $ponderaciones;
+
+								}
+								else
+								{
+
+
+									$i=0;
+									
+									while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
+									{
+										$ponderacionesOrdenadas[$i]=$arrayPonderaciones['nombrePonderacion'];
+										$porcentajesOrdenados[$i]=$arrayPonderaciones['porcentaje'];
+										$i++;
+									}
+
+									$cantidadPonderaciones=$ponderaciones->num_rows;
+
+
+									for ($j=0;$j<$cantidadPonderaciones;$j++)
+									{
+										?>
+
+											<span>
+
+												<?php echo '<input type="text" value="'.$ponderacionesOrdenadas[$j].'" style="width: 60px;" disabled> ';
+
+												echo '<label><input type="number" value="'.$porcentajesOrdenados[$j].'" style="width: 30px;">%</label>'; ?>
+
+											</span>
+
+											<br>
+										<?php
+									}
+
+									?>
+
+										<button>Guardar Ponderaciones</button>
+
+									<?php
+
+								}
+
+							?>
 
 
 
-				</form>
+					</form>
 
 			</td>
 			<td>*boton que no se para que es*</td>
 
 		</tr>
+
+		<?php } ?>
 
 	</table>
 

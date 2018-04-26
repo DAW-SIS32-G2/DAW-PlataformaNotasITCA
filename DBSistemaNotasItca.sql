@@ -30,6 +30,7 @@ primary key pkBuzonArchivos(idBuzonArchivos)
 create table Grupo(
 idGrupo int auto_increment not null,
 nombreGrupo varchar(10) not null,
+anyo int null,
 primary key pkGrupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -104,7 +105,7 @@ foreign key fkHorarioXGrupo(idGrupo) references Grupo(idGrupo)
 
 create table Modulo(
 idModulo int auto_increment not null,
-nombreModulo varchar(50) not null,
+nombreModulo varchar(100) not null,
 siglas varchar(20) not null,
 tipoModulo varchar(10) not null comment 'Practico | teorico',
 aula varchar(20) null,
@@ -115,6 +116,7 @@ activo boolean not null comment '0 => el grupo esta visible unicamente para doce
 estado varchar(10) null comment 'Abierto | Cerrado (sirve para permitir inscripciones o no a dicho modulo por parte de los alumnos)',
 contraModulo varchar(20) null comment 'Sirve para proteger las inscripciones de los alumnos al modulo',
 idHorario int not null comment 'foranea',
+carnet varchar(20) NULL,
 primary key pkModulo(idModulo),
 foreign key fkModuloXHorario(idHorario) references Horario(idHorario)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -177,22 +179,52 @@ foreign key fkNotaXTarea(idTarea) references Tarea(idTarea)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /****************Select's de las tablas****************/
-
+/* Descomentar solo cuando se usara el select*/
+/*
 select * from Grupo;
 select * from Horario;
 select * from Docente;
+select * from Ponderacion;
+select * from Modulo;
 
+select *
+from Modulo as M
+inner join Horario as H
+on M.idHorario = H.idHorario
+inner join Grupo as G
+on H.idGrupo = G.idGrupo
+where M.carnet="funes";
+
+select * from Ponderacion as P
+inner join Modulo as M 
+on M.idModulo=P.idModulo
+where P.idModulo="1";
+
+*/
 
 /****************Insercion de registros de prueba Roberto****************/
 
-insert into Grupo(nombreGrupo) values('SIS32');
+insert into Grupo(nombreGrupo,anyo) values('SIS32B',2018);
+
+
+insert into Grupo(nombreGrupo,anyo) values('SIS31B',2018);
 
 
 insert into Horario(anyo, periodo, idGrupo) values('2018','1','1');
 
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','2');
+
 insert into 
-Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario)
-values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','CC1','7:00','11:30','martes','1','abierto','1');
+Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
+values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','CC1','7:00','11:30','martes','1','abierto','1','funes');
+
+insert into 
+Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
+values('Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-SIS32B','practico','CC1','7:00','11:30','miercoles','1','abierto','1','funes');
+
+insert into 
+Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
+values('Desarrollo de Aplicaciones para la Web','DAW-SIS31B','practico','CC2','7:00','11:30','martes','1','abierto','2','funes2');
 
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','0','1');
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','0','1');
@@ -200,8 +232,16 @@ insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP3','
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EJP','0','1');
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','0','1');
 
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','0','2');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','0','2');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('Trabajo','0','2');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EJP','0','2');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','0','2');
+
 insert into Departamento(nombreDepartamento) values('Sistemas');
 
+INSERT into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) 
+VALUES ('funes', 'Roberto Enrique', 'Funes Rivera', 'administrador', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 /****************Insercion de registros de prueba Marcelo****************/
 
 /****************Insercion de registros de prueba Daniel****************/
