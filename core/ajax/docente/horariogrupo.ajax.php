@@ -1,5 +1,15 @@
 <?php
- $grupo = $_POST['grupo'];
+  define('__ROOT__',dirname(dirname(dirname(dirname(__FILE__)))));
+  require_once(__ROOT__.'/core/funcionesbd.php');
+  $bd = new funcionesBD();
+  //La condicion luego se actualizará conforme a los docentes que impartan en cada grupo
+  $grupo = $_POST['grupo'];
+  $res = $bd->SelectArray('grupo','*',"idGrupo='$grupo'");
+  while($fila = $res->fetch_assoc())
+  {
+    $grupo = $fila['nombreGrupo'];
+  }
+
 ?>
 <div class="text-center">
   <h1>Horario de <?php echo $grupo ?></h1>

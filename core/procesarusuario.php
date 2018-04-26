@@ -33,7 +33,7 @@
     $carnet = $_POST['carnet'];
 		$pass = $_POST['pass'];
 		$conn = new funcionesBD();
-		$mensaje = $conn->logueo($carnet,$pass,'alumno');
+		$mensaje = $conn->logueo($carnet,$pass,'Usuario');
     if($mensaje == 1)
     {
       $_SESSION['tipo'] = "alumno";

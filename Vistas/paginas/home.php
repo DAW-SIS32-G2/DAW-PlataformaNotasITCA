@@ -1,6 +1,19 @@
+<?php
+  session_start();
+  if(isset($_SESSION['usuario']))
+  {
+    if($_SESSION['tipo'] == 'docente')
+    {
+      header("location: ".urlBase."docente");
+    }
+    else if($_SESSION['tipo'] == 'alumno')
+    {
+      header("location: ".urlBase."alumno");
+    }
+  }
+?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <title>Plataforma de Notas ITCA-FEPADE</title>
@@ -16,14 +29,14 @@
       <div class="thumbnail"><img src="<?= imagenes ?>logo-new-white.png" /></div>
       <form class="register-form" method="post" action="<?= urlBase ?>core/procesarusuario.php">
         <label>Docentes</label>
-        <input type="text" name="carnet" placeholder="Carnet" required/>
+        <input type="text" name="carnet" placeholder="Carnet" required autocomplete="off"/>
         <input type="password" name="pass"  placeholder="Contraseña" required/>
         <button type="submit" name="enviar" value="docente">Iniciar Sesión</button>
         <p class="message">¿Eres un alumno? <a href="#">Inicia sesión aquí</a></p>
       </form>
       <form class="login-form"  method="post" action="<?= urlBase ?>core/procesarusuario.php">
         <label>Estudiantes</label>
-        <input type="text" name="carnet" pattern="[0-9]{6}" placeholder="Carnet" required maxlength="6"/>
+        <input type="text" name="carnet" pattern="[0-9]{6}" placeholder="Carnet" required maxlength="6" autocomplete="off"/>
         <input type="password" name="pass"  placeholder="Contraseña" required/>
         <p class="message2">La clave por defecto es "itca" (Sin las comillas)</p>
         <button type="submit" name="enviar" value="alumno">Iniciar sesión</button>

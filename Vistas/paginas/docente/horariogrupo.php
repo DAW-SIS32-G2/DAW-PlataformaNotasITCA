@@ -1,11 +1,15 @@
+<?php
+define("__ROOT__",dirname(dirname(dirname(dirname(__FILE__)))));
+require_once(__ROOT__."/core/funcionesbd.php");
+?>
 <script type="text/javascript">
-function proceso(val)
+function proceso()
 {
   //Procesar
   $.ajax({
       type      : 'post',
       url       : 'ajax/horariogrupo',
-      data      : {grupo:val},
+      data      : {grupo: $('#grupo').val()},
       success   : function(respuesta)
       {
         document.getElementById('resultado').innerHTML = respuesta;
@@ -20,12 +24,16 @@ function proceso(val)
       <form class="form-group" method="post">
           <div class="form-inline">
             <label for="grupo" class="col-lg-4">Seleccione un grupo</label>
-            <select class="form-control col-lg-4" name="grupo" id="grupo" onchange="proceso(this.value);" >
-              <option value="">Seleccione Uno...</option>
-              <option value="Grupo 1">Grupo 1</option>
-              <option value="Grupo 2">Grupo 2</option>
-              <option value="Grupo 3">Grupo 3</option>
-              <option value="Grupo 4">Grupo 4</option>
+            <select class="form-control col-lg-4" name="grupo" id="grupo" onchange="proceso();" >
+              <?php
+                  $bd = new funcionesBD();
+                  //La condicion luego se actualizará conforme a los docentes que impartan en cada grupo
+                  $res = $bd->SelectArray('grupo','*','');
+                  while($fila = $res->fetch_assoc())
+                  {
+                    echo "<option whatever=\"".$fila['nombreGrupo']."\" value=\"".$fila['idGrupo']."\">".$fila['nombreGrupo']."</option>";
+                  }
+              ?>
             </select>
           </div>
       </form>
