@@ -1,10 +1,18 @@
 <?php
-// Acá deberá ir el código de sesión y fetching de base de datos
+define("__ROOT__",dirname(dirname(dirname(dirname(__FILE__)))));
+require_once(__ROOT__."/core/funcionesbd.php");
+$bd = new funcionesBD();
+//La condicion luego se actualizará conforme a los docentes que impartan en cada grupo
+$res = $bd->SelectArray('docente','CONCAT(nombres,\' \',apellidos) as docente',"carnet='".$_SESSION['usuario']."'");
+while($fila = $res->fetch_assoc())
+{
+  $usuario = $fila['docente'];
+}
 ?>
 <body style="padding-top:65px;">
   <div class="container">
     <div class="text-center">
-      <h1>Horario de <?php echo "Usuario"; ?></h1>
+      <h1>Horario de <?= $usuario ?></h1>
     </div>
     <div class="col-lg-12">
       <table class="table table-bordered">
@@ -132,6 +140,6 @@
           </tr>
         </tbody>
       </table>
-    </div>    
+    </div>
   </div>
 </body>

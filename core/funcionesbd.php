@@ -29,6 +29,20 @@ class funcionesBD
 		$this->bd->close();
 	}
 
+	//Funcion para registro de alumnos elemental
+	public function registroAlumno($carnet,$nombres,$apellidos,$contra,$anyo,$modif,$idCarrera,$idGrupo)
+	{
+		$consulta = "INSERT INTO Usuario(carnet,nombres,apellidos,contra,anyoIngreso,permiteModificacion,idCarrera,idGrupo) VALUES ('$carnet','$nombres','$apellidos','$contra',$anyo,$modif,$idCarrera,$idGrupo)";
+		if($this->bd->query($consulta))
+		{
+			return "Alumno Registrado correctamente";
+		}
+		else
+		{
+			return "Error en la consulta: ". $this->db->error;
+		}
+		$this->bd->close();
+	}
 	//Función de inicio de sesión
 	public function logueo($carnet,$pass,$tabla)
 	{
@@ -115,7 +129,21 @@ class funcionesBD
 			<?php
 	}
 
-	//Funcion para actualizar registros
-	
+	//Select 	que devuelve un array
+	public function SelectArray($tabla,$campos,$condicion)
+	{
+		if($condicion != "")
+		{
+			$sql = "SELECT $campos FROM $tabla WHERE $condicion";
+		}
+		else
+		{
+			$sql = "SELECT $campos FROM $tabla";
+		}
+		//Hacemos la consulta
+		$res = $this->bd->query($sql);
+		return $res;
+	}
+
 }
 ?>

@@ -185,12 +185,12 @@ select * from Docente;
 
 /****************Insercion de registros de prueba Roberto****************/
 
-insert into Grupo(nombreGrupo) values('SIS32');
+insert into Grupo(nombreGrupo) values('SIS32U');
 
 
 insert into Horario(anyo, periodo, idGrupo) values('2018','1','1');
 
-insert into 
+insert into
 Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario)
 values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','CC1','7:00','11:30','martes','1','abierto','1');
 
@@ -203,7 +203,26 @@ insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','
 insert into Departamento(nombreDepartamento) values('Sistemas');
 
 /****************Insercion de registros de prueba Marcelo****************/
+/*Insercion de grupos */
+insert into Grupo(nombreGrupo) values('SIS31A');
+insert into Grupo(nombreGrupo) values('SIS31B');
+insert into Grupo(nombreGrupo) values('SIS32A');
+insert into Grupo(nombreGrupo) values('SIS32B');
+insert into Grupo(nombreGrupo) values('SIS33A');
 
+/*Insercion de departamentos*/
+INSERT INTO `departamento` VALUES("2","Eléctrica");
+INSERT INTO `departamento` VALUES("3","Área básica");
+INSERT INTO `departamento` VALUES("4","Administración");
+INSERT INTO `departamento` VALUES("5","Patrimonio");
+INSERT INTO `departamento` VALUES("7","Servicio Desarrollo prof.");
+
+/*Insercion de carreras*/
+INSERT INTO `carrera` VALUES("2","Técnico en Sistemas Informáticos","1");
+INSERT INTO `carrera` VALUES("3","Técnico en Ingeniería Eléctrica","2");
+INSERT INTO `carrera` VALUES("4","Técnico en Mantenimiento de Computadoras","2");
+INSERT INTO `carrera` VALUES("5","Técnico en Gestión Tecnológica del Patrimonio Cultural","5");
+INSERT INTO `carrera` VALUES("6","Cursos libres","7");
 /****************Insercion de registros de prueba Daniel****************/
 
 /****************Insercion de registros de prueba Joaquin****************/
