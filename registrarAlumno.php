@@ -17,12 +17,12 @@
 
 <label for="carrera">Carrera: </label>
 	<select name="carrera">
-		<option value="2" selected>Sistemas</option>
+		<option value="1" selected>Sistemas</option>
 	</select><br>
 
 	<label for="grupo">Grupo: </label>
 		<select name="grupo">
-			<option value="1" selected>Sistemas</option>
+			<option value="1" selected>SIS32B</option>
 		</select><br>
 
 	<input type="submit" name="registrar" value="registrar">
@@ -44,7 +44,7 @@ if(isset($_POST['registrar']))
 
 
 		$conn = new funcionesBD();
-		$mensaje = $conn->registroAlumno($carnet,$nombres,$apellidos,$pass,2018,TRUE,$carrera,$grupo);
+		$mensaje = $conn->registroAlumno($carnet,$nombres,$apellidos,$pass,2018,1,$carrera,$grupo);
 
 		echo $mensaje;
 }

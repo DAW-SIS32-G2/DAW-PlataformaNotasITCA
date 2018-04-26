@@ -155,7 +155,7 @@ class funcionesBD
 
 	}
 
-	public function ConsultaPerzonalizada($sql)
+	public function ConsultaPersonalizada($sql)
 	{
 		$resultado=$this->bd->query($sql);
 
