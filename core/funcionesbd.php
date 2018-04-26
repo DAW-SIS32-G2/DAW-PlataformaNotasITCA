@@ -168,8 +168,7 @@ class funcionesBD
 			return "Error en la consulta: ". $this->bd->error;
 		}
 	}
-	
-=======
+
 	//Select 	que devuelve un array
 	public function SelectArray($tabla,$campos,$condicion)
 	{
