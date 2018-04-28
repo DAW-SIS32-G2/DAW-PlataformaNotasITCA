@@ -10,34 +10,49 @@
 		$nombrePonderacionesG=$_REQUEST['nombrePonderaciones'];
 		$porcentajePonderacionesG=$_REQUEST['porcentajePonderaciones'];
 
-		$cantidadG=count($idPonderacionesG);
-
-		$cantidadG2=count($nombrePonderacionesG);
-
-		$cantidadG3=count($porcentajePonderacionesG);
-
-		$funcionoActualizacion=False;
-
-		for ($i=0;$i<$cantidadG;$i++)
-		{ 
-
-			$resultado=$objDocenteModelo->actualizarPonderaciones($porcentajePonderacionesG[$i],$idPonderacionesG[$i]);
-
-			if (gettype($resultado)=="string")
-			{
-				echo "<br>".$resultado;
-			}
-			else
-			{
-				$funcionoActualizacion=true;
-			}
-
-		}
-
-		if ($funcionoActualizacion)
+		$porcentajeTotal=0;
+		foreach ($porcentajePonderacionesG as $porcentaje)
 		{
-			echo "<br><br><br>Ponderaciones actualizadas.";
+			$porcentajeTotal+=$porcentaje;
 		}
+
+		if ($porcentajeTotal>100)
+		{
+			echo "<br><br><br>Error. La suma de los porcentajes de las ponderaciones debe ser menor o igual que 100%";
+		}
+		else
+		{
+			$cantidadG=count($idPonderacionesG);
+
+			$cantidadG2=count($nombrePonderacionesG);
+
+			$cantidadG3=count($porcentajePonderacionesG);
+
+			$funcionoActualizacion=False;
+
+			for ($i=0;$i<$cantidadG;$i++)
+			{ 
+
+				$resultado=$objDocenteModelo->actualizarPonderaciones($porcentajePonderacionesG[$i],$idPonderacionesG[$i]);
+
+				if (gettype($resultado)=="string")
+				{
+					echo "<br>".$resultado;
+				}
+				else
+				{
+					$funcionoActualizacion=true;
+				}
+
+			}
+
+			if ($funcionoActualizacion)
+			{
+				echo "<br><br><br>Ponderaciones actualizadas.";
+			}
+		}
+
+		
 	}
  ?>
 
@@ -174,7 +189,7 @@
 
 											?>
 
-												<button name="guardarPonderaciones">Guardar Ponderaciones</button>
+												<button name="guardarPonderaciones" onclick="return verificarPonderaciones()">Guardar Ponderaciones</button>
 
 											<?php
 										}
