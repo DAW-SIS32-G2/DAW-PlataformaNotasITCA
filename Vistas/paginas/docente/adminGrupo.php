@@ -65,129 +65,141 @@
 
 			$resultado=$objDocenteModelo->CargarGrupos();
 
-			$cantidad=$resultado->num_rows;
-
-
-			
-			/*Guardando los grupos en un array*/
-			$i=0;
-			while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+			if (gettype($resultado)=="string")
 			{
-				$idModulo[$i]=$arrayGrupos['idModulo'];
-				$nombreGrupos[$i]=$arrayGrupos['nombreGrupo'];
-				$anyoGrupos[$i]=$arrayGrupos['anyo'];
-				$nombreModulos[$i]=$arrayGrupos['nombreModulo'];
-				$i++;
+				echo $resultado;
+
 			}
-
-
-
-
-			for ($k=0;$k<$cantidad;$k++)
+			else
 			{
-			
-		 	?>
 
-			<tr>
+				$cantidad=$resultado->num_rows;
 
-				<td>
-					<?php echo $idModulo[$k]; ?>
-				</td>
 
-				<td>
-					<?php echo $nombreGrupos[$k]."-".$anyoGrupos[$k]; ?>
-				</td>
-
-				<td>*botno subir archivos*<br>*boton ver practicas*<br>*boton descargar todas las guias*</td>
-
-				<td>Grupo Activo<br>*boton ponerle clave al grupo*</td>
-
-				<td>*boton Cerrar inscripciones en el grupo*</td>
-
-				<td>
-					<?php echo $nombreModulos[$k]; ?>
-				</td>
-
-				<td>
-
-					<form action="http://localhost/repositorios/DAW-PlataformaNotasITCA/docente/admingrupo" method="post">
+				
+				/*Guardando los grupos en un array*/
+				$i=0;
+				while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+				{
+					$idModulo[$i]=$arrayGrupos['idModulo'];
+					$nombreGrupos[$i]=$arrayGrupos['nombreGrupo'];
+					$anyoGrupos[$i]=$arrayGrupos['anyo'];
+					$nombreModulos[$i]=$arrayGrupos['nombreModulo'];
+					$i++;
+				}
 
 
 
-							<?php
 
-								$ponderaciones=$objDocenteModelo->BuscarPonderaciones($idModulo[$k]);
+				for ($k=0;$k<$cantidad;$k++)
+				{
+				
+			 	?>
 
-								if (gettype($ponderaciones)=="string")
-								{
-									echo $ponderaciones;
+				<tr>
 
-								}
-								else
-								{
+					<td>
+						<?php echo $idModulo[$k]; ?>
+					</td>
+
+					<td>
+						<?php echo $nombreGrupos[$k]."-".$anyoGrupos[$k]; ?>
+					</td>
+
+					<td>*botno subir archivos*<br>*boton ver practicas*<br>*boton descargar todas las guias*</td>
+
+					<td>Grupo Activo<br>*boton ponerle clave al grupo*</td>
+
+					<td>*boton Cerrar inscripciones en el grupo*</td>
+
+					<td>
+						<?php echo $nombreModulos[$k]; ?>
+					</td>
+
+					<td>
+
+						<form action="http://localhost/repositorios/DAW-PlataformaNotasITCA/docente/admingrupo" method="post">
 
 
-									$i=0;
-									
-									while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
+
+								<?php
+
+									$ponderaciones=$objDocenteModelo->BuscarPonderaciones($idModulo[$k]);
+
+									if (gettype($ponderaciones)=="string")
 									{
-										$ponderacionesOrdenadas[$i]=$arrayPonderaciones['nombrePonderacion'];
-										$porcentajesOrdenados[$i]=$arrayPonderaciones['porcentaje'];
-										$idPonderaciones[$i]=$arrayPonderaciones['idPonderacion'];
-										$i++;
-									}
+										echo $ponderaciones;
 
-									$cantidadPonderaciones=$ponderaciones->num_rows;
-
-									if ($cantidadPonderaciones == 0)
-									{
-										echo "Este modulo no tiene ponderaciones asignadas.<br> Por favor comuniquese con el administrador.";
 									}
 									else
 									{
-										for ($j=0;$j<$cantidadPonderaciones;$j++)
+
+
+										$i=0;
+										
+										while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
 										{
+											$ponderacionesOrdenadas[$i]=$arrayPonderaciones['nombrePonderacion'];
+											$porcentajesOrdenados[$i]=$arrayPonderaciones['porcentaje'];
+											$idPonderaciones[$i]=$arrayPonderaciones['idPonderacion'];
+											$i++;
+										}
+
+										$cantidadPonderaciones=$ponderaciones->num_rows;
+
+										if ($cantidadPonderaciones == 0)
+										{
+											echo "Este modulo no tiene ponderaciones asignadas.<br> Por favor comuniquese con el administrador.";
+										}
+										else
+										{
+											for ($j=0;$j<$cantidadPonderaciones;$j++)
+											{
+												?>
+
+													<span>
+
+														<?php 
+														echo '<input type="hidden" name="idPonderaciones[]" value="'.$idPonderaciones[$j].'">';
+
+														echo '<input type="text" name="nombrePonderaciones[]" value="'.$ponderacionesOrdenadas[$j].'" style="width: 60px;"> ';
+
+														echo '<label><input type="number" max="100" min="0" name="porcentajePonderaciones[]" value="'.$porcentajesOrdenados[$j].'" style="width: 40px;">%</label>'; ?>
+
+													</span>
+
+													<br>
+												<?php
+											}
+
 											?>
 
-												<span>
+												<button name="guardarPonderaciones">Guardar Ponderaciones</button>
 
-													<?php 
-													echo '<input type="hidden" name="idPonderaciones[]" value="'.$idPonderaciones[$j].'">';
-
-													echo '<input type="text" name="nombrePonderaciones[]" value="'.$ponderacionesOrdenadas[$j].'" style="width: 60px;"> ';
-
-													echo '<label><input type="number" max="100" min="0" name="porcentajePonderaciones[]" value="'.$porcentajesOrdenados[$j].'" style="width: 40px;">%</label>'; ?>
-
-												</span>
-
-												<br>
 											<?php
 										}
 
-										?>
 
-											<button name="guardarPonderaciones">Guardar Ponderaciones</button>
+										
 
-										<?php
 									}
 
-
-									
-
-								}
-
-							?>
+								?>
 
 
 
-					</form>
+						</form>
 
-			</td>
-			<td>*boton que no se para que es*</td>
+				</td>
+				<td>*boton que no se para que es*</td>
 
-		</tr>
+			</tr>
 
-		<?php } ?>
+			<?php }
+		
+			}
+
+			 ?>
 
 	</table>
 
