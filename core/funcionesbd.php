@@ -7,9 +7,16 @@ class funcionesBD
 	private $bd;
 	public function __CONSTRUCT()
 	{
-		try {
+		try 
+		{
 			$this->bd = BaseDatos::conexion();
-		} catch (Exception $e) {
+			if (gettype($this->bd) == "string")
+			{
+				echo "<br><br><br>Error en la conexión: ".utf8_encode($this->bd);
+				exit();
+			}
+		} 
+		catch (Exception $e) {
 			die($e->getMessage());
 		}
 
@@ -49,6 +56,7 @@ class funcionesBD
 		$sql = "SELECT carnet, contra FROM $tabla WHERE carnet='$carnet'";
 		$resultado = $this->bd->query($sql);
 
+
 		if($resultado->num_rows > 0)
 		{
 			$fila = $resultado->fetch_assoc();
@@ -58,6 +66,7 @@ class funcionesBD
 			}
 			else
 			{
+
 				return 2;
 			}
 		}
@@ -131,6 +140,21 @@ class funcionesBD
 
 
 	//Funcion para actualizar registros
+	public function ActualizarRegistro($tabla,$campo,$valor,$condicion)
+	{
+		$resultado=$this->bd->query("UPDATE $tabla set $campo=$valor where $condicion");
+
+
+		if ($resultado)
+		{
+			
+			return $resultado;
+		}
+		else
+		{
+			return "Error en la actualizacion de campo: ". $this->bd->error;
+		}
+	}
 
 	//Funcion de consulta general
 	public function ConsultaGeneral($tabla,$condicion)

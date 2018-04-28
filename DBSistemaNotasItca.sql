@@ -5,6 +5,7 @@ create database if not exists SistemaNotasItca;
 use SistemaNotasItca;
 
 
+
 create table Departamento(
 idDepartamento int auto_increment not null,
 nombreDepartamento varchar(50) not null,
@@ -202,7 +203,7 @@ inner join Modulo as M
 on M.idModulo=P.idModulo
 where P.idModulo="1";
 
-*/
+
 
 /****************Insercion de registros de prueba Roberto****************/
 
@@ -254,6 +255,10 @@ insert into Departamento(nombreDepartamento) values('Sistemas');
 INSERT into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) 
 VALUES ('funes', 'Roberto Enrique', 'Funes Rivera', 'administrador', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 
+update Ponderacion set nombrePonderacion='EVP1' where idPonderacion=1;
+
+UPDATE Ponderacion set porcentaje='1' where idPonderacion=1;
+
 /****************Insercion de registros de prueba Marcelo****************/
 /*Insercion de grupos */
 insert into Grupo(nombreGrupo) values('SIS31A');
@@ -278,3 +283,5 @@ INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Cursos libres","7");
 /****************Insercion de registros de prueba Daniel****************/
 
 /****************Insercion de registros de prueba Joaquin****************/
+
+

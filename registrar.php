@@ -30,10 +30,15 @@
 	<input type="submit" name="registrar" value="registrar">
 </form>
 <?php
+
+require_once("core/criptografia.php");
+require_once("core/funcionesbd.php");
+
+echo descifrar("elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN");
+
 if(isset($_POST['registrar']))
 {
-		require_once("core/criptografia.php");
-		require_once("core/funcionesbd.php");
+
 
 		//datos a insertar
 		$carnet = $_POST['carnet'];

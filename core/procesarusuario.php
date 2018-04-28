@@ -23,7 +23,7 @@
     {
       ?>
       <script type="text/javascript">
-          alert("Sus datos no son correctos");
+          alert("<?php echo $mensaje ?> Sus datos no son correctos");
           window.location.replace("<?= urlBase ?>");
       </script>
       <?php

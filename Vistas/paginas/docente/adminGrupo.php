@@ -1,3 +1,46 @@
+<?php 
+
+	require_once('././././core/funcionesbd.php');
+
+	$objDocenteModelo=new docenteModelo();
+
+	if (isset($_REQUEST['guardarPonderaciones']))
+	{
+		$idPonderacionesG=$_REQUEST['idPonderaciones'];
+		$nombrePonderacionesG=$_REQUEST['nombrePonderaciones'];
+		$porcentajePonderacionesG=$_REQUEST['porcentajePonderaciones'];
+
+		$cantidadG=count($idPonderacionesG);
+
+		$cantidadG2=count($nombrePonderacionesG);
+
+		$cantidadG3=count($porcentajePonderacionesG);
+
+		$funcionoActualizacion=False;
+
+		for ($i=0;$i<$cantidadG;$i++)
+		{ 
+
+			$resultado=$objDocenteModelo->actualizarPonderaciones($porcentajePonderacionesG[$i],$idPonderacionesG[$i]);
+
+			if (gettype($resultado)=="string")
+			{
+				echo "<br>".$resultado;
+			}
+			else
+			{
+				$funcionoActualizacion=true;
+			}
+
+		}
+
+		if ($funcionoActualizacion)
+		{
+			echo "<br><br><br>Ponderaciones actualizadas.";
+		}
+	}
+ ?>
+
 <div class="container">
 
 	<br><br><br>
@@ -19,9 +62,6 @@
 
 		<?php 
 
-			require_once('././././core/funcionesbd.php');
-
-			$objDocenteModelo=new docenteModelo();
 
 			$resultado=$objDocenteModelo->CargarGrupos();
 
@@ -39,6 +79,7 @@
 				$nombreModulos[$i]=$arrayGrupos['nombreModulo'];
 				$i++;
 			}
+
 
 
 
@@ -69,7 +110,7 @@
 
 				<td>
 
-					<form action="">
+					<form action="http://localhost/repositorios/DAW-PlataformaNotasITCA/docente/admingrupo" method="post">
 
 
 
@@ -92,33 +133,46 @@
 									{
 										$ponderacionesOrdenadas[$i]=$arrayPonderaciones['nombrePonderacion'];
 										$porcentajesOrdenados[$i]=$arrayPonderaciones['porcentaje'];
+										$idPonderaciones[$i]=$arrayPonderaciones['idPonderacion'];
 										$i++;
 									}
 
 									$cantidadPonderaciones=$ponderaciones->num_rows;
 
-
-									for ($j=0;$j<$cantidadPonderaciones;$j++)
+									if ($cantidadPonderaciones == 0)
 									{
+										echo "Este modulo no tiene ponderaciones asignadas.<br> Por favor comuniquese con el administrador.";
+									}
+									else
+									{
+										for ($j=0;$j<$cantidadPonderaciones;$j++)
+										{
+											?>
+
+												<span>
+
+													<?php 
+													echo '<input type="hidden" name="idPonderaciones[]" value="'.$idPonderaciones[$j].'">';
+
+													echo '<input type="text" name="nombrePonderaciones[]" value="'.$ponderacionesOrdenadas[$j].'" style="width: 60px;"> ';
+
+													echo '<label><input type="number" max="100" min="0" name="porcentajePonderaciones[]" value="'.$porcentajesOrdenados[$j].'" style="width: 40px;">%</label>'; ?>
+
+												</span>
+
+												<br>
+											<?php
+										}
+
 										?>
 
-											<span>
+											<button name="guardarPonderaciones">Guardar Ponderaciones</button>
 
-												<?php echo '<input type="text" value="'.$ponderacionesOrdenadas[$j].'" style="width: 60px;" disabled> ';
-
-												echo '<label><input type="number" value="'.$porcentajesOrdenados[$j].'" style="width: 30px;">%</label>'; ?>
-
-											</span>
-
-											<br>
 										<?php
 									}
 
-									?>
 
-										<button>Guardar Ponderaciones</button>
-
-									<?php
+									
 
 								}
 
