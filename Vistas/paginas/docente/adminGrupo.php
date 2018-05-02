@@ -96,6 +96,7 @@
 				$i=0;
 				while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
 				{
+
 					$idModulo[$i]=$arrayGrupos['idModulo'];
 					$nombreGrupos[$i]=$arrayGrupos['nombreGrupo'];
 					$anyoGrupos[$i]=$arrayGrupos['anyo'];
@@ -217,16 +218,7 @@
 			 ?>
 
 	</table>
-
+<br><br>
 </div>
 
 
-
-<?php
-
-
-	 echo "<br><br>administrfacion de ponderaciones prro";
-
-
-
- ?>

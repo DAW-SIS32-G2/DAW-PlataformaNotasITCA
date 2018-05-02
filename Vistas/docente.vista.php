@@ -72,6 +72,13 @@
           require_once 'Vistas/paginas/docente/adminGrupo.php';
         }
 
+        function administrarPracticas()
+        {
+          include 'paginas/docente/plantillas/cabecera.php';
+          include 'paginas/docente/plantillas/menu.php';
+          require_once 'Vistas/paginas/docente/administrarPracticas.php';
+        }
+
         function restablecer()
         {
           include 'paginas/docente/plantillas/cabecera.php';
