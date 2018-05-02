@@ -1,7 +1,6 @@
 <?php
-  /*  Solo para mi PC*/
+  /*  Solo para mi PC*//*
 
-/*
   define('urlBase','/repositorios/DAW-PlataformaNotasITCA/');
   define('urlVistas','/repositorios/DAW-PlataformaNotasITCA/Vistas/');
   define('css','/repositorios/DAW-PlataformaNotasITCA/assets/css/');
@@ -13,4 +12,3 @@
   define('css','/DAW-PlataformaNotasITCA/assets/css/');
   define('js','/DAW-PlataformaNotasITCA/assets/js/');
   define('imagenes','/DAW-PlataformaNotasITCA/assets/imagenes/');
-  
