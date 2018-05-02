@@ -62,11 +62,17 @@
       $ObjVista = new $nombreVista($ObjControlador, new $nombreModelo);
 
       //Si existen parametros dentro del metodo llamado
-      if($accionRequerida != '')
+      if(!empty($accionRequerida))
       {
-        //Entonces llamamos el método por medio de la vistas
-        //Llamada dinámica de la vistas
-        print $ObjVista->$accionRequerida($parametrosRequeridos[0],$parametrosRequeridos[1]);
+        if(!empty($parametrosRequeridos))
+        {
+          //Entonces llamamos el método por medio de la vistas
+          //Llamada dinámica de la vistas
+          @print $ObjVista->$accionRequerida($parametrosRequeridos[0],$parametrosRequeridos[1]);
+        }
+        else {
+          print $ObjVista->$accionRequerida();
+        }
       }
       else
       {

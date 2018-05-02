@@ -6,7 +6,7 @@
 
         function __construct()
         {
-            $this->pagina = $pagina;
+            @$this->pagina = $pagina;
         }
 
         public function renderView()

@@ -1,5 +1,5 @@
 <?php
-define("__ROOT__", dirname(dirname(__FILE__)));
+@define("__ROOT__", dirname(dirname(__FILE__)));
 require_once(__ROOT__."/config/bd.php");
 require_once "criptografia.php";
 class funcionesBD
@@ -7,7 +7,7 @@ class funcionesBD
 	private $bd;
 	public function __CONSTRUCT()
 	{
-		try 
+		try
 		{
 			$this->bd = BaseDatos::conexion();
 			if (gettype($this->bd) == "string")
@@ -15,7 +15,7 @@ class funcionesBD
 				echo "<br><br><br>Error en la conexión: ".utf8_encode($this->bd);
 				exit();
 			}
-		} 
+		}
 		catch (Exception $e) {
 			die($e->getMessage());
 		}
@@ -147,7 +147,7 @@ class funcionesBD
 
 		if ($resultado)
 		{
-			
+
 			return $resultado;
 		}
 		else
@@ -167,7 +167,7 @@ class funcionesBD
 		{
 			$resultado=$this->bd->query("SELECT * from $tabla");
 		}
-		
+
 		if ($resultado)
 		{
 			return $resultado;

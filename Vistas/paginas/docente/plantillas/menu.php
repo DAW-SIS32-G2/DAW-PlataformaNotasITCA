@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #b0181d;">
   <a class="navbar-brand" href="<?= urlBase ?>docente">ITCA-FEPADE</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

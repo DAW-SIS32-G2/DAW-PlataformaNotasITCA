@@ -1,6 +1,6 @@
 <?php
   session_start();
-  define("__ROOT__", dirname(dirname(__FILE__)));
+  @define("__ROOT__", dirname(dirname(__FILE__)));
   require_once __ROOT__."/config/variables.php";
   require_once __ROOT__."/config/bd.php";
   require_once __ROOT__."/core/funcionesbd.php";
