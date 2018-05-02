@@ -1,6 +1,5 @@
 <?php
-  /*  Solo para mi PC*/
-/*
+  /*  Solo para mi PC*//*
 
   define('urlBase','/repositorios/DAW-PlataformaNotasITCA/');
   define('urlVistas','/repositorios/DAW-PlataformaNotasITCA/Vistas/');

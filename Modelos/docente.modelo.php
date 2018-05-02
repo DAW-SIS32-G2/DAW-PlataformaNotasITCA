@@ -27,7 +27,7 @@
         {
             $conex=new funcionesBD();
 
-            @$resultado=$conex->ConsultaPersonalizada("select * from Modulo as M inner join Horario as H on M.idHorario = H.idHorario inner join Grupo as G on H.idGrupo = G.idGrupo where M.carnet='".$_SESSION['usuario']."'");
+            $resultado=$conex->ConsultaPersonalizada("select * from Modulo as M inner join Horario as H on M.idHorario = H.idHorario inner join Grupo as G on H.idGrupo = G.idGrupo where M.carnet='".$_SESSION['usuario']."'");
 
             return $resultado;
         }
@@ -40,5 +40,6 @@
 
             return $resultado;
         }
+
     }
 ?>

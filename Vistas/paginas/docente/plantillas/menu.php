@@ -57,7 +57,7 @@
           Prácticas
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="<?= urlBase ?>docente/adminpract">Administrar Prácticas</a>
+          <a class="dropdown-item" href="<?= urlBase ?>docente/administrarPracticas">Administrar Prácticas</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/asigpract">Asignar Prácticas</a>
         </div>

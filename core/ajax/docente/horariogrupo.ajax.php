@@ -9,7 +9,6 @@
   {
     $grupo = $fila['nombreGrupo'];
   }
-
 ?>
 <div class="text-center">
   <h1>Horario de <?php echo $grupo ?></h1>
