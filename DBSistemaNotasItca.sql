@@ -161,10 +161,10 @@ foreign key fkPonderacionXModulo(idModulo) references Modulo(idModulo)
 create table Tarea(
 idTarea int auto_increment not null,
 nombreTarea varchar(30) not null,
-porcentaje int not null,
+porcentaje decimal(5,2) not null,
 fechaInicio date null,
 fechaFin date null,
-cantidadEjercicios int null,
+cantidadEjercicios int not null,
 idPonderacion int not null comment 'foranea',
 primary key pkTarea(idTarea),
 foreign key fkTareaXPonderacion(idPonderacion) references Ponderacion(idPonderacion)
@@ -181,7 +181,7 @@ foreign key fkNotaXTarea(idTarea) references Tarea(idTarea)
 
 /****************Select's de las tablas****************/
 /* Descomentar solo cuando se usara el select*/
-
+/*
 select * from Grupo;
 select * from Horario;
 select * from Docente;
@@ -189,6 +189,9 @@ select * from Ponderacion;
 select * from Modulo;
 select * from Carrera;
 select * from Usuario;
+select * from Tarea;
+
+delete from Tarea where idPonderacion=1;
 
 select *
 from Modulo as M
@@ -204,22 +207,22 @@ on M.idModulo=P.idModulo
 where P.idModulo="1";
 
 
-
+SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios 
+from Ponderacion as P
+inner join Tarea as T 
+on P.idPonderacion=T.idPonderacion
+where P.idModulo=1;
+*/
 /****************Insercion de registros de prueba Roberto****************/
 
 
 insert into Grupo(nombreGrupo,anyo) values('SIS32B',2018);
-
-
 insert into Grupo(nombreGrupo,anyo) values('SIS31B',2018);
-
 insert into Grupo(nombreGrupo) values('SIS32U');
 
-
 insert into Horario(anyo, periodo, idGrupo) values('2018','1','1');
-
-
 insert into Horario(anyo, periodo, idGrupo) values('2018','1','2');
+
 
 insert into 
 Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
@@ -238,11 +241,12 @@ Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo,
 values('Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-SIS31B','practico','CC1','7:00','11:30','lunes','1','abierto','2','funes');
 
 
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','0','1');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','0','1');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP3','0','1');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EJP','0','1');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','0','1');
+
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','15','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','15','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP3','20','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EJP','10','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','40','1');
 
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','0','2');
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','0','2');
@@ -255,9 +259,9 @@ insert into Departamento(nombreDepartamento) values('Sistemas');
 INSERT into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) 
 VALUES ('funes', 'Roberto Enrique', 'Funes Rivera', 'administrador', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 
-update Ponderacion set nombrePonderacion='EVP1' where idPonderacion=1;
+insert into Tarea(nombreTarea,porcentaje,cantidadEjercicios,idPonderacion) values('practica05',8.555,'100',5);
 
-UPDATE Ponderacion set porcentaje='1' where idPonderacion=1;
+
 
 /****************Insercion de registros de prueba Marcelo****************/
 /*Insercion de grupos */

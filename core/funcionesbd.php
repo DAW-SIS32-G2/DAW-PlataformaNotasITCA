@@ -79,10 +79,14 @@ class funcionesBD
 	//Funcion para inserción de registros
 	public function insertar($tabla,$campos,$valores)
 	{
-		$sql = "INSERT INTO $tabla($campos) VALUES $valores";
+		$sql = "INSERT INTO $tabla($campos) VALUES ($valores)";
 		if($this->bd->query($sql) === TRUE)
 		{
-			 echo "Registro Insertado Correctamente";
+			 return "Registro Insertado Correctamente";
+		}
+		else
+		{
+			return "Error al insertar el registro: ".$this->bd->error;
 		}
 		$this->bd->close();
 	}
@@ -147,7 +151,6 @@ class funcionesBD
 
 		if ($resultado)
 		{
-
 			return $resultado;
 		}
 		else
