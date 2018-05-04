@@ -14,7 +14,11 @@ class alumnoVista
   {
     $this->controller->loadView();
   }
-
+  public function ajax($pagina)
+  {
+    define('BaseDir', getcwd());
+      require_once BaseDir.'/core/ajax/alumno/'.$pagina.'.ajax.php';
+  }
   function actualizar()
   {
     include 'paginas/alumno/plantillas/head.php';
