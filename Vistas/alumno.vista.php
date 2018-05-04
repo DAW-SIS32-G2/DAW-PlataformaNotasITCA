@@ -66,5 +66,10 @@ class alumnoVista
     include 'paginas/alumno/plantillas/nav.php';
     require_once 'Vistas/paginas/alumno/subir_Prac.php';
   }
+
+  function subir_Prac2()
+  {
+    require_once 'Vistas/paginas/alumno/subir_Prac2.php';
+  }
 }
 ?>

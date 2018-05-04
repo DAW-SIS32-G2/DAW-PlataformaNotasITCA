@@ -70,7 +70,7 @@
             <th>Evaluación</th>
             <th>Práctica</th>
             <th># de ejercicios</th>
-            <th colspan="3">acciones</th>
+            <th colspan="4">acciones</th>
           </tr>
 
           <?php 
@@ -81,6 +81,7 @@
               $nombrePonderacionP[]=$arrayPracticas['nombrePonderacion'];
               $nombreTarea[]=$arrayPracticas['nombreTarea'];
               $cantidadEjercicios[]=$arrayPracticas['cantidadEjercicios'];
+              $idTarea[]=$arrayPracticas['idTarea'];
               $i++;
             }
 
@@ -94,9 +95,10 @@
                   <td><?php echo $nombrePonderacionP[$q]; ?></td>
                   <td><?php echo $nombreTarea[$q]; ?></td>
                   <td><?php echo $cantidadEjercicios[$q]; ?></td>
-                  <td><a href="#">Editar</a></td>
-                  <td><a href="#">ON</a></td>
-                  <td><a href="#">Borrar</a></td>
+                  <td><a href="" data-toggle="modal" data-target="#editarModal">Editar</a></td>
+                  <td><a href="" data-toggle="modal" data-target="#activarModal">ON</a></td>
+                  <td><a href="" data-toggle="modal" data-target="#borrarModal">Borrar</a></td>
+                  <td><a href="descargar/<?= $idTarea[$q]?>" >Descargar Archivos de esta prácticas</a></td>
                 </tr>
 
               <?php
@@ -105,7 +107,68 @@
            ?>
 
         </table>
+        <!-- Modal Editar  -->
+        <div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Practica</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Modal activar  -->
+        <div class="modal fade" id="activarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Activar/Desactivar Práctica</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar Cambios</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal borrar  -->
+        <div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Borrar Practica</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar Cambios</button>
+              </div>
+            </div>
+          </div>
+        </div>
       <?php
     }
   }
