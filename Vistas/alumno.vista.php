@@ -42,5 +42,25 @@ class alumnoVista
     include 'paginas/alumno/plantillas/nav.php';
     require_once 'Vistas/paginas/alumno/practica_prof.php';
   }
+
+  function guias()
+  {
+    include 'paginas/alumno/plantillas/head.php';
+    include 'paginas/alumno/plantillas/nav.php';
+    require_once 'Vistas/paginas/alumno/guias.php';
+  }
+
+  function inscribir()
+  {
+     include 'paginas/alumno/plantillas/head.php';
+    include 'paginas/alumno/plantillas/nav.php';
+    require_once 'Vistas/paginas/alumno/inscribir.php';
+  }
+  function subir_Prac()
+  {
+     include 'paginas/alumno/plantillas/head.php';
+    include 'paginas/alumno/plantillas/nav.php';
+    require_once 'Vistas/paginas/alumno/subir_Prac.php';
+  }
 }
 ?>

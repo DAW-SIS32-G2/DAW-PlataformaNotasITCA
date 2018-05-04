@@ -46,11 +46,11 @@
                     Modulos
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item nav-but" >Guias</a>
+                    <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/guias">Guias</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item nav-but" >Subir Practicas</a>
+                    <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/subir_Prac">Subir Practicas</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item nav-but" >Inscribir</a>
+                    <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/inscribir">Inscribir</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
