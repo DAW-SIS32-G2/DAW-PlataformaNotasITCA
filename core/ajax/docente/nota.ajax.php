@@ -1,4 +1,6 @@
 <?php
+define("RAIZ",dirname(__FILE__,3));
+require_once(RAIZ."/funcionesbd.php");
 if(isset($_POST['grupo']))
 {
   ?>
@@ -6,10 +8,16 @@ if(isset($_POST['grupo']))
       <div class="form-inline">
         <label class="form-label" for="grupo">Seleccione una práctica:</label>
         <select class="form-control" id="grupo" onchange="cargarAlumnos(this.value)">
-          <option value="">Seleccione uno....</option>
-          <option value="p1">practica 1</option>
-          <option value="p2">practica 2</option>
-          <option value="p3">practica 3</option>
+          <option value="">--Seleccione una opcion--</option>
+            <?php
+            $bd = new funcionesBD();
+            $idModulo = $_POST['grupo'];
+            $resultado = $bd->ConsultaPersonalizada("SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios from Ponderacion as P inner join Tarea as T on P.idPonderacion=T.idPonderacion where P.idModulo=$idModulo");
+            while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+                {
+                    echo "<option value=\"".$arrayGrupos['nombreTarea']."\">".$arrayGrupos['nombreTarea']."</option>";
+                }
+            ?>
         </select>
       </div>
   </form>

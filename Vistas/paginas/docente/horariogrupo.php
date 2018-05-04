@@ -1,6 +1,7 @@
 <?php
 define("__ROOT__",dirname(dirname(dirname(dirname(__FILE__)))));
 require_once(__ROOT__."/core/funcionesbd.php");
+$carnet = $_SESSION['usuario'];
 ?>
 <script type="text/javascript">
 function proceso()
@@ -28,7 +29,7 @@ function proceso()
               <?php
                   $bd = new funcionesBD();
                   //La condicion luego se actualizará conforme a los docentes que impartan en cada grupo
-                  $res = $bd->SelectArray('grupo','*','');
+                  $res = $bd->ConsultaPersonalizada("select distinct G.nombreGrupo, G.idGrupo from Modulo as M inner join Horario as H on M.idHorario = H.idHorario inner join Grupo as G on H.idGrupo = G.idGrupo where M.carnet='".$_SESSION['usuario']."'");
                   while($fila = $res->fetch_assoc())
                   {
                     echo "<option whatever=\"".$fila['nombreGrupo']."\" value=\"".$fila['idGrupo']."\">".$fila['nombreGrupo']."</option>";

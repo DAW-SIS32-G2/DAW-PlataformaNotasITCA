@@ -1,6 +1,9 @@
 <?php
   //Acá se va a cargar la tabLa según la BD
-  $grupo = $_POST['grupo'];
+  define("RAIZ",dirname(__FILE__,3));
+  require_once(RAIZ."/funcionesbd.php");
+  $idModulo = $_POST['grupo'];
+  $objDocenteModelo=new docenteModelo();
 ?>
 <script type="text/javascript">
   $('#eliminarModal').on('show.bs.modal', function (event) {
@@ -31,10 +34,15 @@
       <th>Foto</th>
       <th>Inasistencias</th>
       <!-- Acá se van a cargar las filas según sean las Evaluaciones en la BD -->
-      <th>EV1</th>
-      <th>EV2</th>
-      <th>EV3</th>
-      <th>EV4</th>
+      <?php
+      $contponderaciones = 0;
+      $ponderaciones=$objDocenteModelo->BuscarPonderaciones($idModulo);
+      while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
+                    {
+                      echo "<th>".$arrayPonderaciones['nombrePonderacion']."</th>";
+                      $contponderaciones++;
+                    }
+      ?>
       <!--final-->
       <th>Firma</th>
     </tr>
@@ -51,12 +59,15 @@
       <td><a href="#" data-toggle="modal" data-target="#notasModal" data-whatever="carnet1">carnet1</a></td><!-- carnet -->
       <td>Nombre</td><!-- nombres -->
       <td>de Prueba</td><!-- apellidos -->
-      <td><img src="../res/img/user.jpg" class="img-fluid" width="80" height="80" alt="alumno"></td><!-- foto -->
+      <td><img src="../assets/imagenes/user.jpg" class="img-fluid" width="80" height="80" alt="alumno"></td><!-- foto -->
       <td>1</td><!-- Inasistencias -->
-      <td>10.00</td><!-- EV1 -->
-      <td>10.00</td><!-- EV2 -->
-      <td>10.00</td><!-- EV3 -->
-      <td>10.00</td><!-- EV4 -->
+      <!-- Acá se cargarán los datos segun los promedios de cada alumno -->
+      <?php
+        for($i=0;$i<$contponderaciones;$i++)
+        {
+          echo "<td>10.00</td>";
+        }
+      ?>
       <td>firma</td><!-- firma -->
     </tr>
   </tbody>

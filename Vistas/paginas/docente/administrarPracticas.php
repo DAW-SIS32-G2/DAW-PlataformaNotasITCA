@@ -1,5 +1,4 @@
 <?php
-	echo '<br><br><br>';
 	define("__ROOT__", dirname(dirname(__FILE__,3)));
 	require_once(__ROOT__.'/core/funcionesbd.php'); 
 	$objDocenteModelo=new DocenteModelo();
@@ -52,7 +51,7 @@
 		
 	}
 ?>
-<div class="container">
+<div class="container" style="padding-top: 65px">
 
 	<script type="text/javascript">
 	function mostrarPonderaciones()
