@@ -8,6 +8,15 @@
 		$nombrePractica=$_REQUEST['nombre'];
 		$cantidadEjercicios=$_REQUEST['cantidad'];
 		$idPonderacion=$_REQUEST['ponderacion'];
+		$idModulo = $_REQUEST['modulo'];
+
+		//Obtendremos la carpeta que pertenece al módulo
+		$objBD = new funcionesBD();
+		$res = $objBD->ConsultaPersonalizada("SELECT M.siglas FROM Modulo AS M WHERE M.idModulo= '$idModulo'");
+		while($fila = $res->fetch_array(MYSQLI_ASSOC))
+		{
+			$carpetaMod = $fila['siglas'];
+		}
 
 		$cantidadTareas=$objDocenteModelo->obtenerCantidadTareas($idPonderacion);
 
@@ -27,7 +36,7 @@
 			$porcentajeTarea=number_format(($porcentajePonderacion['porcentaje']/$cantidadTareas),2);
 
 
-			$resultado=$objDocenteModelo->InsertarPracticas($nombrePractica,$porcentajeTarea,$cantidadEjercicios,$idPonderacion);
+			$resultado=$objDocenteModelo->InsertarPracticas($nombrePractica,$porcentajeTarea,$cantidadEjercicios,$idPonderacion,$carpetaMod);
 
 			if(gettype($resultado)=="string")
 			{

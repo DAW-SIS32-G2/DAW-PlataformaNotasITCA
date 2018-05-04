@@ -165,6 +165,7 @@ porcentaje decimal(5,2) not null,
 fechaInicio date null,
 fechaFin date null,
 cantidadEjercicios int not null,
+directorio varchar(30) not null,
 idPonderacion int not null comment 'foranea',
 primary key pkTarea(idTarea),
 foreign key fkTareaXPonderacion(idPonderacion) references Ponderacion(idPonderacion)
@@ -267,8 +268,7 @@ insert into Departamento(nombreDepartamento) values('Sistemas');
 INSERT into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) 
 VALUES ('funes', 'Roberto Enrique', 'Funes Rivera', 'administrador', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 
-insert into Tarea(nombreTarea,porcentaje,cantidadEjercicios,idPonderacion) values('practica05',8.555,'100',5);
-
+insert into Tarea(nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio) values('practica05',8.555,'100',5,'practica05');
 
 
 /****************Insercion de registros de prueba Marcelo****************/

@@ -61,15 +61,22 @@
             }
         }
 
-        public function InsertarPracticas($nombreTarea,$porcentaje,$cantidadEjercicios,$idPonderacion)
+        public function InsertarPracticas($nombreTarea,$porcentaje,$cantidadEjercicios,$idPonderacion,$carpetaMod)
         {
+            $directorio = $carpetaMod."/".$nombreTarea;
             $conex=new funcionesBD();
-
-            $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion","'$nombreTarea',$porcentaje,$cantidadEjercicios,$idPonderacion");
+            $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio","'$nombreTarea',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio'");
 
             if($resultado=="Registro Insertado Correctamente")
             {
-                return true;
+                if(mkdir("Practicas/".$carpetaMod."/".$nombreTarea))
+                {
+                    return true;
+                }
+                else
+                {
+                    return "Fallo al crear el directorio";
+                }
             }
             else
             {
