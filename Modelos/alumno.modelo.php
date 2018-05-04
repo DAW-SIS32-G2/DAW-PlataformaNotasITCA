@@ -27,5 +27,16 @@
         $cant = mysqli_num_rows($resultado);
         return $cant;
       }
+
+      public function verificarActivo($idTarea)
+      {
+        $conex = new funcionesBD();
+        $resultado = $conex->ConsultaPersonalizada("SELECT activo FROM Tarea WHERE idTarea='$idTarea'");
+        while($fila = $resultado->fetch_array(MYSQLI_ASSOC))
+        {
+          $res = $fila['activo'];
+        }
+        return $res;
+      }
   }
 ?>

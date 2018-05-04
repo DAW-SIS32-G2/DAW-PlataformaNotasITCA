@@ -32,23 +32,33 @@
                         <td>".$fila['cantidadEjercicios']."</td>
                     ";
                     $valid = $objAlumno->verificarSubida($_SESSION['usuario'],$fila['idTarea']);
+                    $activ = $objAlumno->verificarActivo($fila['idTarea']);
                     if($valid == 0)
                     {
-                        ?>
-                            <td>Pendiente</td>
-                            <td>
-                                <form action="" enctype="multipart/form-data" method="post">
-                                  <label>
-                                    <input type="file" class="form-control" name="guia">
-                                  </label>
-                            </td>
-                            <td>
-                                  <button class="btn btn-info">
-                                    Subir Practica
-                                  </button>
-                                </form>
-                            </td>
+                        if($activ == 1)
+                        {
+                            ?>
+                                <td>Pendiente</td>
+                                <td>
+                                    <form action="subir_Prac.php" enctype="multipart/form-data" method="post">
+                                      <label>
+                                        <input type="file" class="form-control" name="guia<?=$fila['idTarea'] ?>">
+                                      </label>
+                                </td>
+                                <td>
+                                      <button class="btn btn-info" type="submit" name="subir" value="<?= $fila['idTarea']?>">
+                                        Subir Practica
+                                      </button>
+                                    </form>
+                                </td>
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+                        <td colspan="2">Práctica Cerrada</td>
                         <?php
+                        }
                     }
                     else
                     {
@@ -61,6 +71,46 @@
         ?>
       </tr>
     </table>
+    <?php
+    if(isset($_POST['subir']))
+    {
+        //Si se cargan varias tareas, necesitamos saber cuál campo se ha usado
+        $nomControl = "guia".$_POST['subir'];
+
+        //Obtenemos el nombre original
+        $nomOriginal = $_FILES[$nomControl]['name'];
+
+        //Ahora obtendremos la carpeta en donce se subiurá el archivo
+        $objBD = new funcionesBD();
+        $res = $objBD->ConsultaPersonalizada("SELECT directorio from tarea where idTarea = '".$_POST['subir']."'");
+        while($fila = $res->fetch_array(MYSQLI_ASSOC))
+        {
+            $ruta = $fila['directorio'];
+        }
+
+        //Ahora generamos el nombre que le daremos al archivo subido
+        $nuevoNom = $_POST['subir']."-".$_SESSION['usuario']."-".$nomOriginal;
+
+        //Finalmente subimos el archivo con el nuevo nombre a la carpeta correspondiente
+        if(move_uploaded_file($_FILES[$nomControl]['tmp_name'], dirname(__FILE__,4)."/Practicas/".$ruta."/".$nuevoNom))
+        {
+            //El archivo se movió con exito, procedemos a insertar el registro en tareas, para poder cerrarlo
+            if($respuesta = $objBD->insertar("TareaSubidaPor","carnet,idTarea,ruta","'".$_SESSION['usuario']."','".$_POST['subir']."','".$ruta."/".$nuevoNom."'"))
+            {
+                //Si la inserción funciona, termina el proceso, se recarga
+                echo "Subido con éxito";
+            }
+            else
+            {
+                echo "Algo salió mal con la insercion en la BD";
+            }
+        }
+        else
+        {
+            echo "No se pudo subir el archivo";
+        }
+    }
+    ?>
     </div>
   </div>
 </div>

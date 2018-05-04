@@ -65,7 +65,7 @@
         {
             $directorio = $carpetaMod."/".$nombreTarea;
             $conex=new funcionesBD();
-            $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio","'$nombreTarea',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio'");
+            $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo","'$nombreTarea',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',1");
 
             if($resultado=="Registro Insertado Correctamente")
             {
@@ -75,7 +75,7 @@
                 }
                 else
                 {
-                    return "Fallo al crear el directorio";
+                    return "Falló al crear el directorio";
                 }
             }
             else
