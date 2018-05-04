@@ -170,6 +170,14 @@ primary key pkTarea(idTarea),
 foreign key fkTareaXPonderacion(idPonderacion) references Ponderacion(idPonderacion)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table TareaSubidaPor(
+idTareaSubidaPor int auto_increment not null,
+carnet varchar(6) not null,
+idTarea int not null,
+primary key pkTareaSubidaPor(idTareaSubidaPor),
+foreign key fkTareaSubidaPorXTarea(idTarea) references Tarea(idTarea)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table Nota(
 idNota int auto_increment not null,
 carnet varchar(6) not null,
