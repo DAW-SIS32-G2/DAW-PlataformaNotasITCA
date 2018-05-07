@@ -1,6 +1,6 @@
 <?php
 	define("__ROOT__", dirname(dirname(__FILE__,3)));
-	require_once(__ROOT__.'/core/funcionesbd.php'); 
+	require_once(__ROOT__.'/core/funcionesbd.php');
 	$objDocenteModelo=new DocenteModelo();
 
 	if (isset($_REQUEST['guardarPracticas']))
@@ -57,7 +57,7 @@
 			}
 		}
 
-		
+
 	}
 ?>
 <div class="container" style="padding-top: 65px">
@@ -93,20 +93,20 @@
 
 	}
 	</script>
-	
+
 	<form method="post">
-		<table border="1px">
+		<table class="table">
 			<tr>
 				<th colspan="2">Agregar prácticas</th>
 			</tr>
 			<tr>
 				<td colspan="2">
 					<font>Grupo:</font>
-					<select name="modulo" id="moduloIngresar" onchange="mostrarPonderaciones()">
-						
-						<?php 
+					<select name="modulo" class="form-control" id="moduloIngresar" onchange="mostrarPonderaciones()">
 
-							
+						<?php
+
+
 
 							$resultado=$objDocenteModelo->CargarGrupos();
 
@@ -130,9 +130,9 @@
 								echo "<option>--Seleccione una opcion--</option>";
 
 								for($j=0;$j<$conteo;$j++)
-								{ 
+								{
 									?>
-										
+
 										<option value='<?php echo $idModulos[$j]; ?>'>
 											<?php echo $nombreGrupos[$j]."-".$nombreModulos[$j]; ?>
 										</option>
@@ -150,7 +150,7 @@
 					<label for="nombre">Nombre:</label>
 				</td>
 				<td>
-					<input type="text" name="nombre" required>
+					<input type="text" class="form-control" name="nombre" required>
 				</td>
 			</tr>
 			<tr>
@@ -158,7 +158,7 @@
 					<label for="cantidad">Cantidad de ejercicios:</label>
 				</td>
 				<td>
-					<input type="number" min="1" name="cantidad" required>
+					<input type="number" class="form-control" min="1" name="cantidad" required>
 				</td>
 			</tr>
 			<tr>
@@ -173,7 +173,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<button name="guardarPracticas">Guardar practica</button>
+					<button class="btn btn-secondary" name="guardarPracticas">Guardar practica</button>
 				</td>
 			</tr>
 		</table>
@@ -183,12 +183,12 @@
 <br><br>
 
 <div class="container">
-	
+
 	<font>Practicas</font><br>
 
-		<select name="modulo" id="moduloMostrar" onchange="mostrarPracticas()">
+		<select name="modulo" id="moduloMostrar" class="form-control" onchange="mostrarPracticas()">
 
-			<?php 
+			<?php
 
 				$resultado=$objDocenteModelo->CargarGrupos();
 
@@ -214,9 +214,9 @@
 					echo "<option>--Seleccione una opcion--</option>";
 
 					for($j=0;$j<$conteo;$j++)
-					{ 
+					{
 						?>
-							
+
 							<option value='<?php echo $idModulos[$j]; ?>'>
 								<?php echo $nombreGrupos[$j]."-".$nombreModulos[$j]; ?>
 							</option>
@@ -227,9 +227,9 @@
 			 ?>
 
 		</select>
-	
+
 
 		<div class="container" id="resultadoPracticas">
-			
+
 		</div>
 </div>
