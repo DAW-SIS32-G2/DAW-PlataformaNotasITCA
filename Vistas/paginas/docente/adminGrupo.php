@@ -4,6 +4,9 @@
 
 	$objDocenteModelo=new docenteModelo();
 
+	echo "<br><br><br>";
+
+
 	if (isset($_REQUEST['guardarPonderaciones']))
 	{
 		$idPonderacionesG=$_REQUEST['idPonderaciones'];
@@ -18,7 +21,7 @@
 
 		if ($porcentajeTotal>100)
 		{
-			echo "<br><br><br>Error. La suma de los porcentajes de las ponderaciones debe ser menor o igual que 100%";
+			echo "Error. La suma de los porcentajes de las ponderaciones debe ser menor o igual que 100%";
 		}
 		else
 		{
@@ -48,15 +51,39 @@
 
 			if ($funcionoActualizacion)
 			{
-				echo "<br><br><br>Ponderaciones actualizadas.";
+				echo "Ponderaciones actualizadas.";
 			}
 		}
 
 		
 	}
+
+	if(isset($_REQUEST['GuardarGuia']))
+	{
+		$guia=$_FILES['guia'];
+
+		$idModulo=$_REQUEST['idModulo'];
+
+		$objDocenteControlador=new docenteControlador('docenteModelo');
+
+		$objDocenteControlador->GuardarGuia($guia,$idModulo);
+	}
  ?>
 
 <div class="container">
+	
+
+	<div id="divPracticas" class="oculto">
+
+		
+
+	</div>
+
+	<div id="divSubirGuias" class="oculto">
+
+		
+
+	</div>
 
 	<br><br><br>
 
@@ -122,7 +149,15 @@
 						<?php echo $nombreGrupos[$k]."-".$anyoGrupos[$k]; ?>
 					</td>
 
-					<td>*botno subir archivos*<br>*boton ver practicas*<br>*boton descargar todas las guias*</td>
+					<td>
+						<button onclick="mostrarDiv('SubirGuias','<?= $idModulo[$k]; ?>')">Subir guias</button>
+						<br>
+
+						<!--<button onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver practicas</button><br>-->
+						*Boton ver practicas (Proximamente)*<br>
+
+						*boton descargar todas las guias*
+					</td>
 
 					<td>Grupo Activo<br>*boton ponerle clave al grupo*</td>
 
@@ -134,7 +169,7 @@
 
 					<td>
 
-						<form action="http://localhost/repositorios/DAW-PlataformaNotasITCA/docente/admingrupo" method="post">
+						<form action="<?= urlBase ?>docente/admingrupo" method="post">
 
 
 

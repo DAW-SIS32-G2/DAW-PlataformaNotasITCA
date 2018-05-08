@@ -27,13 +27,17 @@ class funcionesBD
 		$consulta = "INSERT into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('$carnet', '$nombres', '$apellidos', '$tipoUsuario', '$pass', $idDepartamento)";
 		if($this->bd->query($consulta))
 		{
+			//Cerrando conexión
+			$this->bd->close();
 			return "Docente Registrado correctamente";
 		}
 		else
 		{
-			return "Error en la consulta: ". $this->db->error;
+			$error=$this->bd->error;
+			//Cerrando conexión
+			$this->bd->close();
+			return "Error en la consulta: ". $error;
 		}
-		$this->bd->close();
 	}
 
 	//Funcion para registro de alumnos elemental
@@ -42,13 +46,17 @@ class funcionesBD
 		$consulta = "INSERT INTO Usuario(carnet,nombres,apellidos,contra,anyoIngreso,permiteModificacion,idCarrera,idGrupo) VALUES ('$carnet','$nombres','$apellidos','$contra',$anyo,$modif,$idCarrera,$idGrupo)";
 		if($this->bd->query($consulta))
 		{
+			//Cerrando conexión
+			$this->bd->close();
 			return "Alumno Registrado correctamente";
 		}
 		else
 		{
-			return "Error en la consulta: ". $this->db->error;
+			$error=$this->bd->error;
+			//Cerrando conexión
+			$this->bd->close();
+			return "Error en la consulta: ". $error;
 		}
-		$this->bd->close();
 	}
 	//Función de inicio de sesión
 	public function logueo($carnet,$pass,$tabla)
@@ -62,16 +70,21 @@ class funcionesBD
 			$fila = $resultado->fetch_assoc();
 			if($pass == descifrar($fila['contra']))
 			{
+				//Cerrando conexión
+				$this->bd->close();
 				return 1;
 			}
 			else
 			{
-
+				//Cerrando conexión
+				$this->bd->close();
 				return 2;
 			}
 		}
 		else
 		{
+			//Cerrando conexión
+			$this->bd->close();
 			return 3;
 		}
 	}
@@ -82,13 +95,17 @@ class funcionesBD
 		$sql = "INSERT INTO $tabla($campos) VALUES ($valores)";
 		if($this->bd->query($sql) === TRUE)
 		{
-			 return "Registro Insertado Correctamente";
+			//Cerrando conexión
+			$this->bd->close();
+			return "Registro Insertado Correctamente";
 		}
 		else
 		{
-			return "Error al insertar el registro: ".$this->bd->error;
+			$error=$this->bd->error;
+			//Cerrando conexión
+			$this->bd->close();
+			return "Error al insertar el registro: ".$error;
 		}
-		$this->bd->close();
 	}
 
 	//Funcion para seleccionar datos y mostrarlos en una tabla
@@ -140,6 +157,8 @@ class funcionesBD
 				</tbody>
 			</table>
 			<?php
+			//Cerrando conexión
+			$this->bd->close();
 	}
 
 
@@ -151,11 +170,16 @@ class funcionesBD
 
 		if ($resultado)
 		{
+			//Cerrando conexión
+			$this->bd->close();
 			return $resultado;
 		}
 		else
 		{
-			return "Error en la actualizacion de campo: ". $this->bd->error;
+			$error=$this->bd->error;
+			//Cerrando conexión
+			$this->bd->close();
+			return "Error en la actualizacion de campo: ". $error;
 		}
 	}
 
@@ -173,11 +197,16 @@ class funcionesBD
 
 		if ($resultado)
 		{
+			//Cerrando conexión
+			$this->bd->close();
 			return $resultado;
 		}
 		else
 		{
-			return "Error en la consulta: ". $this->bd->error;
+			$error=$this->bd->error;
+			//Cerrando conexión
+			$this->bd->close();
+			return "Error en la consulta: ". $error;
 		}
 
 	}
@@ -188,11 +217,16 @@ class funcionesBD
 
 		if ($resultado)
 		{
+			//Cerrando conexión
+			$this->bd->close();
 			return $resultado;
 		}
 		else
 		{
-			return "Error en la consulta: ". $this->bd->error;
+			$error=$this->bd->error;
+			//Cerrando conexión
+			$this->bd->close();
+			return "Error en la consulta: ". $error;
 		}
 	}
 
@@ -209,6 +243,9 @@ class funcionesBD
 		}
 		//Hacemos la consulta
 		$res = $this->bd->query($sql);
+		//Cerrando conexión
+		$this->bd->close();
+
 		return $res;
 	}
 

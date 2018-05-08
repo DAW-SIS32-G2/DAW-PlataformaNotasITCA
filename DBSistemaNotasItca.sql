@@ -110,6 +110,7 @@ nombreModulo varchar(100) not null,
 siglas varchar(20) not null,
 tipoModulo varchar(10) not null comment 'Practico | teorico',
 aula varchar(20) null,
+anyo int not null,
 horaInicio time null,
 horaFin time not null,
 dia varchar(10) null comment 'Lunes a viernes',
@@ -194,10 +195,14 @@ select * from Grupo;
 select * from Horario;
 select * from Docente;
 select * from Ponderacion;
-select * from Modulo;
+select * from Modulo where idModulo=1;
 select * from Carrera;
 select * from Usuario;
 select * from Tarea;
+select * from ArchivoSubido;
+select * from GuiaModulo;
+
+
 
 delete from Tarea where idPonderacion=1;
 
@@ -233,20 +238,20 @@ insert into Horario(anyo, periodo, idGrupo) values('2018','1','2');
 
 
 insert into 
-Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
-values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','CC1','7:00','11:30','martes','1','abierto','1','funes');
+Modulo(nombreModulo, siglas, tipoModulo, aula, anyo, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
+values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','CC1',2018,'7:00','11:30','martes','1','abierto','1','funes');
 
 insert into 
-Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
-values('Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-SIS32B','practico','CC1','7:00','11:30','miercoles','1','abierto','1','funes');
+Modulo(nombreModulo, siglas, tipoModulo, aula, anyo, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
+values('Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-SIS32B','practico','CC1',2018,'7:00','11:30','miercoles','1','abierto','1','funes');
 
 insert into 
-Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
-values('Desarrollo de Aplicaciones para la Web','DAW-SIS31B','practico','CC2','7:00','11:30','martes','1','abierto','2','funes2');
+Modulo(nombreModulo, siglas, tipoModulo, aula, anyo, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
+values('Desarrollo de Aplicaciones para la Web','DAW-SIS31B','practico','CC2',2018,'7:00','11:30','martes','1','abierto','2','funes2');
 
 insert into 
-Modulo(nombreModulo, siglas, tipoModulo, aula, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
-values('Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-SIS31B','practico','CC1','7:00','11:30','lunes','1','abierto','2','funes');
+Modulo(nombreModulo, siglas, tipoModulo, aula, anyo, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
+values('Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-SIS31B','practico','CC1',2018,'7:00','11:30','lunes','1','abierto','2','funes');
 
 
 

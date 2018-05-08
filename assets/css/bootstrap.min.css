@@ -35,6 +35,36 @@
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
 }
 
+/*Clases roberto
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto
+}
+
+*/
+.oculto {
+    display: none;
+}
+
+.visible{
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    position: fixed;
+    width: 50%;
+    top: 25%;
+    left: 25%;
+    background-color: green;
+}
+
+
+/*Aca termina*/
+
 *, ::after, ::before {
     box-sizing: border-box
 }

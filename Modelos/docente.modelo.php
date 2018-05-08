@@ -29,8 +29,6 @@
 
             $resultado=$conex->ConsultaPersonalizada("select * from Modulo as M inner join Horario as H on M.idHorario = H.idHorario inner join Grupo as G on H.idGrupo = G.idGrupo where M.carnet='".$_SESSION['usuario']."'");
 
-            $conex->close;
-
             return $resultado;
         }
 
@@ -104,6 +102,24 @@
             $resultado=$conex->ConsultaPersonalizada("SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios from Ponderacion as P inner join Tarea as T on P.idPonderacion=T.idPonderacion where P.idModulo=$idModulo");
 
             return $resultado;
+        }
+
+        public function GuardarGuiasBaseDatos($nombreArchivo,$ruta,$idModulo)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->insertar('GuiaModulo','nombreGuia,ruta,idModulo',"'$nombreArchivo','$ruta',$idModulo");
+
+            return $resultado;
+        }
+
+        public function CargarGrupoIndividual($idModulo)
+        {
+             $conex=new funcionesBD();
+
+             $resultado=$conex->ConsultaGeneral('Modulo',"idModulo=$idModulo");
+
+             return $resultado;
         }
     }
 ?>
