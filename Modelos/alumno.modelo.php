@@ -19,5 +19,24 @@
 
           return $resultado;
       }
+
+      public function verificarSubida($carnet,$idTarea)
+      {
+        $conex = new funcionesBD();
+        $resultado = $conex->ConsultaPersonalizada("SELECT * FROM TareaSubidaPor WHERE carnet='$carnet' AND idTarea = '$idTarea'");
+        $cant = mysqli_num_rows($resultado);
+        return $cant;
+      }
+
+      public function verificarActivo($idTarea)
+      {
+        $conex = new funcionesBD();
+        $resultado = $conex->ConsultaPersonalizada("SELECT activo FROM Tarea WHERE idTarea='$idTarea'");
+        while($fila = $resultado->fetch_array(MYSQLI_ASSOC))
+        {
+          $res = $fila['activo'];
+        }
+        return $res;
+      }
   }
 ?>

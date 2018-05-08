@@ -59,15 +59,22 @@
             }
         }
 
-        public function InsertarPracticas($nombreTarea,$porcentaje,$cantidadEjercicios,$idPonderacion)
+        public function InsertarPracticas($nombreTarea,$porcentaje,$cantidadEjercicios,$idPonderacion,$carpetaMod)
         {
+            $directorio = $carpetaMod."/".$nombreTarea;
             $conex=new funcionesBD();
-
-            $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion","'$nombreTarea',$porcentaje,$cantidadEjercicios,$idPonderacion");
+            $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo","'$nombreTarea',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',1");
 
             if($resultado=="Registro Insertado Correctamente")
             {
-                return true;
+                if(mkdir("Practicas/".$carpetaMod."/".$nombreTarea))
+                {
+                    return true;
+                }
+                else
+                {
+                    return "Falló al crear el directorio";
+                }
             }
             else
             {
@@ -99,7 +106,7 @@
         {
             $conex=new funcionesBD();
 
-            $resultado=$conex->ConsultaPersonalizada("SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios from Ponderacion as P inner join Tarea as T on P.idPonderacion=T.idPonderacion where P.idModulo=$idModulo");
+            $resultado=$conex->ConsultaPersonalizada("SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios, T.idTarea from Ponderacion as P inner join Tarea as T on P.idPonderacion=T.idPonderacion where P.idModulo=$idModulo");
 
             return $resultado;
         }

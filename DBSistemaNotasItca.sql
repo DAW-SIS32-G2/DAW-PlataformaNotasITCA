@@ -165,7 +165,9 @@ nombreTarea varchar(30) not null,
 porcentaje decimal(5,2) not null,
 fechaInicio date null,
 fechaFin date null,
+activo int(1) not null comment 'define si una práctica está abierta(1) o cerrada(0)',
 cantidadEjercicios int not null,
+directorio varchar(30) not null,
 idPonderacion int not null comment 'foranea',
 primary key pkTarea(idTarea),
 foreign key fkTareaXPonderacion(idPonderacion) references Ponderacion(idPonderacion)
@@ -175,6 +177,7 @@ create table TareaSubidaPor(
 idTareaSubidaPor int auto_increment not null,
 carnet varchar(6) not null,
 idTarea int not null,
+ruta varchar(250) not null comment 'Aquí se guardará donde esta el archivo subido',
 primary key pkTareaSubidaPor(idTareaSubidaPor),
 foreign key fkTareaSubidaPorXTarea(idTarea) references Tarea(idTarea)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -272,8 +275,7 @@ insert into Departamento(nombreDepartamento) values('Sistemas');
 INSERT into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) 
 VALUES ('funes', 'Roberto Enrique', 'Funes Rivera', 'administrador', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 
-insert into Tarea(nombreTarea,porcentaje,cantidadEjercicios,idPonderacion) values('practica05',8.555,'100',5);
-
+insert into Tarea(nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo) values('practica05',8.555,'100',5,'practica05',1);
 
 
 /****************Insercion de registros de prueba Marcelo****************/
