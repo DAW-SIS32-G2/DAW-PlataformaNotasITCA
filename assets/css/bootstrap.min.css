@@ -59,7 +59,8 @@
     width: 50%;
     top: 25%;
     left: 25%;
-    background-color: green;
+    background-color: gray;
+    opacity: 0.99;
 }
 
 

@@ -1,5 +1,5 @@
 <?php
-	define("__ROOT__", dirname(dirname(__FILE__,3)));
+	@define("__ROOT__", dirname(__FILE__,4));
 	require_once(__ROOT__.'/core/funcionesbd.php');
 	$objDocenteModelo=new DocenteModelo();
 
