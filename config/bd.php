@@ -33,6 +33,7 @@ class BaseDatos
 
 		$bd = new mysqli(descifrar(HOST),descifrar(USER),descifrar(PASS),descifrar(DATABASE));
 		$bd = new mysqli("localhost","usuarioItca","12345","SistemaNotasItca");
+		$bd->set_charset("utf8");
 		if($bd->connect_error)
 		{
 			return "La conexión ha fallado: ". $bd->connect_error;

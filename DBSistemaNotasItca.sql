@@ -12,6 +12,14 @@ nombreDepartamento varchar(50) not null,
 primary key pkDepartamento(idDepartamento)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Insercion de departamentos*/
+insert into Departamento(nombreDepartamento) values('Sistemas');
+INSERT INTO Departamento(nombreDepartamento) VALUES("Eléctrica");
+INSERT INTO Departamento(nombreDepartamento) VALUES("Área básica");
+INSERT INTO Departamento(nombreDepartamento) VALUES("Administración");
+INSERT INTO Departamento(nombreDepartamento) VALUES("Patrimonio");
+INSERT INTO Departamento(nombreDepartamento) VALUES("Servicio Desarrollo prof.");
+
 
 create table Carrera(
 idCarrera int auto_increment not null,
@@ -20,6 +28,13 @@ idDepartamento int not null,
 primary key pkCarrera(idCarrera),
 foreign key fkCarreraXDepartamento(idDepartamento) references Departamento(idDepartamento)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Insercion de carreras*/
+INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Sistemas Informáticos","1");
+INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Ingeniería Eléctrica","2");
+INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Mantenimiento de Computadoras","2");
+INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Gestión Tecnológica del Patrimonio Cultural","5");
+INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Cursos libres","6");
 
 create table BuzonArchivos(
 idBuzonArchivos int auto_increment not null,
@@ -31,9 +46,20 @@ primary key pkBuzonArchivos(idBuzonArchivos)
 create table Grupo(
 idGrupo int auto_increment not null,
 nombreGrupo varchar(10) not null,
+seccion varchar(1) not null,
 anyo int null,
 primary key pkGrupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Inserción de grupos*/
+insert into grupo(nombreGrupo,seccion,anyo) values ('SIS31','A','2018');
+insert into grupo(nombreGrupo,seccion,anyo) values ('SIS31','B','2018');
+insert into grupo(nombreGrupo,seccion,anyo) values ('SIS31','U','2018');
+insert into grupo(nombreGrupo,seccion,anyo) values ('SIS32','A','2018');
+insert into grupo(nombreGrupo,seccion,anyo) values ('SIS32','B','2018');
+insert into grupo(nombreGrupo,seccion,anyo) values ('SIS32','U','2018');
+insert into grupo(nombreGrupo,seccion,anyo) values ('SIS33','A','2018');
+insert into grupo(nombreGrupo,seccion,anyo) values ('SIS33','U','2018');
 
 
 
@@ -58,6 +84,7 @@ foreign key fkUsuarioXGrupo(idGrupo) references Grupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
 create table Docente(
 idDocente int auto_increment not null,
 carnet varchar(20) NOT NULL,
@@ -72,6 +99,14 @@ idDepartamento int not null,
 primary key pkDocente(idDocente),
 foreign key fkDocenteXDepartamento(idDepartamento) references Departamento(idDepartamento)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('funes', 'Roberto Enrique', 'Funes Rivera', 'administrador', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
+insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('vladimir', 'Vladimir Edenilson', 'Aguilar', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
+insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('magari', 'Henry Magari', 'Vanegas', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
+insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('quintanilla', 'Ricardo Edgardo', 'Quintanilla', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
+insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('yaqueline', 'Yaqueline Catalina', 'Pimentel', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
+insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('melbin', 'Melbin', 'Barrera', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
+
 
 create table Archivo(
 idArchivo int auto_increment not null,
@@ -104,24 +139,93 @@ primary key pkHorario(idHorario),
 foreign key fkHorarioXGrupo(idGrupo) references Grupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Inserción de horarios*/
+
+/*Horario para SIS31A*/
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','1'); 
+/*Horario para SIS31B*/
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','2'); 
+/*Horario para SIS31U*/
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','3'); 
+/*Horario para SIS32A*/
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','4'); 
+/*Horario para SIS32B*/
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','5'); 
+/*Horario para SIS32U*/
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','6'); 
+/*Horario para SIS33A*/
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','7'); 
+/*Horario para SIS33U*/
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','8'); 
+
+
 create table Modulo(
 idModulo int auto_increment not null,
 nombreModulo varchar(100) not null,
 siglas varchar(20) not null,
 tipoModulo varchar(10) not null comment 'Practico | teorico',
-aula varchar(20) null,
 anyo int not null,
-horaInicio time null,
-horaFin time not null,
-dia varchar(10) null comment 'Lunes a viernes',
 activo boolean not null comment '0 => el grupo esta visible unicamente para docentes | 1=> el grupo esta visible para todos los usuarios',
 estado varchar(10) null comment 'Abierto | Cerrado (sirve para permitir inscripciones o no a dicho modulo por parte de los alumnos)',
 contraModulo varchar(20) null comment 'Sirve para proteger las inscripciones de los alumnos al modulo',
-idHorario int not null comment 'foranea',
+idHorario int not null comment 'Hace referencia al ID de cada Horario por grupo',
 carnet varchar(20) NULL,
+idGrupo int not null comment 'Hace referencia al grupo al que pertenece esta asignatura',
 primary key pkModulo(idModulo),
-foreign key fkModuloXHorario(idHorario) references Horario(idHorario)
+foreign key fkModuloXHorario(idHorario) references Horario(idHorario), 
+foreign key fkgrupo(idGrupo) references grupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32A','practico','2018',1,'activo','4','quintanilla','4');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','2018',1,'activo','5','magari','5');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32U','teorico','2018',1,'activo','6','magari','6');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32A','practico','2018',1,'activo','4','vladimir','4');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32B','practico','2018',1,'activo','5','magari','5');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32U','teorico','2018',1,'activo','6','magari','6');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32A','practico','2018',1,'activo','4','vladimir','4');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32B','practico','2018',1,'activo','5','vladimir','5');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32U','teorico','2018',1,'activo','6','vladimir','6');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Comunicación Oral y Escrita', 'COE-SIS32U','teorico','2018',1,'activo','6','yaqueline','6');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Física', 'FIS-SIS32U','teorico','2018',1,'activo','6','melbin','6');
+
+create table DetalleModulo(
+	id_detalle int auto_increment not null,
+	aula varchar(10) not null,
+	horaInicio time not null,
+	horaFin time not null, 
+	ciclo int not null,
+	dia varchar(10) not null,
+	idGrupo int not null comment 'Foranea de Grupo',
+	horas int not null comment 'Cantidad de horas | Se divide por bloques de 2 horas',
+	idModulo int not null comment 'Hace referencia al modulo al que pertenece',
+	primary key pkdetmod(id_detalle),
+	foreign key fkmodulo(idModulo) references Modulo(idModulo)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Inserción de detalles de modulo*/
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','07:00:00','08:40:00','III','Lunes','4','2','7');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','09:00:00','10:40:00','III','Lunes','4','2','7');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','10:40:00','12:20:00','III','Lunes','6','2','10');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','13:00:00','14:40:00','III','Lunes','5','2','8');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','14:40:00','16:20:00','III','Lunes','5','2','8');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC2','07:00:00','08:40:00','III','Martes','4','2','1');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','07:00:00','08:40:00','III','Martes','5','2','2');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC2','09:00:00','10:40:00','III','Martes','4','2','1');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','09:00:00','10:40:00','III','Martes','5','2','2');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC2','10:40:00','11:30:00','III','Martes','4','1','1');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','10:40:00','11:30:00','III','Martes','5','1','2');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','11:30:00','12:20:00','III','Martes','6','1','9');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','13:00:00','14:40:00','III','Martes','6','2','11');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC3','07:00:00','08:40:00','III','Miércoles','4','2','4');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC3','09:00:00','10:40:00','III','Miércoles','4','2','4');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC3','10:40:00','11:30:00','III','Miércoles','4','1','4');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','07:00:00','08:40:00','III','Miércoles','5','2','5');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','09:00:00','10:40:00','III','Miércoles','5','2','5');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','10:40:00','11:30:00','III','Miércoles','5','1','5');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','09:00:00','10:40:00','III','Jueves','6','2','11'); 
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','10:40:00','12:20:00','III','Jueves','6','2','3'); 
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','07:00:00','08:40:00','III','Viernes','6','2','10'); 
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','09:00:00','10:40:00','III','Viernes','6','2','6'); 
 
 create table GuiaModulo(
 idGuiaModulo int auto_increment not null,
@@ -131,6 +235,7 @@ idModulo int not null comment 'foranea',
 primary key pkGuiaModulo(idGuiaModulo),
 foreign key fkGuiaModuloXModulo(idModulo) references Modulo(idModulo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 create table UsuarioActivo(
 idUsuarioActivo int auto_increment not null,
@@ -159,6 +264,18 @@ primary key pkPonderacion(idPonderacion),
 foreign key fkPonderacionXModulo(idModulo) references Modulo(idModulo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*Insercion de ponderaciones*/
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','15','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','15','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP3','20','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EJP','10','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','40','1');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','0','2');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','0','2');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('Trabajo','0','2');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EJP','0','2');
+insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','0','2');
+
 create table Tarea(
 idTarea int auto_increment not null,
 nombreTarea varchar(30) not null,
@@ -172,6 +289,9 @@ idPonderacion int not null comment 'foranea',
 primary key pkTarea(idTarea),
 foreign key fkTareaXPonderacion(idPonderacion) references Ponderacion(idPonderacion)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Inserción de tareas*/
+insert into Tarea(nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo) values('practica05',8.555,'100',5,'practica05',1);
 
 create table TareaSubidaPor(
 idTareaSubidaPor int auto_increment not null,
@@ -205,8 +325,6 @@ select * from Tarea;
 select * from ArchivoSubido;
 select * from GuiaModulo;
 
-
-
 delete from Tarea where idPonderacion=1;
 
 select *
@@ -228,77 +346,21 @@ from Ponderacion as P
 inner join Tarea as T 
 on P.idPonderacion=T.idPonderacion
 where P.idModulo=1;
+
+---- Select por docente -----
+
+Select Modulo.nombreModulo, CONCAT(Grupo.nombreGrupo,' ',Grupo.seccion) AS 'clase', DetalleModulo.horaInicio, DetalleModulo.horaFin, DetalleModulo.aula, CONCAT(Docente.nombres,' ',Docente.apellidos) as 'docente', DetalleModulo.horas, DetalleModulo.dia from modulo inner join DetalleModulo on Modulo.idModulo = DetalleModulo.idModulo INNER JOIN Grupo on Grupo.idGrupo = Modulo.idGrupo inner join Docente on Docente.carnet = Modulo.carnet WHERE Docente.carnet = '$carnet' order by DetalleModulo.horaInicio
+
+---- Select por grupo ---- 
+
+Select Modulo.nombreModulo, CONCAT(Grupo.nombreGrupo,' ',Grupo.seccion) AS 'clase', DetalleModulo.horaInicio, DetalleModulo.horaFin, DetalleModulo.aula, CONCAT(Docente.nombres,' ',Docente.apellidos) as 'docente', DetalleModulo.horas, DetalleModulo.dia from modulo inner join DetalleModulo on Modulo.idModulo = DetalleModulo.idModulo INNER JOIN Grupo on Grupo.idGrupo = Modulo.idGrupo inner join Docente on Docente.carnet = Modulo.carnet WHERE CONCAT() = '$carnet' order by DetalleModulo.horaInicio
+
+
 */
 /****************Insercion de registros de prueba Roberto****************/
 
-
-insert into Grupo(nombreGrupo,anyo) values('SIS32B',2018);
-insert into Grupo(nombreGrupo,anyo) values('SIS31B',2018);
-insert into Grupo(nombreGrupo) values('SIS32U');
-
-insert into Horario(anyo, periodo, idGrupo) values('2018','1','1');
-insert into Horario(anyo, periodo, idGrupo) values('2018','1','2');
-
-
-insert into 
-Modulo(nombreModulo, siglas, tipoModulo, aula, anyo, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
-values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','CC1',2018,'7:00','11:30','martes','1','abierto','1','funes');
-
-insert into 
-Modulo(nombreModulo, siglas, tipoModulo, aula, anyo, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
-values('Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-SIS32B','practico','CC1',2018,'7:00','11:30','miercoles','1','abierto','1','funes');
-
-insert into 
-Modulo(nombreModulo, siglas, tipoModulo, aula, anyo, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
-values('Desarrollo de Aplicaciones para la Web','DAW-SIS31B','practico','CC2',2018,'7:00','11:30','martes','1','abierto','2','funes2');
-
-insert into 
-Modulo(nombreModulo, siglas, tipoModulo, aula, anyo, horaInicio, horaFin, dia, activo, estado, idHorario, carnet)
-values('Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-SIS31B','practico','CC1',2018,'7:00','11:30','lunes','1','abierto','2','funes');
-
-
-
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','15','1');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','15','1');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP3','20','1');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EJP','10','1');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','40','1');
-
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','0','2');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','0','2');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('Trabajo','0','2');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EJP','0','2');
-insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','0','2');
-
-insert into Departamento(nombreDepartamento) values('Sistemas');
-
-INSERT into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) 
-VALUES ('funes', 'Roberto Enrique', 'Funes Rivera', 'administrador', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
-
-insert into Tarea(nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo) values('practica05',8.555,'100',5,'practica05',1);
-
-
 /****************Insercion de registros de prueba Marcelo****************/
-/*Insercion de grupos */
-insert into Grupo(nombreGrupo) values('SIS31A');
-insert into Grupo(nombreGrupo) values('SIS31B');
-insert into Grupo(nombreGrupo) values('SIS32A');
-insert into Grupo(nombreGrupo) values('SIS32B');
-insert into Grupo(nombreGrupo) values('SIS33A');
 
-/*Insercion de departamentos*/
-INSERT INTO `departamento` VALUES("2","Eléctrica");
-INSERT INTO `departamento` VALUES("3","Área básica");
-INSERT INTO `departamento` VALUES("4","Administración");
-INSERT INTO `departamento` VALUES("5","Patrimonio");
-INSERT INTO `departamento` VALUES("7","Servicio Desarrollo prof.");
-
-/*Insercion de carreras*/
-INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Sistemas Informáticos","1");
-INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Ingeniería Eléctrica","2");
-INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Mantenimiento de Computadoras","2");
-INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Gestión Tecnológica del Patrimonio Cultural","5");
-INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Cursos libres","7");
 /****************Insercion de registros de prueba Daniel****************/
 
 /****************Insercion de registros de prueba Joaquin****************/
