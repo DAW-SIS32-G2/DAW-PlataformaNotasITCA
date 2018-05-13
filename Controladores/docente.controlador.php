@@ -33,18 +33,18 @@
 
                 $nombre=$siglasModulos."_". str_replace(' ','',$_FILES['guia']['name']);
 
-                $rutaArchivo="Archivos/".$siglasModulos."-".$anyosModulos."/".$nombre;
+                $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/".$nombre;
 
                 $contador=2;
                 while(file_exists($rutaArchivo))
                 {
-                        $rutaArchivo="Archivos/".$siglasModulos."-".$anyosModulos."/($contador)".$nombre;
+                        $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/($contador)".$nombre;
                         $contador++;
                 }
 
-                if(!file_exists("Archivos/".$siglasModulos."-".$anyosModulos))
+                if(!file_exists("Archivos/Guias/".$siglasModulos."-".$anyosModulos))
                 {
-                    mkdir("Archivos/".$siglasModulos."-".$anyosModulos);
+                    mkdir("Archivos/Guias/".$siglasModulos."-".$anyosModulos,0777,true);
                 }
                 
                 move_uploaded_file($nombreTemporal,$rutaArchivo);

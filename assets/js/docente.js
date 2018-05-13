@@ -16,7 +16,7 @@ function mostrarDiv(tipoDiv,idModulo)
 
 	div.innerHTML='\
 					\
-					<button onclick="mostrarDiv(\'SubirGuias\',0)">X</button><br><br><h3>Subir guias</h3>\
+					<button onclick="mostrarDiv(\''+tipoDiv+'\',0)">X</button><br><br><h3>Subir guias</h3>\
 					<form method="post" enctype="multipart/form-data">\
 						<input type="hidden" name="MAX_FILE_SIZE" value="62914560"> \
 						<input type="file" name="guia"><br><br>\

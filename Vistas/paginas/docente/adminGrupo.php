@@ -104,7 +104,6 @@
 
 		<?php 
 
-
 			$resultado=$objDocenteModelo->CargarGrupos();
 
 			if (gettype($resultado)=="string")
@@ -153,8 +152,8 @@
 						<button onclick="mostrarDiv('SubirGuias','<?= $idModulo[$k]; ?>')">Subir guias</button>
 						<br>
 
-						<!--<button onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver practicas</button><br>-->
-						*Boton ver practicas (Proximamente)*<br>
+						<button onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver guias</button><br>
+						<br>
 
 						*boton descargar todas las guias*
 					</td>

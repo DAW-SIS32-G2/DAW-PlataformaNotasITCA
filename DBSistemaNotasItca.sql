@@ -61,8 +61,6 @@ insert into grupo(nombreGrupo,seccion,anyo) values ('SIS32','U','2018');
 insert into grupo(nombreGrupo,seccion,anyo) values ('SIS33','A','2018');
 insert into grupo(nombreGrupo,seccion,anyo) values ('SIS33','U','2018');
 
-
-
 create table Usuario(
 idUsuario int auto_increment not null,
 carnet varchar(6) not null,
@@ -170,23 +168,21 @@ estado varchar(10) null comment 'Abierto | Cerrado (sirve para permitir inscripc
 contraModulo varchar(20) null comment 'Sirve para proteger las inscripciones de los alumnos al modulo',
 idHorario int not null comment 'Hace referencia al ID de cada Horario por grupo',
 carnet varchar(20) NULL,
-idGrupo int not null comment 'Hace referencia al grupo al que pertenece esta asignatura',
 primary key pkModulo(idModulo),
-foreign key fkModuloXHorario(idHorario) references Horario(idHorario), 
-foreign key fkgrupo(idGrupo) references grupo(idGrupo)
+foreign key fkModuloXHorario(idHorario) references Horario(idHorario)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32A','practico','2018',1,'activo','4','quintanilla','4');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','2018',1,'activo','5','magari','5');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32U','teorico','2018',1,'activo','6','magari','6');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32A','practico','2018',1,'activo','4','vladimir','4');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32B','practico','2018',1,'activo','5','magari','5');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32U','teorico','2018',1,'activo','6','magari','6');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32A','practico','2018',1,'activo','4','vladimir','4');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32B','practico','2018',1,'activo','5','vladimir','5');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32U','teorico','2018',1,'activo','6','vladimir','6');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Comunicación Oral y Escrita', 'COE-SIS32U','teorico','2018',1,'activo','6','yaqueline','6');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet, idGrupo) values('Física', 'FIS-SIS32U','teorico','2018',1,'activo','6','melbin','6');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32A','practico','2018',1,'activo','4','quintanilla');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','2018',1,'activo','5','magari');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32U','teorico','2018',1,'activo','6','magari');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32A','practico','2018',1,'activo','4','vladimir');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32B','practico','2018',1,'activo','5','magari');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32U','teorico','2018',1,'activo','6','magari');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32A','practico','2018',1,'activo','4','vladimir');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32B','practico','2018',1,'activo','5','vladimir');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32U','teorico','2018',1,'activo','6','vladimir');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Comunicación Oral y Escrita', 'COE-SIS32U','teorico','2018',1,'activo','6','yaqueline');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Física', 'FIS-SIS32U','teorico','2018',1,'activo','6','melbin');
 
 create table DetalleModulo(
 	id_detalle int auto_increment not null,
@@ -203,29 +199,29 @@ create table DetalleModulo(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Inserción de detalles de modulo*/
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','07:00:00','08:40:00','III','Lunes','4','2','7');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','09:00:00','10:40:00','III','Lunes','4','2','7');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','10:40:00','12:20:00','III','Lunes','6','2','10');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','13:00:00','14:40:00','III','Lunes','5','2','8');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','14:40:00','16:20:00','III','Lunes','5','2','8');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC2','07:00:00','08:40:00','III','Martes','4','2','1');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','07:00:00','08:40:00','III','Martes','5','2','2');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC2','09:00:00','10:40:00','III','Martes','4','2','1');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','09:00:00','10:40:00','III','Martes','5','2','2');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC2','10:40:00','11:30:00','III','Martes','4','1','1');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','10:40:00','11:30:00','III','Martes','5','1','2');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','11:30:00','12:20:00','III','Martes','6','1','9');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','13:00:00','14:40:00','III','Martes','6','2','11');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC3','07:00:00','08:40:00','III','Miércoles','4','2','4');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC3','09:00:00','10:40:00','III','Miércoles','4','2','4');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC3','10:40:00','11:30:00','III','Miércoles','4','1','4');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','07:00:00','08:40:00','III','Miércoles','5','2','5');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','09:00:00','10:40:00','III','Miércoles','5','2','5');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','10:40:00','11:30:00','III','Miércoles','5','1','5');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','09:00:00','10:40:00','III','Jueves','6','2','11'); 
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','10:40:00','12:20:00','III','Jueves','6','2','3'); 
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','07:00:00','08:40:00','III','Viernes','6','2','10'); 
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','09:00:00','10:40:00','III','Viernes','6','2','6'); 
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','07:00:00','08:40:00','1','Lunes','4','2','7');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','09:00:00','10:40:00','1','Lunes','4','2','7');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','10:40:00','12:20:00','1','Lunes','6','2','10');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','13:00:00','14:40:00','1','Lunes','5','2','8');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','14:40:00','16:20:00','1','Lunes','5','2','8');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC2','07:00:00','08:40:00','1','Martes','4','2','1');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','07:00:00','08:40:00','1','Martes','5','2','2');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC2','09:00:00','10:40:00','1','Martes','4','2','1');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','09:00:00','10:40:00','1','Martes','5','2','2');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC2','10:40:00','11:30:00','1','Martes','4','1','1');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','10:40:00','11:30:00','1','Martes','5','1','2');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','11:30:00','12:20:00','1','Martes','6','1','9');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','13:00:00','14:40:00','1','Martes','6','2','11');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC3','07:00:00','08:40:00','1','Miércoles','4','2','4');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC3','09:00:00','10:40:00','1','Miércoles','4','2','4');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC3','10:40:00','11:30:00','1','Miércoles','4','1','4');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','07:00:00','08:40:00','1','Miércoles','5','2','5');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','09:00:00','10:40:00','1','Miércoles','5','2','5');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','10:40:00','11:30:00','1','Miércoles','5','1','5');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','09:00:00','10:40:00','1','Jueves','6','2','11'); 
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','10:40:00','12:20:00','1','Jueves','6','2','3'); 
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','07:00:00','08:40:00','1','Viernes','6','2','10'); 
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','09:00:00','10:40:00','1','Viernes','6','2','6'); 
 
 create table GuiaModulo(
 idGuiaModulo int auto_increment not null,
@@ -291,7 +287,7 @@ foreign key fkTareaXPonderacion(idPonderacion) references Ponderacion(idPonderac
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Inserción de tareas*/
-insert into Tarea(nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo) values('practica05',8.555,'100',5,'practica05',1);
+insert into Tarea(nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo) values('practica05',8.55,'100',5,'practica05',1);
 
 create table TareaSubidaPor(
 idTareaSubidaPor int auto_increment not null,
