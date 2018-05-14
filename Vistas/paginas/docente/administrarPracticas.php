@@ -1,6 +1,8 @@
 <?php
+echo "<br><br><br>";
 	@define("__ROOT__", dirname(__FILE__,4));
 	require_once(__ROOT__.'/core/funcionesbd.php');
+	require_once(__ROOT__.'/controladores/docente.controlador.php');
 	$objDocenteModelo=new DocenteModelo();
 
 	if (isset($_REQUEST['guardarPracticas']))
@@ -10,13 +12,15 @@
 		$idPonderacion=$_REQUEST['ponderacion'];
 		$idModulo = $_REQUEST['modulo'];
 
-		//Obtendremos la carpeta que pertenece al módulo
-		$objBD = new funcionesBD();
-		$res = $objBD->ConsultaPersonalizada("SELECT M.siglas FROM Modulo AS M WHERE M.idModulo= '$idModulo'");
-		while($fila = $res->fetch_array(MYSQLI_ASSOC))
-		{
-			$carpetaMod = $fila['siglas'];
-		}
+		$objDocenteControlador=new DocenteControlador('DocenteModelo');
+
+		$resultado=$objDocenteControlador->ObtenerSiglas($idModulo);
+
+		while($arrayModulo=$resultado->fetch_array(MYSQLI_ASSOC))
+        {
+            $carpetaMod = $arrayModulo['siglas'];
+            $anyoModulo=$arrayModulo['anyo'];
+        }
 
 		$cantidadTareas=$objDocenteModelo->obtenerCantidadTareas($idPonderacion);
 
@@ -36,7 +40,7 @@
 			$porcentajeTarea=number_format(($porcentajePonderacion['porcentaje']/$cantidadTareas),2);
 
 
-			$resultado=$objDocenteModelo->InsertarPracticas($nombrePractica,$porcentajeTarea,$cantidadEjercicios,$idPonderacion,$carpetaMod);
+			$resultado=$objDocenteModelo->InsertarPracticas($nombrePractica,$porcentajeTarea,$cantidadEjercicios,$idPonderacion,$carpetaMod,$anyoModulo);
 
 			if(gettype($resultado)=="string")
 			{
@@ -120,6 +124,7 @@
 								while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
 								{
 									$nombreModulos[]=$arrayGrupos['nombreModulo'];
+									$secciones[]=$arrayGrupos['seccion'];
 									$nombreGrupos[]=$arrayGrupos['nombreGrupo'];
 									$idModulos[]=$arrayGrupos['idModulo'];
 									$i++;
@@ -134,7 +139,7 @@
 									?>
 
 										<option value='<?php echo $idModulos[$j]; ?>'>
-											<?php echo $nombreGrupos[$j]."-".$nombreModulos[$j]; ?>
+											<?php echo $nombreGrupos[$j].$secciones[$j]."-".$nombreModulos[$j]; ?>
 										</option>
 
 									<?php
@@ -203,6 +208,7 @@
 					while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
 					{
 						$nombreModulos[]=$arrayGrupos['nombreModulo'];
+						$secciones[]=$arrayGrupos['seccion'];
 						$nombreGrupos[]=$arrayGrupos['nombreGrupo'];
 						$idModulos[]=$arrayGrupos['idModulo'];
 						$i++;
@@ -218,7 +224,7 @@
 						?>
 
 							<option value='<?php echo $idModulos[$j]; ?>'>
-								<?php echo $nombreGrupos[$j]."-".$nombreModulos[$j]; ?>
+								<?php echo $nombreGrupos[$j].$secciones[$j]."-".$nombreModulos[$j]; ?>
 							</option>
 
 						<?php

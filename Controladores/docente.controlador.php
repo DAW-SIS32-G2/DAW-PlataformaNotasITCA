@@ -33,18 +33,18 @@
 
                 $nombre=$siglasModulos."_". str_replace(' ','',$_FILES['guia']['name']);
 
-                $rutaArchivo="Archivos/".$siglasModulos."-".$anyosModulos."/".$nombre;
+                $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/".$nombre;
 
                 $contador=2;
                 while(file_exists($rutaArchivo))
                 {
-                        $rutaArchivo="Archivos/".$siglasModulos."-".$anyosModulos."/($contador)".$nombre;
+                        $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/($contador)".$nombre;
                         $contador++;
                 }
 
-                if(!file_exists("Archivos/".$siglasModulos."-".$anyosModulos))
+                if(!file_exists("Archivos/Guias/".$siglasModulos."-".$anyosModulos))
                 {
-                    mkdir("Archivos/".$siglasModulos."-".$anyosModulos);
+                    mkdir("Archivos/Guias/".$siglasModulos."-".$anyosModulos,0777,true);
                 }
                 
                 move_uploaded_file($nombreTemporal,$rutaArchivo);
@@ -58,5 +58,12 @@
                 echo "Ocurrio un error al subir el archivo: El error es el numero ".$file['error'].". Para saber más sobre este error de click <a target='_blank' href='http://php.net/manual/es/features.file-upload.errors.php'>Aquí</a>";
             }
         }
+
+        public function ObtenerSiglas($idModulo)
+        {
+            $resultado = $this->model->ObtenerSiglas($idModulo);
+            return $resultado;
+        }
+        
     }
   ?>

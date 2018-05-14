@@ -59,26 +59,35 @@
             }
         }
 
-        public function InsertarPracticas($nombreTarea,$porcentaje,$cantidadEjercicios,$idPonderacion,$carpetaMod)
+        public function InsertarPracticas($nombreTarea,$porcentaje,$cantidadEjercicios,$idPonderacion,$carpetaMod,$anyoModulo)
         {
-            $directorio = $carpetaMod."/".$nombreTarea;
-            $conex=new funcionesBD();
-            $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo","'$nombreTarea',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',1");
+            $directorio = "Archivos/Practicas/".$carpetaMod."-$anyoModulo/".$nombreTarea;
 
-            if($resultado=="Registro Insertado Correctamente")
+            if(file_exists($directorio))
             {
-                if(mkdir("Practicas/".$carpetaMod."/".$nombreTarea))
-                {
-                    return true;
-                }
-                else
-                {
-                    return "Falló al crear el directorio";
-                }
+                return "Error. El directorio ya existe";
             }
             else
             {
-                return $resultado;
+                $conex=new funcionesBD();
+
+                $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo","'$nombreTarea',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',1");
+
+                if($resultado=="Registro Insertado Correctamente")
+                {
+                    if(mkdir($directorio,0777,true))
+                    {
+                        return $resultado;
+                    }
+                    else
+                    {
+                        return "Falló al crear el directorio";
+                    }
+                }
+                else
+                {
+                    return $resultado;
+                }
             }
         }
 
@@ -128,5 +137,15 @@
 
              return $resultado;
         }
+
+        public function ObtenerSiglas($idModulo)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->ConsultaPersonalizada("SELECT M.siglas,M.anyo FROM Modulo AS M WHERE M.idModulo= '$idModulo'");
+
+            return $resultado;
+        }
+        
     }
 ?>

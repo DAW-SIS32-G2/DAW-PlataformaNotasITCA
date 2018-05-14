@@ -69,6 +69,24 @@
 		$objDocenteControlador->GuardarGuia($guia,$idModulo);
 	}
  ?>
+ <div class="container" style="padding-top: 65px">
+
+<script type="text/javascript">
+	function mostrarGuias(idModulo)
+	{
+	  //Procesar
+	  $.ajax({
+	      type      : 'post',
+	      url       : 'ajax/adminGrupo',
+	      data      : {idModulo: idModulo},
+	      success   : function(respuesta)
+	      {
+	        document.getElementById('verGuias').innerHTML = respuesta;
+	      }
+	  })
+
+	}
+</script>
 
 <div class="container">
 	
@@ -104,7 +122,6 @@
 
 		<?php 
 
-
 			$resultado=$objDocenteModelo->CargarGrupos();
 
 			if (gettype($resultado)=="string")
@@ -114,24 +131,23 @@
 			}
 			else
 			{
+				$res=$resultado;
 
-				$cantidad=$resultado->num_rows;
+				$cantidad=$res->num_rows;
 
 
-				
 				/*Guardando los grupos en un array*/
+				unset($idModulo);
 				$i=0;
 				while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
 				{
-
 					$idModulo[$i]=$arrayGrupos['idModulo'];
 					$nombreGrupos[$i]=$arrayGrupos['nombreGrupo'];
+					$seccion[$i]=$arrayGrupos['seccion'];
 					$anyoGrupos[$i]=$arrayGrupos['anyo'];
 					$nombreModulos[$i]=$arrayGrupos['nombreModulo'];
 					$i++;
 				}
-
-
 
 
 				for ($k=0;$k<$cantidad;$k++)
@@ -146,15 +162,15 @@
 					</td>
 
 					<td>
-						<?php echo $nombreGrupos[$k]."-".$anyoGrupos[$k]; ?>
+						<?php echo $nombreGrupos[$k].$seccion[$k]."-".$anyoGrupos[$k]; ?>
 					</td>
 
 					<td>
 						<button onclick="mostrarDiv('SubirGuias','<?= $idModulo[$k]; ?>')">Subir guias</button>
 						<br>
 
-						<!--<button onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver practicas</button><br>-->
-						*Boton ver practicas (Proximamente)*<br>
+						<button onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver guias</button><br>
+						<br>
 
 						*boton descargar todas las guias*
 					</td>
