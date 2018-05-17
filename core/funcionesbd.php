@@ -223,7 +223,7 @@ class funcionesBD
 		}
 		else
 		{
-			$error=$this->bd->error;
+			$error=$resultado->error;
 			//Cerrando conexión
 			$this->bd->close();
 			return "Error en la consulta: ". $error;

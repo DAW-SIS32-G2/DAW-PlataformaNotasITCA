@@ -1,4 +1,4 @@
-<?php
+ <?php
 define("__ROOT__",dirname(dirname(dirname(dirname(__FILE__)))));
 require_once(__ROOT__."/core/funcionesbd.php");
 $carnet = $_SESSION['usuario'];
@@ -26,10 +26,11 @@ function proceso()
           <div class="form-inline">
             <label for="grupo" class="col-lg-4">Seleccione un grupo</label>
             <select class="form-control col-lg-4" name="grupo" id="grupo" onchange="proceso();" >
+              <option value="">--Seleccione Uno--</option>
               <?php
                   $bd = new funcionesBD();
                   //La condicion luego se actualizará conforme a los docentes que impartan en cada grupo
-                  $res = $bd->ConsultaPersonalizada("select distinct G.nombreGrupo, G.idGrupo from Modulo as M inner join Horario as H on M.idHorario = H.idHorario inner join Grupo as G on H.idGrupo = G.idGrupo where M.carnet='".$_SESSION['usuario']."'");
+                  $res = $bd->ConsultaPersonalizada("select distinct G.nombreGrupo, G.idGrupo from Modulo as M inner join Horario as H on M.idHorario = H.idHorario inner join Grupo as G on H.idGrupo = G.idGrupo where M.carnet='".$_SESSION['usuario']."' and G.seccion='U'");
                   while($fila = $res->fetch_assoc())
                   {
                     echo "<option whatever=\"".$fila['nombreGrupo']."\" value=\"".$fila['idGrupo']."\">".$fila['nombreGrupo']."</option>";
