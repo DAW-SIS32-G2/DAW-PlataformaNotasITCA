@@ -86,8 +86,14 @@
           require_once 'Vistas/paginas/docente/restablecer.php';
         }
 
+        function descargar()
+        {
+          include 'paginas/docente/plantillas/cabecera.php';
+          require_once 'core/descargar.php';
+        }
+
         
-        function descargar($idTarea)
+        /*function descargar($idTarea)
         {
             include 'paginas/docente/plantillas/cabecera.php';
             include 'paginas/docente/plantillas/menu.php';
@@ -107,6 +113,8 @@
               </script>
             ";
             
-        }
+        }*/
+
+
     }
 ?>

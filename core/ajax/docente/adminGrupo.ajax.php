@@ -2,6 +2,7 @@
 	define("__ROOT__", dirname(__FILE__,4));
 	require_once(__ROOT__.'/controladores/docente.controlador.php');
 	require_once(__ROOT__.'/core/funcionesbd.php');
+	require_once(__ROOT__.'/core/criptografia.php');
 	
 	$idModulo=$_REQUEST['idModulo'];
 
@@ -19,24 +20,27 @@
 
     $guias=scandir($directorio);
 
-    header('location: http://localhost/repositorios/DAW-PlataformaNotasITCA/docente/admingrupo');
-    	
-
-    /*$contador=0;
+    $contador=0;
     foreach ($guias as $guia)
     {
     	if(!($guia == ".") and !($guia==".."))
     	{
-			echo "$contador - ".$guia."<br>";
+			echo "$contador - ".$guia." ";
     		$contador++;
-
-
-    		@session_start();
     		
-    		/*$_SESSION['archivoDescargar']=$directorio."/".$guia;
-    		header('location: /core/descargar.php');
-    	
+    		$rutaArchivo=$directorio."/".$guia;
+
+    		$archivoAux=cifrar($rutaArchivo);
+
+    		?>
+    				<button onclick='descargar(<?php echo '"'.$archivoAux.'"';?>)'>Descargar</button>
+    		<?php 
+    		echo "<br><br>";
     	}
 
-    }*/
+    }
+    if($contador==0)
+    {
+    	echo "No hay guias en este modulo";
+    }
 ?>
