@@ -1,6 +1,6 @@
 drop database if exists SistemaNotasItca;
 
-create database if not exists SistemaNotasItca;
+create database SistemaNotasItca;
 
 use SistemaNotasItca;
 
@@ -14,11 +14,11 @@ primary key pkDepartamento(idDepartamento)
 
 /*Insercion de departamentos*/
 insert into Departamento(nombreDepartamento) values('Sistemas');
-INSERT INTO Departamento(nombreDepartamento) VALUES("Eléctrica");
-INSERT INTO Departamento(nombreDepartamento) VALUES("Área básica");
-INSERT INTO Departamento(nombreDepartamento) VALUES("Administración");
-INSERT INTO Departamento(nombreDepartamento) VALUES("Patrimonio");
-INSERT INTO Departamento(nombreDepartamento) VALUES("Servicio Desarrollo prof.");
+INSERT INTO Departamento(nombreDepartamento) VALUES('Eléctrica');
+INSERT INTO Departamento(nombreDepartamento) VALUES('Área básica');
+INSERT INTO Departamento(nombreDepartamento) VALUES('Administración');
+INSERT INTO Departamento(nombreDepartamento) VALUES('Patrimonio');
+INSERT INTO Departamento(nombreDepartamento) VALUES('Servicio Desarrollo prof.');
 
 
 create table Carrera(
@@ -30,11 +30,11 @@ foreign key fkCarreraXDepartamento(idDepartamento) references Departamento(idDep
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Insercion de carreras*/
-INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Sistemas Informáticos","1");
-INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Ingeniería Eléctrica","2");
-INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Mantenimiento de Computadoras","2");
-INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Técnico en Gestión Tecnológica del Patrimonio Cultural","5");
-INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES("Cursos libres","6");
+INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Sistemas Informáticos','1');
+INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Ingeniería Eléctrica','2');
+INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Mantenimiento de Computadoras','2');
+INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Gestión Tecnológica del Patrimonio Cultural','5');
+INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Cursos libres','6');
 
 create table BuzonArchivos(
 idBuzonArchivos int auto_increment not null,
@@ -140,21 +140,21 @@ foreign key fkHorarioXGrupo(idGrupo) references Grupo(idGrupo)
 /*Inserción de horarios*/
 
 /*Horario para SIS31A*/
-insert into Horario(anyo, periodo, idGrupo) values('2018','1','1'); 
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','1');
 /*Horario para SIS31B*/
-insert into Horario(anyo, periodo, idGrupo) values('2018','1','2'); 
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','2');
 /*Horario para SIS31U*/
-insert into Horario(anyo, periodo, idGrupo) values('2018','1','3'); 
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','3');
 /*Horario para SIS32A*/
-insert into Horario(anyo, periodo, idGrupo) values('2018','1','4'); 
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','4');
 /*Horario para SIS32B*/
-insert into Horario(anyo, periodo, idGrupo) values('2018','1','5'); 
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','5');
 /*Horario para SIS32U*/
-insert into Horario(anyo, periodo, idGrupo) values('2018','1','6'); 
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','6');
 /*Horario para SIS33A*/
-insert into Horario(anyo, periodo, idGrupo) values('2018','1','7'); 
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','7');
 /*Horario para SIS33U*/
-insert into Horario(anyo, periodo, idGrupo) values('2018','1','8'); 
+insert into Horario(anyo, periodo, idGrupo) values('2018','1','8');
 
 
 create table Modulo(
@@ -190,7 +190,7 @@ create table DetalleModulo(
 	id_detalle int auto_increment not null,
 	aula varchar(10) not null,
 	horaInicio time not null,
-	horaFin time not null, 
+	horaFin time not null,
 	ciclo int not null,
 	dia varchar(10) not null,
 	idGrupo int not null comment 'Foranea de Grupo',
@@ -220,10 +220,10 @@ insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModu
 insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','07:00:00','08:40:00','1','Miércoles','5','2','5');
 insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','09:00:00','10:40:00','1','Miércoles','5','2','5');
 insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC4','10:40:00','11:30:00','1','Miércoles','5','1','5');
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','09:00:00','10:40:00','1','Jueves','6','2','11'); 
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','10:40:00','12:20:00','1','Jueves','6','2','3'); 
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','07:00:00','08:40:00','1','Viernes','6','2','10'); 
-insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','09:00:00','10:40:00','1','Viernes','6','2','6'); 
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','09:00:00','10:40:00','1','Jueves','6','2','11');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','10:40:00','12:20:00','1','Jueves','6','2','3');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','07:00:00','08:40:00','1','Viernes','6','2','10');
+insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','09:00:00','10:40:00','1','Viernes','6','2','6');
 
 create table GuiaModulo(
 idGuiaModulo int auto_increment not null,
@@ -357,17 +357,17 @@ inner join Horario as H
 on M.idHorario = H.idHorario
 inner join Grupo as G
 on H.idGrupo = G.idGrupo
-where M.carnet="funes";
+where M.carnet='funes';
 
 select * from Ponderacion as P
-inner join Modulo as M 
+inner join Modulo as M
 on M.idModulo=P.idModulo
-where P.idModulo="1";
+where P.idModulo='1';
 
 
-SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios 
+SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios
 from Ponderacion as P
-inner join Tarea as T 
+inner join Tarea as T
 on P.idPonderacion=T.idPonderacion
 where P.idModulo=1;
 
@@ -377,7 +377,7 @@ SELECT M.siglas,M.anyo FROM Modulo AS M WHERE M.idModulo= 100;
 
 Select Modulo.nombreModulo, CONCAT(Grupo.nombreGrupo,' ',Grupo.seccion) AS 'clase', DetalleModulo.horaInicio, DetalleModulo.horaFin, DetalleModulo.aula, CONCAT(Docente.nombres,' ',Docente.apellidos) as 'docente', DetalleModulo.horas, DetalleModulo.dia from modulo inner join DetalleModulo on Modulo.idModulo = DetalleModulo.idModulo INNER JOIN Grupo on Grupo.idGrupo = Modulo.idGrupo inner join Docente on Docente.carnet = Modulo.carnet WHERE Docente.carnet = '$carnet' order by DetalleModulo.horaInicio
 
----- Select por grupo ---- 
+---- Select por grupo ----
 
 Select Modulo.nombreModulo, CONCAT(Grupo.nombreGrupo,' ',Grupo.seccion) AS 'clase', DetalleModulo.horaInicio, DetalleModulo.horaFin, DetalleModulo.aula, CONCAT(Docente.nombres,' ',Docente.apellidos) as 'docente', DetalleModulo.horas, DetalleModulo.dia from modulo inner join DetalleModulo on Modulo.idModulo = DetalleModulo.idModulo INNER JOIN Grupo on Grupo.idGrupo = Modulo.idGrupo inner join Docente on Docente.carnet = Modulo.carnet WHERE CONCAT() = '$carnet' order by DetalleModulo.horaInicio
 
@@ -389,18 +389,18 @@ insert into grupo(idGrupo,nombreGrupo,seccion,anyo) values (100,'Prueba31','U','
 insert into grupo(idGrupo,nombreGrupo,seccion,anyo) values (101,'Prueba31','A','2018');
 insert into grupo(idGrupo,nombreGrupo,seccion,anyo) values (102,'Prueba31','B','2018');
 
-insert into Horario(idHorario,anyo, periodo, idGrupo) values(100,'2018','1','102'); 
-insert into Horario(idHorario,anyo, periodo, idGrupo) values(101,'2018','1','101'); 
+insert into Horario(idHorario,anyo, periodo, idGrupo) values(100,'2018','1','102');
+insert into Horario(idHorario,anyo, periodo, idGrupo) values(101,'2018','1','101');
 
-insert into 
+insert into
 Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet)
 values(100,'Desarrollo de Aplicaciones para la Web','DAW-Prueba31B','practico','2018','1','abierto','100','funes');
 
-insert into 
+insert into
 Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet)
 values(101,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31B','practico','2018','1','abierto','100','funes');
 
-insert into 
+insert into
 Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet)
 values(103,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31A','practico','2018','1','abierto','101','funes');
 
@@ -421,5 +421,3 @@ insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','
 /****************Insercion de registros de prueba Daniel****************/
 
 /****************Insercion de registros de prueba Joaquin****************/
-
-
