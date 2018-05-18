@@ -52,14 +52,14 @@ primary key pkGrupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Inserción de grupos*/
-insert into grupo(nombreGrupo,seccion,anyo) values ('SIS31','A','2018');
-insert into grupo(nombreGrupo,seccion,anyo) values ('SIS31','B','2018');
-insert into grupo(nombreGrupo,seccion,anyo) values ('SIS31','U','2018');
-insert into grupo(nombreGrupo,seccion,anyo) values ('SIS32','A','2018');
-insert into grupo(nombreGrupo,seccion,anyo) values ('SIS32','B','2018');
-insert into grupo(nombreGrupo,seccion,anyo) values ('SIS32','U','2018');
-insert into grupo(nombreGrupo,seccion,anyo) values ('SIS33','A','2018');
-insert into grupo(nombreGrupo,seccion,anyo) values ('SIS33','U','2018');
+insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS31','A','2018');
+insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS31','B','2018');
+insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS31','U','2018');
+insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS32','A','2018');
+insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS32','B','2018');
+insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS32','U','2018');
+insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS33','A','2018');
+insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS33','U','2018');
 
 create table Usuario(
 idUsuario int auto_increment not null,
