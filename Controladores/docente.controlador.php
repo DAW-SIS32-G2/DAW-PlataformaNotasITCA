@@ -31,7 +31,7 @@
                     $anyosModulos=$arrayGrupos['anyo'];
                 }
 
-                $nombre=$siglasModulos."_". str_replace(' ','',$_FILES['guia']['name']);
+                $nombre=$siglasModulos."_". str_replace(' ','_',$_FILES['guia']['name']);
 
                 $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/".$nombre;
 
@@ -40,6 +40,7 @@
                 {
                         $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/($contador)".$nombre;
                         $contador++;
+                        $yaExiste="Ya existe un archivo con ese nombre. El archivo fue guardado como: ($contador)".$nombre."<br>";
                 }
 
                 if(!file_exists("Archivos/Guias/".$siglasModulos."-".$anyosModulos))
@@ -49,7 +50,7 @@
                 
                 move_uploaded_file($nombreTemporal,$rutaArchivo);
 
-                echo "Archivo subido con exito. Ocupara ". $file['size']." bytes de memoria en disco";
+                echo $yaExiste."Archivo subido con exito. Ocupara ". $file['size']." bytes de memoria en disco";
 
                 $this->model->GuardarGuiasBaseDatos($nombre,$rutaArchivo,$idModulo);
             }

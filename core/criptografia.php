@@ -2,6 +2,7 @@
 //$key es la llave que serivrá para cifrar y derscifrar los datos en cada vuelta,
 // actualmente está en base64, debería guardarse en una BD
 $key = "bRuD5WYw5wd0rdHR9yLlM6wt2vteuiniQBqE70nAuhU=";
+
 /*
   ------- FUNCION PARA GENERAR CLAVES ---------
   $key = base64_encode(openssl_random_pseudo_bytes(32));

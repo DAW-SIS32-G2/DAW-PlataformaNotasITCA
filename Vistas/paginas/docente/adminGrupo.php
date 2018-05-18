@@ -1,10 +1,10 @@
 <?php 
-
+	echo "<br><br><br>";
 	require_once('././././core/funcionesbd.php');
 
 	$objDocenteModelo=new docenteModelo();
 
-	echo "<br><br><br>";
+	
 
 
 	if (isset($_REQUEST['guardarPonderaciones']))
@@ -78,7 +78,7 @@
 	  $.ajax({
 	      type      : 'post',
 	      url       : 'ajax/adminGrupo',
-	      data      : {idModulo: idModulo},
+	      data      : {"idModulo": idModulo},
 	      success   : function(respuesta)
 	      {
 	        document.getElementById('verGuias').innerHTML = respuesta;

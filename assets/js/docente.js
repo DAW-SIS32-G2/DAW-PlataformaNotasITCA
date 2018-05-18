@@ -22,7 +22,7 @@ function mostrarDiv(tipoDiv,idModulo)
 					<form method="post" enctype="multipart/form-data">\
 						<input type="hidden" name="MAX_FILE_SIZE" value="62914560"> \
 						<input type="file" name="guia"><br><br>\
-						\
+						<font color="red">Puede subir archivos con espacios, tildes o lo que a usted le de la gana</font>\
 						<input type="hidden" name="idModulo" value="'+idModulo+'">\
 						<input type="submit" value="Subir guia al modulo" name="GuardarGuia">\
 					</form>\
@@ -32,7 +32,7 @@ function mostrarDiv(tipoDiv,idModulo)
 	{
 		div.innerHTML='\
 					\
-					<button onclick="mostrarDiv(\''+tipoDiv+'\',0)">X</button><br><br><h3>Ver guias</h3><br>\
+					<button onclick="mostrarDiv(\''+tipoDiv+'\','+idModulo+')">X</button><br><br><h3>Ver guias</h3><br>\
 					<div id="verGuias"></div>\
 					';
 					mostrarGuias(idModulo);

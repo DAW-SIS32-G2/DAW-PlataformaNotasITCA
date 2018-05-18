@@ -186,7 +186,6 @@ insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHor
 
 
 
-
 create table DetalleModulo(
 	id_detalle int auto_increment not null,
 	aula varchar(10) not null,
@@ -338,12 +337,12 @@ delimiter ;
 
 /****************Select's de las tablas****************/
 /* Descomentar solo cuando se usara el select*/
-/*
+
 select * from Grupo;
 select * from Horario;
 select * from Docente;
 select * from Ponderacion;
-select * from Modulo where idModulo=1;
+select * from Modulo;
 select * from Carrera;
 select * from Usuario;
 select * from Tarea;
