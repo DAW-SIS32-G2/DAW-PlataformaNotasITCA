@@ -1,5 +1,5 @@
 <?php 
-	echo "<br><br><br>";
+echo "<br><br><br>";
 	require_once('././././core/funcionesbd.php');
 
 	$objDocenteModelo=new docenteModelo();
@@ -105,7 +105,7 @@
 
 	<br><br><br>
 
-	<table border="2px">
+	<table class="table table-bordered table-light table-hover">
 
 		<tr>
 
@@ -166,10 +166,10 @@
 					</td>
 
 					<td>
-						<button onclick="mostrarDiv('SubirGuias','<?= $idModulo[$k]; ?>')">Subir guias</button>
-						<br>
+						<button class="btn btn-info" onclick="mostrarDiv('SubirGuias','<?= $idModulo[$k]; ?>')">Subir guias</button>
+						<br><br>
 
-						<button onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver guias</button><br>
+						<button class="btn btn-info" onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver guias</button><br>
 						<br>
 
 						*boton descargar todas las guias*
@@ -220,28 +220,30 @@
 										}
 										else
 										{
+											$totalPorcentajes=0;
 											for ($j=0;$j<$cantidadPonderaciones;$j++)
 											{
 												?>
-
 													<span>
+														<input type="hidden" name="idPonderaciones[]" value="<?= $idPonderaciones[$j] ?>">
 
-														<?php 
-														echo '<input type="hidden" name="idPonderaciones[]" value="'.$idPonderaciones[$j].'">';
+														<input type="text" onfocus="this.blur()" name="nombrePonderaciones[]" value="<?= $ponderacionesOrdenadas[$j] ?>" style="width: 60px;">
 
-														echo '<input type="text" name="nombrePonderaciones[]" value="'.$ponderacionesOrdenadas[$j].'" style="width: 60px;"> ';
-
-														echo '<label><input type="number" max="100" min="0" name="porcentajePonderaciones[]" value="'.$porcentajesOrdenados[$j].'" style="width: 40px;">%</label>'; ?>
-
+														<label>
+															<input type="number" step="0.1" max="100" min="0" id="<?= $idPonderaciones[$j] ?>" name="porcentajePonderaciones[]" value="<?= $porcentajesOrdenados[$j] ?>" style="width: 50px;"  onkeyup="actualizarTotal(<?= $idModulo[$k] ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)" onchange="actualizarTotal(<?= $idModulo[$k] ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)">%
+														</label>
 													</span>
-
 													<br>
 												<?php
+												$totalPorcentajes+=$porcentajesOrdenados[$j];
+												
 											}
 
 											?>
+												<font>Total:</font>
+												<input type="text" id="<?= $idModulo[$k] ?>" name="total" value="<?= $totalPorcentajes ?>" onfocus="this.blur()" style="width: 70px;">%
 
-												<button name="guardarPonderaciones" onclick="return verificarPonderaciones()">Guardar Ponderaciones</button>
+												<button class="btn btn-info" name="guardarPonderaciones" onclick="return verificarPonderaciones(<?= $idModulo[$k] ?>)">Guardar<br>Ponderaciones</button>
 
 											<?php
 										}

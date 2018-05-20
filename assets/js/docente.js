@@ -53,3 +53,45 @@ function descargar(archivo)
 	  });
 	
 }
+
+function actualizarTotal(idTotal,idAgregar,valorActual)
+{
+	var total = document.getElementById(idTotal);
+	var agregar = document.getElementById(idAgregar).value;
+
+	if(agregar==="")
+	{
+		agregar=0;
+	}
+
+	var totalCant = total.value;
+
+	
+
+	totalCant= parseFloat(totalCant-valorActual);
+
+	totalCant=Math.round(totalCant);
+
+	totalCant=parseFloat(totalCant) + parseFloat(agregar);
+
+	total.value=totalCant;
+
+	document.getElementById(idAgregar).setAttribute("onkeyup", "actualizarTotal("+idTotal+","+idAgregar+","+agregar+");");
+	document.getElementById(idAgregar).setAttribute("onchange", "actualizarTotal("+idTotal+","+idAgregar+","+agregar+");");
+	
+}
+
+function verificarPonderaciones(idTotal)
+{
+	var total=document.getElementById(idTotal);
+	
+	if(total.value != 100)
+	{
+		alert('Error. El total de las ponderaciones debe ser igual a 100%.');
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}

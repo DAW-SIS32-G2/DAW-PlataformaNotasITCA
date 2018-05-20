@@ -73,7 +73,7 @@
 
                 $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo","'$nombreTarea',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',1");
 
-                if($resultado=="Registro Insertado Correctamente")
+                if($resultado)
                 {
                     if(mkdir($directorio,0777,true))
                     {

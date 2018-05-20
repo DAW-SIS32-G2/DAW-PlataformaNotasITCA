@@ -93,11 +93,11 @@ class funcionesBD
 	public function insertar($tabla,$campos,$valores)
 	{
 		$sql = "INSERT INTO $tabla($campos) VALUES ($valores)";
-		if($this->bd->query($sql) === TRUE)
+		if($resultado=$this->bd->query($sql))
 		{
 			//Cerrando conexión
 			$this->bd->close();
-			return "Registro Insertado Correctamente";
+			return $resultado;
 		}
 		else
 		{
