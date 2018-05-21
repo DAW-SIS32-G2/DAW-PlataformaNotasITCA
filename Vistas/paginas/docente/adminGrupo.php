@@ -172,7 +172,25 @@ echo "<br><br><br>";
 						<button class="btn btn-info" onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver guias</button><br>
 						<br>
 
-						*boton descargar todas las guias*
+						<?php 
+
+
+						$resultado=$objDocenteModelo->CargarGrupoIndividual($idModulo[$k]);
+
+		                while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+		                {
+		                    $siglasModulos=$arrayGrupos['siglas'];
+		                    $anyosModulos=$arrayGrupos['anyo'];
+		                }
+
+		             
+
+		                $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/";
+		                $archivo=$siglasModulos."-".$anyosModulos."_";
+
+						 ?>
+
+						<button class="btn btn-info" onclick="comprimirGuias('<?= $rutaArchivo ?>','<?= $archivo ?>')">Descargar<br>todas las<br>guias</button>
 					</td>
 
 					<td>Grupo Activo<br>*boton ponerle clave al grupo*</td>

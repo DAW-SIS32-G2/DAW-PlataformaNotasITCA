@@ -40,6 +40,19 @@ function mostrarDiv(tipoDiv,idModulo)
 	
 }
 
+function comprimirGuias(ruta,archivo)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/zip',
+	      data      : {ruta : ruta, archivo : archivo, comprimir : true},
+	      success   : function(respuesta)
+	      {
+	        descargar(respuesta);
+	      }
+	  });
+}
+
 function descargar(archivo)
 {
 	$.ajax({
@@ -53,7 +66,21 @@ function descargar(archivo)
 	  });
 	
 }
-
+/*Fuera de uso*/
+/*
+function borrarZip(ruta)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/zip',
+	      data      : {ruta: ruta, borrar : true},
+	      success   : function(respuesta)
+	      {
+	        
+	      }
+	  });
+}
+*/
 function actualizarTotal(idTotal,idAgregar,valorActual)
 {
 	var total = document.getElementById(idTotal);

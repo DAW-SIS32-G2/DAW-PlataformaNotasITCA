@@ -79,5 +79,5 @@ function download($path, $name = '', $type = 'application/octet-stream', $force_
     }
 
     return((connection_status() == 0) && !connection_aborted());
-}  
+} 
 ?>
