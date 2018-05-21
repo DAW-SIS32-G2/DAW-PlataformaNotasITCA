@@ -146,6 +146,15 @@
 
             return $resultado;
         }
+
+        public function obtenerInfoSeguridadModulo($idModulo)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->ConsultaPersonalizada("SELECT M.protegidoPorContra, M.contraModulo from Modulo as M where idModulo=$idModulo");
+
+            return $resultado;
+        }
         
     }
 ?>

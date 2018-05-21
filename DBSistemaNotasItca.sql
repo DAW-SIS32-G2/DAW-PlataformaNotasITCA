@@ -165,6 +165,7 @@ tipoModulo varchar(10) not null comment 'Practico | teorico',
 anyo int not null,
 activo boolean not null comment '0 => el grupo esta visible unicamente para docentes | 1=> el grupo esta visible para todos los usuarios',
 estado varchar(10) null comment 'Abierto | Cerrado (sirve para permitir inscripciones o no a dicho modulo por parte de los alumnos)',
+protegidoPorContra boolean not null comment '0=> el modulo no esta protegido por clave | 1 => el modulo require de calve para inscribirse',
 contraModulo varchar(20) null comment 'Sirve para proteger las inscripciones de los alumnos al modulo',
 idHorario int not null comment 'Hace referencia al ID de cada Horario por grupo',
 carnet varchar(20) NULL,
@@ -172,17 +173,17 @@ primary key pkModulo(idModulo),
 foreign key fkModuloXHorario(idHorario) references Horario(idHorario)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32A','practico','2018',1,'activo','4','quintanilla');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','2018',1,'activo','5','magari');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32U','teorico','2018',1,'activo','6','magari');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32A','practico','2018',1,'activo','4','vladimir');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32B','practico','2018',1,'activo','5','magari');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32U','teorico','2018',1,'activo','6','magari');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32A','practico','2018',1,'activo','4','vladimir');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32B','practico','2018',1,'activo','5','vladimir');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32U','teorico','2018',1,'activo','6','vladimir');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Comunicación Oral y Escrita', 'COE-SIS32U','teorico','2018',1,'activo','6','yaqueline');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet) values('Física', 'FIS-SIS32U','teorico','2018',1,'activo','6','melbin');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32A','practico','2018',1,'activo',1,'4','quintanilla');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','2018',1,'activo',1,'5','magari');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32U','teorico','2018',1,'activo',1,'6','magari');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32A','practico','2018',1,'activo',1,'4','vladimir');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32B','practico','2018',1,'activo',1,'5','magari');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32U','teorico','2018',1,'activo',1,'6','magari');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32A','practico','2018',1,'activo',1,'4','vladimir');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32B','practico','2018',1,'activo',1,'5','vladimir');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32U','teorico','2018',1,'activo',1,'6','vladimir');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Comunicación Oral y Escrita', 'COE-SIS32U','teorico','2018',1,'activo',1,'6','yaqueline');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Física', 'FIS-SIS32U','teorico','2018',1,'activo',1,'6','melbin');
 
 
 
@@ -349,7 +350,6 @@ select * from Tarea;
 select * from ArchivoSubido;
 select * from GuiaModulo;
 
-delete from Tarea;
 
 select *
 from Modulo as M
@@ -373,6 +373,8 @@ where P.idModulo=1;
 
 SELECT M.siglas,M.anyo FROM Modulo AS M WHERE M.idModulo= 100;
 
+select M.protegidoPorContra, M.contraModulo from Modulo as M where idModulo=100;
+
 ---- Select por docente -----
 
 Select Modulo.nombreModulo, CONCAT(Grupo.nombreGrupo,' ',Grupo.seccion) AS 'clase', DetalleModulo.horaInicio, DetalleModulo.horaFin, DetalleModulo.aula, CONCAT(Docente.nombres,' ',Docente.apellidos) as 'docente', DetalleModulo.horas, DetalleModulo.dia from modulo inner join DetalleModulo on Modulo.idModulo = DetalleModulo.idModulo INNER JOIN Grupo on Grupo.idGrupo = Modulo.idGrupo inner join Docente on Docente.carnet = Modulo.carnet WHERE Docente.carnet = '$carnet' order by DetalleModulo.horaInicio
@@ -393,16 +395,16 @@ insert into Horario(idHorario,anyo, periodo, idGrupo) values(100,'2018','1','102
 insert into Horario(idHorario,anyo, periodo, idGrupo) values(101,'2018','1','101');
 
 insert into
-Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet)
-values(100,'Desarrollo de Aplicaciones para la Web','DAW-Prueba31B','practico','2018','1','abierto','100','funes');
+Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet)
+values(100,'Desarrollo de Aplicaciones para la Web','DAW-Prueba31B','practico','2018','1','abierto',0,'100','funes');
 
 insert into
-Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet)
-values(101,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31B','practico','2018','1','abierto','100','funes');
+Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet)
+values(101,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31B','practico','2018','1','abierto',0,'100','funes');
 
 insert into
-Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, idHorario, carnet)
-values(103,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31A','practico','2018','1','abierto','101','funes');
+Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, contraModulo, idHorario, carnet)
+values(103,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31A','practico','2018','1','abierto',1,'AMATS-Prueba31A','101','funes');
 
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','15','100');
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','15','100');

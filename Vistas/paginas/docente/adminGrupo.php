@@ -1,105 +1,85 @@
 <?php 
 echo "<br><br><br>";
-	require_once('././././core/funcionesbd.php');
+define("__ROOT__", dirname(__FILE__,4));
+require_once(__ROOT__.'/core/funcionesbd.php');
 
-	$objDocenteModelo=new docenteModelo();
+$objDocenteModelo=new docenteModelo();
+
+if (isset($_REQUEST['guardarPonderaciones']))
+{
+	$idPonderacionesG=$_REQUEST['idPonderaciones'];
+	$nombrePonderacionesG=$_REQUEST['nombrePonderaciones'];
+	$porcentajePonderacionesG=$_REQUEST['porcentajePonderaciones'];
+
+	$porcentajeTotal=0;
+	foreach ($porcentajePonderacionesG as $porcentaje)
+	{
+		$porcentajeTotal+=$porcentaje;
+	}
+
+	if ($porcentajeTotal>100)
+	{
+		echo "Error. La suma de los porcentajes de las ponderaciones debe ser menor o igual que 100%";
+	}
+	else
+	{
+		$cantidadG=count($idPonderacionesG);
+
+		$cantidadG2=count($nombrePonderacionesG);
+
+		$cantidadG3=count($porcentajePonderacionesG);
+
+		$funcionoActualizacion=False;
+
+		for ($i=0;$i<$cantidadG;$i++)
+		{ 
+
+			$resultado=$objDocenteModelo->actualizarPonderaciones($porcentajePonderacionesG[$i],$idPonderacionesG[$i]);
+
+			if (gettype($resultado)=="string")
+			{
+				echo "<br>".$resultado;
+			}
+			else
+			{
+				$funcionoActualizacion=true;
+			}
+
+		}
+
+		if ($funcionoActualizacion)
+		{
+			echo "Ponderaciones actualizadas.";
+		}
+	}
 
 	
+}
 
+if(isset($_REQUEST['GuardarGuia']))
+{
+	$guia=$_FILES['guia'];
 
-	if (isset($_REQUEST['guardarPonderaciones']))
-	{
-		$idPonderacionesG=$_REQUEST['idPonderaciones'];
-		$nombrePonderacionesG=$_REQUEST['nombrePonderaciones'];
-		$porcentajePonderacionesG=$_REQUEST['porcentajePonderaciones'];
+	$idModulo=$_REQUEST['idModulo'];
 
-		$porcentajeTotal=0;
-		foreach ($porcentajePonderacionesG as $porcentaje)
-		{
-			$porcentajeTotal+=$porcentaje;
-		}
+	$objDocenteControlador=new docenteControlador('docenteModelo');
 
-		if ($porcentajeTotal>100)
-		{
-			echo "Error. La suma de los porcentajes de las ponderaciones debe ser menor o igual que 100%";
-		}
-		else
-		{
-			$cantidadG=count($idPonderacionesG);
-
-			$cantidadG2=count($nombrePonderacionesG);
-
-			$cantidadG3=count($porcentajePonderacionesG);
-
-			$funcionoActualizacion=False;
-
-			for ($i=0;$i<$cantidadG;$i++)
-			{ 
-
-				$resultado=$objDocenteModelo->actualizarPonderaciones($porcentajePonderacionesG[$i],$idPonderacionesG[$i]);
-
-				if (gettype($resultado)=="string")
-				{
-					echo "<br>".$resultado;
-				}
-				else
-				{
-					$funcionoActualizacion=true;
-				}
-
-			}
-
-			if ($funcionoActualizacion)
-			{
-				echo "Ponderaciones actualizadas.";
-			}
-		}
-
-		
-	}
-
-	if(isset($_REQUEST['GuardarGuia']))
-	{
-		$guia=$_FILES['guia'];
-
-		$idModulo=$_REQUEST['idModulo'];
-
-		$objDocenteControlador=new docenteControlador('docenteModelo');
-
-		$objDocenteControlador->GuardarGuia($guia,$idModulo);
-	}
- ?>
+	$objDocenteControlador->GuardarGuia($guia,$idModulo);
+}
+?>
  <div class="container" style="padding-top: 65px">
-
-<script type="text/javascript">
-	function mostrarGuias(idModulo)
-	{
-	  //Procesar
-	  $.ajax({
-	      type      : 'post',
-	      url       : 'ajax/adminGrupo',
-	      data      : {"idModulo": idModulo},
-	      success   : function(respuesta)
-	      {
-	        document.getElementById('verGuias').innerHTML = respuesta;
-	      }
-	  })
-
-	}
-</script>
 
 <div class="container">
 	
-
 	<div id="divPracticas" class="oculto">
-
-		
 
 	</div>
 
 	<div id="divSubirGuias" class="oculto">
 
-		
+	</div>
+
+	<div id="divContra" class="oculto">
 
 	</div>
 
@@ -127,14 +107,12 @@ echo "<br><br><br>";
 			if (gettype($resultado)=="string")
 			{
 				echo $resultado;
-
 			}
 			else
 			{
 				$res=$resultado;
 
 				$cantidad=$res->num_rows;
-
 
 				/*Guardando los grupos en un array*/
 				unset($idModulo);
@@ -193,7 +171,10 @@ echo "<br><br><br>";
 						<button class="btn btn-info" onclick="comprimirGuias('<?= $rutaArchivo ?>','<?= $archivo ?>')">Descargar<br>todas las<br>guias</button>
 					</td>
 
-					<td>Grupo Activo<br>*boton ponerle clave al grupo*</td>
+					<td>
+						Grupo Activo<br>
+						<button class="btn btn-info" onclick="mostrarDiv('Contra','<?= $idModulo[$k] ?>')">Administrar<br>seguridad</button>
+					</td>
 
 					<td>*boton Cerrar inscripciones en el grupo*</td>
 

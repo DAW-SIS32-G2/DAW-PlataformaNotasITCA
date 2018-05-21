@@ -1,3 +1,16 @@
+function mostrarGuias(idModulo)
+{
+  $.ajax({
+      type      : 'post',
+      url       : 'ajax/adminGrupo',
+      data      : {"idModulo": idModulo, mostrarGuias : true},
+      success   : function(respuesta)
+      {
+        document.getElementById('verGuias').innerHTML = respuesta;
+      }
+  })
+
+}
 
 function mostrarDiv(tipoDiv,idModulo)
 {
@@ -35,6 +48,15 @@ function mostrarDiv(tipoDiv,idModulo)
 					<div id="verGuias"></div>\
 					';
 					mostrarGuias(idModulo);
+	}
+	else if(tipoDiv == 'Contra' && div.classList.contains('visible'))
+	{
+		div.innerHTML='\
+					\
+					<button onclick="mostrarDiv(\''+tipoDiv+'\','+idModulo+')">X</button><br><br><h3>Administrar seguridad</h3><br>\
+					<div id="adminSeguridad"></div>\
+					';
+					mostrarAdminSeguridad(idModulo);
 	}
 
 	
@@ -121,4 +143,17 @@ function verificarPonderaciones(idTotal)
 	{
 		return true;
 	}
+}
+
+function mostrarAdminSeguridad(idModulo)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/adminGrupo',
+	      data      : {idModulo: idModulo, adminSeguridad : true},
+	      success   : function(respuesta)
+	      {
+	        document.getElementById('adminSeguridad').innerHTML = respuesta;
+	      }
+	  });
 }

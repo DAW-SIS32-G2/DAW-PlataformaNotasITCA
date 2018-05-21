@@ -65,6 +65,12 @@
             $resultado = $this->model->ObtenerSiglas($idModulo);
             return $resultado;
         }
+
+        public function obtenerInfoSeguridadModulo($idModulo)
+        {
+            $resultado = $this->model->obtenerInfoSeguridadModulo($idModulo);
+            return $resultado;
+        }
         
     }
   ?>
