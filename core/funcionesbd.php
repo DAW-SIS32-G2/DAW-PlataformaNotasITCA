@@ -165,10 +165,8 @@ class funcionesBD
 	//Funcion para actualizar registros
 	public function ActualizarRegistro($tabla,$campo,$valor,$condicion)
 	{
-		$resultado=$this->bd->query("UPDATE $tabla set $campo=$valor where $condicion");
-
-
-		if ($resultado)
+		$resultado=$this->bd->query("UPDATE $tabla set $campo='$valor' where $condicion");
+		if($resultado)
 		{
 			//Cerrando conexión
 			$this->bd->close();

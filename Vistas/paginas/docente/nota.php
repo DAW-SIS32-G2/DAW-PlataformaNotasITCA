@@ -4,35 +4,6 @@ require_once(__ROOT__."/core/funcionesbd.php");
 $carnet = $_SESSION['usuario'];
 $objDocenteModelo = new DocenteModelo();
 ?>
-<script type="text/javascript">
-  function cargarPracticas(val)
-  {
-    $.ajax({
-
-      type      : 'post',
-      url       : 'ajax/nota',
-      data      : {grupo : val},
-      success   : function(select)
-      {
-        $('#practicas').html(select)
-      }
-    })
-  }
-
-  function cargarAlumnos(grupo)
-  {
-    $.ajax({
-
-      type      : 'post',
-      url       : 'ajax/nota',
-      data      : {practica : grupo},
-      success   : function(select)
-      {
-        $('#tablaRes').html(select)
-      }
-    })
-  }
-</script>
 <body style="padding-top:65px;">
   <div class="container">
     <div class="text-center">
@@ -63,7 +34,7 @@ $objDocenteModelo = new DocenteModelo();
                         $i++;
                       }
                       $conteo=count($nombreModulos);
-                      echo "<option>--Seleccione una opcion--</option>";
+                      echo "<option value=''>--Seleccione una opcion--</option>";
                       for($j=0;$j<$conteo;$j++)
                       { 
                         ?>

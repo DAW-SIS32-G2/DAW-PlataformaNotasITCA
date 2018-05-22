@@ -34,7 +34,7 @@
                   $i++;
                 }
                 $conteo=count($nombreModulos);
-                echo "<option>--Seleccione una opcion--</option>";
+                echo "<option value=''>--Seleccione una opcion--</option>";
                 for($j=0;$j<$conteo;$j++)
                 { 
                   ?>

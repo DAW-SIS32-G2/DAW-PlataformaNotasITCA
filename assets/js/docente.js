@@ -157,3 +157,156 @@ function mostrarAdminSeguridad(idModulo)
 	      }
 	  });
 }
+
+//Funciones para notas
+function cargarPracticas(val)
+{
+$.ajax({
+
+  type      : 'post',
+  url       : 'ajax/nota',
+  data      : {grupo : val},
+  success   : function(select)
+  {
+    $('#practicas').html(select)
+  }
+})
+}
+
+function cargarAlumnos(tarea)
+{
+$.ajax({
+
+  type      : 'post',
+  url       : 'ajax/nota',
+  data      : {idTarea : tarea,
+               idModulo  : $("input[name=idModulo]").val()
+              },
+  success   : function(select)
+  {
+    $('#tablaRes').html(select)
+  }
+})
+}
+
+function updNota(identificador)
+{
+var valores = "#valores"+identificador;
+var ejercicios = "#ejercicios"+identificador;
+var not = "#nota"+identificador;
+var val = $(valores).val();
+var eje = $(ejercicios).val();
+var nota = ((val/eje)*10).toFixed(2);
+$(not).html(nota);
+}       
+
+function validarNotas(total)
+{
+	var valores = [];
+	$("input[name='valor']").each(function() {
+	    valores.push($(this).val());
+	});
+
+	var maximo = []
+	$("input[name='valor']").each(function() {
+	    maximo.push($(this).attr("max"));
+	});
+	var correctos = 0;
+
+	for(var i=0;i<total;i++)
+	{
+		var campo = "#valid" + parseInt(i+1);
+		if(parseInt(valores[i]) > parseInt(maximo[i]))
+		{
+			$(campo).html("<small style='color:red'>El valor excede el máximo permitido</small>");
+		}
+		else
+		{
+			correctos++;
+			$(campo).html("");
+		}
+	}
+
+	if(correctos == total)
+	{
+		serializar();
+	}
+}
+
+function serializar()
+{
+var valores = [];
+$("input[name='valor']").each(function() {
+    valores.push($(this).val());
+});
+
+var carnets = [];
+$("input[name='carnet']").each(function() {
+    carnets.push($(this).val());
+});
+
+$.ajax({
+  type    : 'post',
+  url     : 'ajax/nota',
+  data    : {
+              'actualizar' : 1,
+              'valores'    : valores,
+              'carnets'    : carnets,
+              'tarea'	   : $("#grupo").val(),
+            },
+  success : function(mensaje) {
+              $("#mensajenotas").html(mensaje);
+            }
+});
+}    
+
+//Funcion para modificar datos del estudiante
+function modificarAlumno()
+{
+	var nombres = $("#nombres").val();
+	var apellidos = $("#apellidos").val();
+	var cont = 0;
+
+	if(nombres == "")
+	{
+		$("#respuestaNom").html("<small style='color: red'>Este campo no puede estar vacío</small>");
+		cont++;
+	}
+	else
+	{
+		$("#respuestaNom").html("");
+	}
+
+	if(apellidos == "")
+	{
+		$("#respuestaApe").html("<small style='color: red'>Este campo no puede estar vacío</small>");
+		cont++;
+	}
+	else
+	{
+		$("#respuestaApe").html("");
+	}
+
+	if(cont == 0)
+	{
+		$.ajax({
+			type	: 'post',
+			url		: 'ajax/progrupo',
+			data    : {
+						'modificar' : 1,
+						'nombres' 	: nombres,
+						'apellidos' : apellidos,
+						'carnet'	: $("#carnet2").val()
+					  },
+			success : function(mensaje)
+					  {
+					  		if(mensaje == '1')
+					  		{
+					  			$("#modificarModal").modal('hide');
+					  			$("#respuestaForm").modal('show');
+					  		}
+					  }
+		});
+		
+	}
+}
