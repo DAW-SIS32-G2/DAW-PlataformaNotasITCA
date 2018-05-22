@@ -27,7 +27,7 @@ while($fila = $res->fetch_assoc())
   //Creamos un array para cada día
   $horario = array();
 
-  //Creamos un array con las posiciones del horario 
+  //Creamos un array con las posiciones del horario
   $pos = array(array(1,1,1,1,1),array(2,2,2,2,2),array(3,3,3,3,3),array(4,4,4,4,4),array(5,5,5,5,5),array(6,6,6,6,6),array(7,7,7,7,7),array(8,8,8,8,8),array(9,9,9,9,9),array(10,10,10,10,10),array(11,11,11,11,11),array(12,12,12,12,12));
 
   for($i=0;$i<count($pos);$i++)
@@ -69,7 +69,7 @@ while($fila = $res->fetch_assoc())
             //Si no, dejamos todo como está
             $rowspan = 1;
           }
-          //Si nos devuelve un resultado, existen tres posibilidades, que se trate de una práctica para el grupo A, que se trate de una práctica para el grupo B o de una teórica, por tanto debemos evaluar eso 
+          //Si nos devuelve un resultado, existen tres posibilidades, que se trate de una práctica para el grupo A, que se trate de una práctica para el grupo B o de una teórica, por tanto debemos evaluar eso
           switch($arrayDatos['seccion'])
           {
             case "A":
@@ -78,7 +78,7 @@ while($fila = $res->fetch_assoc())
             break;
             case "B":
               //Si se trata del B, primero la celda vacía y luego la clase
-              $horario[$i][$j] = "<td rowspan='$rowspan'>$nbsp</td><td rowspan='$rowspan'><small>".$arrayDatos['nombreModulo']."<br>".$arrayDatos['encargado']."<br>".$arrayDatos['clase']."<br>".$arrayDatos['aula']."</small></td>";
+              $horario[$i][$j] = "<td rowspan='$rowspan'>&nbsp;</td><td rowspan='$rowspan'><small>".$arrayDatos['nombreModulo']."<br>".$arrayDatos['encargado']."<br>".$arrayDatos['clase']."<br>".$arrayDatos['aula']."</small></td>";
             break;
             case "U":
               //Si se trata de una sesión teórica, entonces debe ser una sola celda
@@ -111,7 +111,7 @@ while($fila = $res->fetch_assoc())
           //Ahora procedemos a guardar las filas en nuestra tabla
           $horario[$i][$j] = "<td rowspan='$rowspan'><small>".$datos[0]['nombreModulo']."<br>".$datos[0]['encargado']."<br>".$datos[0]['clase']."<br>".$datos[0]['aula']."</small></td>"."<td rowspan='$rowspan'><small>".$datos[1]['nombreModulo']."<br>".$datos[1]['encargado']."<br>".$datos[1]['clase']."<br>".$datos[1]['aula']."</small></td>";
         }
-        
+
       }
     }
     else
@@ -151,7 +151,7 @@ while($fila = $res->fetch_assoc())
             //Si no, dejamos todo como está
             $rowspan = 1;
           }
-          //Si nos devuelve un resultado, existen tres posibilidades, que se trate de una práctica para el grupo A, que se trate de una práctica para el grupo B o de una teórica, por tanto debemos evaluar eso 
+          //Si nos devuelve un resultado, existen tres posibilidades, que se trate de una práctica para el grupo A, que se trate de una práctica para el grupo B o de una teórica, por tanto debemos evaluar eso
           switch($arrayDatos['seccion'])
           {
             case "A":
@@ -160,7 +160,7 @@ while($fila = $res->fetch_assoc())
             break;
             case "B":
               //Si se trata del B, primero la celda vacía y luego la clase
-              $horario[$i][$j] = "<td rowspan='$rowspan'>$nbsp</td><td rowspan='$rowspan'><small>".$arrayDatos['nombreModulo']."<br>".$arrayDatos['encargado']."<br>".$arrayDatos['clase']."<br>".$arrayDatos['aula']."</small></td>";
+              $horario[$i][$j] = "<td rowspan='$rowspan'>&nbsp;</td><td rowspan='$rowspan'><small>".$arrayDatos['nombreModulo']."<br>".$arrayDatos['encargado']."<br>".$arrayDatos['clase']."<br>".$arrayDatos['aula']."</small></td>";
             break;
             case "U":
               //Si se trata de una sesión teórica, entonces debe ser una sola celda
@@ -193,7 +193,7 @@ while($fila = $res->fetch_assoc())
           //Ahora procedemos a guardar las filas en nuestra tabla
           $horario[$i][$j] = "<td rowspan='$rowspan'><small>".$datos[0]['nombreModulo']."<br>".$datos[0]['encargado']."<br>".$datos[0]['clase']."<br>".$datos[0]['aula']."</small></td>"."<td rowspan='$rowspan'><small>".$datos[1]['nombreModulo']."<br>".$datos[1]['encargado']."<br>".$datos[1]['clase']."<br>".$datos[1]['aula']."</small></td>";
         }
-        
+
       }
     }
   }
@@ -218,7 +218,7 @@ while($fila = $res->fetch_assoc())
     {
       if($i==2)
       {
-        echo 
+        echo
         "
           <tr>
             <td colspan='11' class='table-secondary text-center'><h3>Receso</h3></td>
@@ -229,7 +229,7 @@ while($fila = $res->fetch_assoc())
         }
       if($i==4)
       {
-        echo 
+        echo
         "
           <tr>
             <td colspan='11' class='table-secondary text-center'><h3>Cambio de Clase</h3></td>
@@ -240,7 +240,7 @@ while($fila = $res->fetch_assoc())
       }
       if($i==6)
       {
-        echo 
+        echo
         "
           <tr>
             <td colspan='11' class='table-secondary text-center'><h2>Medio Día</h2></td>
@@ -251,7 +251,7 @@ while($fila = $res->fetch_assoc())
       }
       if($i==8)
       {
-        echo 
+        echo
         "
           <tr>
             <td colspan='11' class='table-secondary text-center'><h3>Cambio de Clase</h3></td>
@@ -262,7 +262,7 @@ while($fila = $res->fetch_assoc())
       }
       if($i==10)
       {
-        echo 
+        echo
         "
           <tr>
             <td colspan='11' class='table-secondary text-center'><h3>Cambio de Clase</h3></td>

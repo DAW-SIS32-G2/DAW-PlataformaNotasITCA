@@ -1,4 +1,4 @@
-<?php 
+<?php
 echo "<br><br><br>";
 define("__ROOT__", dirname(__FILE__,4));
 require_once(__ROOT__.'/core/funcionesbd.php');
@@ -32,7 +32,7 @@ if (isset($_REQUEST['guardarPonderaciones']))
 		$funcionoActualizacion=False;
 
 		for ($i=0;$i<$cantidadG;$i++)
-		{ 
+		{
 
 			$resultado=$objDocenteModelo->actualizarPonderaciones($porcentajePonderacionesG[$i],$idPonderacionesG[$i]);
 
@@ -53,7 +53,7 @@ if (isset($_REQUEST['guardarPonderaciones']))
 		}
 	}
 
-	
+
 }
 
 if(isset($_REQUEST['GuardarGuia']))
@@ -70,7 +70,7 @@ if(isset($_REQUEST['GuardarGuia']))
  <div class="container" style="padding-top: 65px">
 
 <div class="container">
-	
+
 	<div id="divPracticas" class="oculto">
 
 	</div>
@@ -100,7 +100,7 @@ if(isset($_REQUEST['GuardarGuia']))
 
 		</tr>
 
-		<?php 
+		<?php
 
 			$resultado=$objDocenteModelo->CargarGrupos();
 
@@ -130,7 +130,7 @@ if(isset($_REQUEST['GuardarGuia']))
 
 				for ($k=0;$k<$cantidad;$k++)
 				{
-				
+
 			 	?>
 
 				<tr>
@@ -150,7 +150,7 @@ if(isset($_REQUEST['GuardarGuia']))
 						<button class="btn btn-info" onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver guias</button><br>
 						<br>
 
-						<?php 
+						<?php
 
 
 						$resultado=$objDocenteModelo->CargarGrupoIndividual($idModulo[$k]);
@@ -161,7 +161,7 @@ if(isset($_REQUEST['GuardarGuia']))
 		                    $anyosModulos=$arrayGrupos['anyo'];
 		                }
 
-		             
+
 
 		                $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/";
 		                $archivo=$siglasModulos."-".$anyosModulos."_";
@@ -202,7 +202,7 @@ if(isset($_REQUEST['GuardarGuia']))
 
 
 										$i=0;
-										
+
 										while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
 										{
 											$ponderacionesOrdenadas[$i]=$arrayPonderaciones['nombrePonderacion'];
@@ -235,7 +235,7 @@ if(isset($_REQUEST['GuardarGuia']))
 													<br>
 												<?php
 												$totalPorcentajes+=$porcentajesOrdenados[$j];
-												
+
 											}
 
 											?>
@@ -248,7 +248,7 @@ if(isset($_REQUEST['GuardarGuia']))
 										}
 
 
-										
+
 
 									}
 
@@ -264,7 +264,7 @@ if(isset($_REQUEST['GuardarGuia']))
 			</tr>
 
 			<?php }
-		
+
 			}
 
 			 ?>
@@ -272,5 +272,3 @@ if(isset($_REQUEST['GuardarGuia']))
 	</table>
 <br><br>
 </div>
-
-
