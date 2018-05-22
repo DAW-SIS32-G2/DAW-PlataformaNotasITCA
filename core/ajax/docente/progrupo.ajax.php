@@ -51,6 +51,10 @@ else
       modal.find('#nombres').val(nombre)
       modal.find('#apellidos').val(apellido)
       })
+
+      $("#respuestaForm").on('hidden.bs.modal', function (event) {
+        consultarNotas(<?= $idModulo ?>)
+      })
     </script>
     <?php
     $objeto = new funcionesBD();
@@ -264,7 +268,7 @@ else
                     <p>Acción Realizada correctamente</p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-success" data-dismiss="modal" onclick="consultarNotas(<?= $idModulo ?>)">Cerrar</button>
+                  <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
                 </div>
               </div>
             </div>
