@@ -189,18 +189,29 @@
         {
             $conex=new funcionesBD();
 
-            $resultado=ConsultaGeneral('Docente','carnet=$carnetDocente');
+            $resultado=$conex->ConsultaGeneral('Docente',"carnet='$carnetDocente'");
 
             return $resultado;
         }
 
-        public function modificarContra($idModulo,$contra,$carnetDocente,$contraDocente)
+        public function modificarContra($idModulo,$contra)
         {
             $conex=new funcionesBD();
 
             $contraCifrada=cifrar($contra);
 
-            $resultado=$conex->ActualizarRegistro('Modulo','contraModulo',"","idModulo=$idModulo");
+            $resultado=$conex->ActualizarRegistro('Modulo','contraModulo',"$contraCifrada","idModulo=$idModulo");
+        }
+
+        public function eliminarContra($idModulo)
+        {
+            $conex=new funcionesBD();
+
+            $conex->ActualizarRegistro('Modulo','protegidoPorContra','0',"idModulo=$idModulo");
+
+            $conex=new funcionesBD();
+
+            $resultado2=$conex->ActualizarRegistro('Modulo','contraModulo',"","idModulo=$idModulo");
         }
     }
 ?>

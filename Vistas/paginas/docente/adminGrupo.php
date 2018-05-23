@@ -89,14 +89,11 @@ if(isset($_REQUEST['asignarContra']))
 if(isset($_REQUEST['modificarContra']))
 {
 	$contra=$_REQUEST['contra'];
-	$contraDocente=$_REQUEST['contraDocente'];
 	$idModulo=$_REQUEST['idModulo'];
 
 	$objDocenteControlador=new docenteControlador('docenteModelo');
 
-	$carnetDocente=$_SESSION['usuario'];
-
-	$resultado=$objDocenteControlador->modificarContra($idModulo,$contra,$carnetDocente,$contraDocente);
+	$resultado=$objDocenteControlador->modificarContra($idModulo,$contra);
 
 	if (gettype($resultado)=="string")
 	{
@@ -104,7 +101,25 @@ if(isset($_REQUEST['modificarContra']))
 	}
 	else
 	{
-		echo '<div class="alert alert-success"> Contraseña asignada.</div>';
+		echo '<div class="alert alert-success"> Contraseña modificada.</div>';
+	}
+}
+
+if(isset($_REQUEST['eliminarContra']))
+{
+	$idModulo=$_REQUEST['idModulo'];
+
+	$objDocenteControlador=new docenteControlador('docenteModelo');
+
+	$resultado=$objDocenteControlador->eliminarContra($idModulo);
+
+	if (gettype($resultado)=="string")
+	{
+		echo '<div class="alert alert-danger">'.$resultado.'</div>';
+	}
+	else
+	{
+		echo '<div class="alert alert-success"> Contraseña eliminada.</div>';
 	}
 }
 ?>

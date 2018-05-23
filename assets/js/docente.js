@@ -144,6 +144,46 @@ function verificarPonderaciones(idTotal)
 		return true;
 	}
 }
+	
+var resultadoVerificarDocente="";
+function verificarDocente()
+{
+	var carnet=document.getElementById('carnetDocente');
+	var contra=document.getElementById('contraDocente');
+
+	verificarEnvioFormulario(contra.value,carnet.value);
+
+	var resultado=resultadoVerificarDocente;
+	
+	if(resultado==1)
+	{
+		return true;
+	}
+	else if(resultado==0)
+	{
+		alert("Las contraseñas no coinciden. Intentelo de nuevo");
+		document.getElementById('contraDocente').value="";
+		document.getElementById('contraDocente').focus();
+		return false;
+	}
+	
+}
+
+function verificarEnvioFormulario(contra,carnet)
+{
+	$.ajax({
+	      type      : 'post',
+	      async		:  false,
+	      url       : 'ajax/adminGrupo',
+	      data      : {contraDocente: contra, carnetDocente : carnet, validarContraDocente : true},
+	      success   : function(respuesta)
+	      {
+	      	resultadoVerificarDocente= respuesta;
+	      }
+	  });
+}
+
+
 
 function mostrarAdminSeguridad(idModulo)
 {
@@ -157,6 +197,33 @@ function mostrarAdminSeguridad(idModulo)
 	      }
 	  });
 }
+
+function mostrarModificarContra(idModulo)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/adminGrupo',
+	      data      : {idModulo: idModulo, mostrarModificarContra : true},
+	      success   : function(respuesta)
+	      {
+	        document.getElementById('adminSeguridad').innerHTML = respuesta;
+	      }
+	  });
+}
+
+function mostrarEliminarContra(idModulo)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/adminGrupo',
+	      data      : {idModulo: idModulo, mostrarEliminarContra : true},
+	      success   : function(respuesta)
+	      {
+	        document.getElementById('adminSeguridad').innerHTML = respuesta;
+	      }
+	  });
+}
+
 
 //Funciones para notas
 function cargarPracticas(val)

@@ -99,13 +99,38 @@
             }
         }
         
-        public function modificarContra($idModulo,$contra,$carnetDocente,$contraDocente)
+        public function modificarContra($idModulo,$contra)
+        {
+        
+            $resultado = $this->model->modificarContra($idModulo,$contra);
+        }
+
+        public function eliminarContra($idModulo)
+        {
+        
+            $resultado = $this->model->eliminarContra($idModulo);
+        }
+
+        public function validarContraDocente($carnetDocente,$contraDocente)
         {
             $resultado=$this->model->obtenerClaveDocente($carnetDocente);
 
-            
+            if(gettype($resultado)=="string")
+            {
+                return $resultado;
+            }
 
-            $resultado = $this->model->modificarContra($idModulo,$contra,$carnetDocente,$contraDocente);
+            $arrayContra=$resultado->fetch_assoc();
+            $contraDocenteCifrada=$arrayContra['contra'];
+
+            if($contraDocente == descifrar($contraDocenteCifrada))
+            {
+                return true;
+            }
+            else
+            {
+                return "Las claves no coinciden";
+            }
         }
     }
   ?>

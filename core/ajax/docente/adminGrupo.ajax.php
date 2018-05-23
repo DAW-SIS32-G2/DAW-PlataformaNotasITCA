@@ -84,21 +84,12 @@ if(isset($_REQUEST['adminSeguridad']))
             elseif($tieneContra==1)
             {
                 ?>
+                
                     <div class="alert alert-info">El modulo esta protegido por contraseña</div>
-                    <h5>Modificar contraseña actual</h5>
-                    <form action="" method="post">
-                        <label for="contra">Nueva contraseña:
-                            <input type="password" name="contra" class="form-control" required>
-                        </label><br>
 
-                        <label for="contra">Contraseña actual de docente:
-                            <input type="password" name="contraDocente" class="form-control" required>
-                        </label><br>
+                    <button class="btn btn-info" onclick="mostrarModificarContra('<?= $idModulo ?>')">Modificar<br>contraseña</button>
 
-                        <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
-                        <input type="submit" name="modificarContra" value="Modificar contraseña" class="btn btn-info">
-                    </form>
-                    <br>
+                    <button class="btn btn-info" onclick="mostrarEliminarContra('<?= $idModulo ?>')">Eliminar<br>contraseña</button>
                 <?php
             }
         }
@@ -106,4 +97,72 @@ if(isset($_REQUEST['adminSeguridad']))
     
             
 }
+
+if(isset($_REQUEST['mostrarModificarContra']))
+{
+    session_start();
+    $idModulo=$_REQUEST['idModulo'];
+    $carnetDocente=$_SESSION['usuario'];
+
+    ?>
+        <h5>Modificar contraseña actual</h5>
+        <form action="" method="post">
+            <label for="contra">Nueva contraseña:
+                <input type="password" name="contra" id="contra" class="form-control" required>
+            </label><br>
+
+            <label for="contra">Contraseña actual de docente:
+                <input type="password" name="contraDocente" id="contraDocente" class="form-control" required>
+            </label><br>
+
+            <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+            <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
+            <input type="submit" name="modificarContra" value="Modificar contraseña" onclick="return verificarDocente()" class="btn btn-info">
+        </form>
+        <br>
+    <?php
+}
+
+if(isset($_REQUEST['mostrarEliminarContra']))
+{
+    session_start();
+    $idModulo=$_REQUEST['idModulo'];
+    $carnetDocente=$_SESSION['usuario'];
+
+    ?>
+        <h5>Eliminar contraseña actual</h5>
+        <form action="" method="post">
+
+            <label for="contra">Contraseña actual de docente:
+                <input type="password" name="contraDocente" id="contraDocente" class="form-control" required>
+            </label><br>
+
+            <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+            <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
+            <input type="submit" name="eliminarContra" value="Elimar contraseña" onclick="return verificarDocente()" class="btn btn-info">
+        </form>
+        <br>
+    <?php
+}
+
+
+if(isset($_REQUEST['validarContraDocente']))
+{
+    $carnetDocente=$_REQUEST['carnetDocente'];
+    $contraDocente=$_REQUEST['contraDocente'];
+
+    $objDocenteControlador=new DocenteControlador('DocenteModelo');
+
+    $resultado=$objDocenteControlador->validarContraDocente(trim($carnetDocente),trim($contraDocente));
+
+    if(gettype($resultado)=="string")
+    {
+        echo 0;
+    }
+    elseif($resultado)
+    {
+        echo 1;
+    }
+}
+
 ?>
