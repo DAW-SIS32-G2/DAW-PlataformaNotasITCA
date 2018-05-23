@@ -39,8 +39,8 @@
                 while(file_exists($rutaArchivo))
                 {
                         $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/($contador)".$nombre;
-                        $contador++;
                         $yaExiste="Ya existe un archivo con ese nombre. El archivo fue guardado como: ($contador)".$nombre."<br>";
+                        $contador++;
                 }
 
                 if(!file_exists("Archivos/Guias/".$siglasModulos."-".$anyosModulos))
@@ -71,6 +71,41 @@
             $resultado = $this->model->obtenerInfoSeguridadModulo($idModulo);
             return $resultado;
         }
+
+        public function asignarContra($idModulo,$contra)
+        {
+            $resultado = $this->model->asignarContra($idModulo,$contra);
+
+            $conteo=count($resultado);
+
+            if($conteo==1)
+            {
+                return $resultado;
+            }
+            else
+            {
+                if(gettype($resultado[0])=="string")
+                {
+                    return $resultado[0];
+                }
+                elseif(gettype($resultado[1])=="string")
+                {
+                    return $resultado[1];
+                }
+                else
+                {
+                    return $resultado[1];
+                }
+            }
+        }
         
+        public function modificarContra($idModulo,$contra,$carnetDocente,$contraDocente)
+        {
+            $resultado=$this->model->obtenerClaveDocente($carnetDocente);
+
+            
+
+            $resultado = $this->model->modificarContra($idModulo,$contra,$carnetDocente,$contraDocente);
+        }
     }
   ?>

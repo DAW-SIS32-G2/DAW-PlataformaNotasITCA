@@ -5,7 +5,7 @@ require_once(__ROOT__.'/core/funcionesbd.php');
 
 $objDocenteModelo=new docenteModelo();
 
-if (isset($_REQUEST['guardarPonderaciones']))
+if(isset($_REQUEST['guardarPonderaciones']))
 {
 	$idPonderacionesG=$_REQUEST['idPonderaciones'];
 	$nombrePonderacionesG=$_REQUEST['nombrePonderaciones'];
@@ -65,6 +65,47 @@ if(isset($_REQUEST['GuardarGuia']))
 	$objDocenteControlador=new docenteControlador('docenteModelo');
 
 	$objDocenteControlador->GuardarGuia($guia,$idModulo);
+}
+
+if(isset($_REQUEST['asignarContra']))
+{
+	$contra=$_REQUEST['contra'];
+	$idModulo=$_REQUEST['idModulo'];
+
+	$objDocenteControlador=new docenteControlador('docenteModelo');
+
+	$resultado=$objDocenteControlador->asignarContra($idModulo,$contra);
+
+	if (gettype($resultado)=="string")
+	{
+		echo '<div class="alert alert-danger">'.$resultado.'</div>';
+	}
+	else
+	{
+		echo '<div class="alert alert-success"> Contraseña asignada.</div>';
+	}
+}
+
+if(isset($_REQUEST['modificarContra']))
+{
+	$contra=$_REQUEST['contra'];
+	$contraDocente=$_REQUEST['contraDocente'];
+	$idModulo=$_REQUEST['idModulo'];
+
+	$objDocenteControlador=new docenteControlador('docenteModelo');
+
+	$carnetDocente=$_SESSION['usuario'];
+
+	$resultado=$objDocenteControlador->modificarContra($idModulo,$contra,$carnetDocente,$contraDocente);
+
+	if (gettype($resultado)=="string")
+	{
+		echo '<div class="alert alert-danger">'.$resultado.'</div>';
+	}
+	else
+	{
+		echo '<div class="alert alert-success"> Contraseña asignada.</div>';
+	}
 }
 ?>
  <div class="container" style="padding-top: 65px">

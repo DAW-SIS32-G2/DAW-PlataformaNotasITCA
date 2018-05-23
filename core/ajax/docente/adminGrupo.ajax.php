@@ -69,11 +69,37 @@ if(isset($_REQUEST['adminSeguridad']))
 
             if($tieneContra==0)
             {
-                echo "El modulo no tiene contraseña";
+                ?>
+                    <div class="alert alert-info">El modulo no tiene contraseña</div>
+                    <form action="" method="post">
+                        <label for="contra">Nueva contraseña:
+                            <input type="password" name="contra" class="form-control" required>
+                        </label><br>
+                        <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+                        <input type="submit" name="asignarContra" value="Asignar contraseña" class="btn btn-info">
+                    </form>
+                    <br>
+                <?php
             }
             elseif($tieneContra==1)
             {
-                echo "El modulo tiene contraseña y es: $contraModulo";
+                ?>
+                    <div class="alert alert-info">El modulo esta protegido por contraseña</div>
+                    <h5>Modificar contraseña actual</h5>
+                    <form action="" method="post">
+                        <label for="contra">Nueva contraseña:
+                            <input type="password" name="contra" class="form-control" required>
+                        </label><br>
+
+                        <label for="contra">Contraseña actual de docente:
+                            <input type="password" name="contraDocente" class="form-control" required>
+                        </label><br>
+
+                        <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+                        <input type="submit" name="modificarContra" value="Modificar contraseña" class="btn btn-info">
+                    </form>
+                    <br>
+                <?php
             }
         }
     }

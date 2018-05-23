@@ -155,6 +155,52 @@
 
             return $resultado;
         }
-        
+
+        public function asignarContra($idModulo,$contra)
+        {
+            $conex=new funcionesBD();
+
+            $resultado1=$conex->ActualizarRegistro('Modulo','protegidoPorContra','1',"idModulo=$idModulo");
+
+            if(gettype($resultado1)=="string")
+            {
+                return $resultado1;
+            }
+
+            $conex=new funcionesBD();
+
+            $contraCifrada=cifrar($contra);
+
+            $resultado2=$conex->ActualizarRegistro('Modulo','contraModulo',"$contraCifrada","idModulo=$idModulo");
+
+            if(gettype($resultado2)=="string")
+            {
+                $conex=new funcionesBD();
+
+                $conex->ActualizarRegistro('Modulo','protegidoPorContra','0',"idModulo=$idModulo");
+
+                return $resultado2;
+            }
+
+            return $resultado=[$resultado1,$resultado2];
+        } 
+
+        public function obtenerClaveDocente($carnetDocente)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=ConsultaGeneral('Docente','carnet=$carnetDocente');
+
+            return $resultado;
+        }
+
+        public function modificarContra($idModulo,$contra,$carnetDocente,$contraDocente)
+        {
+            $conex=new funcionesBD();
+
+            $contraCifrada=cifrar($contra);
+
+            $resultado=$conex->ActualizarRegistro('Modulo','contraModulo',"","idModulo=$idModulo");
+        }
     }
 ?>
