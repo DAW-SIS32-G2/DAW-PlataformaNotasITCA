@@ -1,4 +1,4 @@
-<?php
+ <?php
   //Acá se va a cargar la tabLa según la BD
   define("RAIZ",dirname(__FILE__,3));
   require_once(RAIZ."/funcionesbd.php");
@@ -35,7 +35,7 @@ else
       var nombre = button.data('nombre')
       var apellido = button.data('apellido')
       var modal = $(this)
-      //modal.find('.modal-title').text('Eliminar el alumno con carnet: ' + recipient)
+      modal.find('.modal-title').text('Eliminar el alumno con carnet: ' + recipient)
       modal.find('.modal-body input').val(recipient)
       modal.find("#nombre").html(nombre+' '+apellido)
       })
