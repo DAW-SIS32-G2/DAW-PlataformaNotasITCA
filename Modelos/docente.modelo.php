@@ -219,6 +219,7 @@
             $resultado2=$conex->ActualizarRegistro('Modulo','contraModulo',"","idModulo=$idModulo");
         }
 
+
         public function obtenerNombrePonderacion($idPonderacion)
         {
             $conex=new funcionesBD();
@@ -235,6 +236,99 @@
             $resultado=$conex->EliminarRegistro('Ponderacion',"idPonderacion='$idPonderacion'");
 
             return $resultado;
+        }
+
+        public function inscribirAlumno($carnet,$modulo,$pass,$carnetDoc)
+        {
+            $objBD = new funcionesBD();
+            $sql = "SELECT contra FROM docente WHERE carnet = '$carnetDoc'";
+            $res = $objBD->ConsultaPersonalizada($sql);
+            while($fila = mysqli_fetch_assoc($res))
+            {
+                $claveDocenteReal = $fila['contra'];
+            }
+
+            $claveDescifrada = descifrar($claveDocenteReal);
+            if($claveDescifrada == $pass)
+            {
+                $conex = new funcionesBD();
+                $BuscarCarnet = $conex->ConsultaPersonalizada("SELECT * FROM Usuario WHERE carnet='$carnet'");
+                if(mysqli_num_rows($BuscarCarnet) == 1)
+                {
+                    $conex = new funcionesBD();
+                    $inscripcion = $conex->ConsultaPersonalizada("SELECT * FROM UsuarioActivo WHERE carnet='$carnet' AND idModulo = '$modulo'");
+                    if(mysqli_num_rows($inscripcion) == 1)
+                    {
+                        return "El alumno ya está inscrito en esta materia";
+                    }
+                    else
+                    {
+                        $conex = new funcionesBD();
+                        $resultado = $conex->insertar("UsuarioActivo","carnet,idModulo","'$carnet','$modulo'");
+                        if(gettype($resultado) == "boolean" && $resultado === true)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return $resultado;
+                        }   
+                    }
+                }
+                else
+                {
+                    return 2;
+                }
+            }
+            else
+            {
+                return "Su clave no es correcta, Intentelo nuevamente";
+            }
+        }
+
+        public function cambiarPassDocente($carnet,$passOrig,$pass1,$pass2)
+        {
+            $objBD = new funcionesBD();
+            $sql = "SELECT contra FROM docente WHERE carnet = '$carnet'";
+            $res = $objBD->ConsultaPersonalizada($sql);
+            while($fila = mysqli_fetch_assoc($res))
+            {
+                $claveDocenteReal = $fila['contra'];
+            }
+
+            $claveDescifrada = descifrar($claveDocenteReal);
+
+            if($carnet != $_SESSION['usuario'])
+            {
+                return "<div class='alert alert-danger'><strong>Error:</strong> el carnet que ha escrito no existe o pertenece a otro docente</div>";
+            }
+            elseif($claveDescifrada != $passOrig)
+            {
+                return "<div class='alert alert-danger'><strong>Error:</strong> Su contraseña actual no es correcta</div>";  
+            }
+            elseif($pass1 != $pass2)
+            {
+                return "<div class='alert alert-danger'><strong>Error:</strong> Las claves ingresadas no coinciden</div>";
+            }
+            elseif($pass1 == $passOrig)
+            {
+                return "<div class='alert alert-warning'><strong>Advertencia:</strong> La nueva clave es igual a la clave actual. No se ha cambiado</div>";
+            }
+            else
+            {
+                $nuevaclave = cifrar($pass2);
+                $objBD = new funcionesBD();
+                $sql = "UPDATE docente SET contra = '$nuevaclave' WHERE carnet='$carnet'";
+                $resultado = $objBD->ConsultaPersonalizada($sql);
+                if(gettype($resultado) == "boolean" && $resultado === true)
+                {
+                    return "<div class='alert alert-success'>Clave actualizada correctamente</div>";
+                }
+                else
+                {
+                    return $resultado;
+                }
+            }
         }
     }
 ?>

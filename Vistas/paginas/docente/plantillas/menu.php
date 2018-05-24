@@ -23,6 +23,8 @@
           Notas
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="<?= urlBase ?>docente/nota">Ingresar Nota</a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/progrupo">Consultar Promedios por Grupo</a>
         </div>
       </li>
@@ -31,9 +33,8 @@
           Estudiantes
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="<?= urlBase ?>docente/nota">Ingresar Nota</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="<?= urlBase ?>docente/inscribir">Inscribir estudiantes al grupo</a>
+          <a class="dropdown-item" href="<?= urlBase ?>docente/registrar">Registrar Estudiantes</a><div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="<?= urlBase ?>docente/inscribir">Inscribir Estudiantes al grupo</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/restablecer">Restablecer clave del alumno</a>
         </div>
@@ -49,7 +50,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/adminarchivo">Administrar archivos</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="<?= urlBase ?>docente/cambiarclave">Cambiar clave</a>
+          <a class="dropdown-item" href="<?= urlBase ?>docente/cambiarclave">Cambiar clave docente</a>
         </div>
       </li>
       <li class="nav-item dropdown">

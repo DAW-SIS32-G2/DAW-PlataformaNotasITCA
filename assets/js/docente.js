@@ -440,3 +440,40 @@ function EliminarAlumno()
 				  }
 	})
 }
+
+//Funcion para cambiar la clave de un docente
+function cambiarPassDocente()
+{
+	var carnet = $("#carnet").val();
+	var passOrig = $("#passOrig").val();
+	var pass1 = $("#passN1").val();
+	var pass2 = $("#passN2").val();
+	var vacios = 0;
+
+	if(carnet == "" || passOrig == "" || pass1 == "" || pass2 == "")
+		vacios++;
+	else
+		vacios = 0;
+
+	if(vacios == 0)
+	{
+		$.ajax({
+			type	: "post",
+			url		: "ajax/cambiarclave",
+			data 	: {
+						"carnet"	: carnet,
+						"passOrig"	: passOrig,
+						"pass1"		: pass1,
+						"pass2"		: pass2,
+					  },
+			success : function(mensaje)
+					  {
+					  	$("#respuesta").html(mensaje)
+					  }
+		});
+	}
+	else
+	{
+		$("#respuesta").html("<div class='alert alert-danger'><strong>Error:</strong> Uno o más campos están vacíos, revise e intente de nuevo</div>")
+	}
+}

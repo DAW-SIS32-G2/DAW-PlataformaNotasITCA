@@ -22,7 +22,7 @@ print_r($modulosInscritos);
     </tr>
       <?php
       $objBD = new funcionesBD();
-      $modulos = $objBD->ConsultaPersonalizada("SELECT CONCAT(docente.nombres,' ',docente.apellidos) AS Docente, CONCAT(Grupo.nombreGrupo,Grupo.seccion,' - ',modulo.nombreModulo) as Materia, modulo.protegidoPorContra, modulo.idModulo FROM Docente INNER JOIN Modulo ON docente.carnet = modulo.carnet INNER JOIN Horario ON horario.idHorario = modulo.idHorario INNER JOIN grupo ON grupo.idGrupo = horario.idGrupo WHERE modulo.activo = 1 AND modulo.estado = 1 AND grupo.idGrupo = (SELECT usuario.idGrupo FROM usuario WHERE usuario.carnet = '".$_SESSION['usuario']."')"); 
+      $modulos = $objBD->ConsultaPersonalizada("SELECT Grupo.nombreGrupo, CONCAT(docente.nombres,' ',docente.apellidos) AS Docente, CONCAT(Grupo.nombreGrupo,Grupo.seccion,' - ',modulo.nombreModulo) as Materia, modulo.protegidoPorContra, modulo.idModulo FROM Docente INNER JOIN Modulo ON docente.carnet = modulo.carnet INNER JOIN Horario ON horario.idHorario = modulo.idHorario INNER JOIN grupo ON grupo.idGrupo = horario.idGrupo WHERE modulo.activo = 1 AND modulo.estado = 1 AND grupo.idGrupo = (SELECT usuario.idGrupo FROM usuario WHERE usuario.carnet = '".$_SESSION['usuario']."')"); 
       $docentes = array();
       $materias = array();
       $idModulos = array();
@@ -34,6 +34,20 @@ print_r($modulosInscritos);
           $materias[$i] = $fila['Materia'];
           $idModulos[$i] = $fila['idModulo'];
           $protegidoPorContra[$i] = $fila['protegidoPorContra'];
+          $nomGrupo = $fila['nombreGrupo'];
+          $i++;
+      }
+
+      //Ahora buscaremos los grupos teoricos 
+      $objBD = new funcionesBD();
+      $teoricos = $objBD->ConsultaPersonalizada("SELECT Grupo.nombreGrupo, CONCAT(docente.nombres,' ',docente.apellidos) AS Docente, CONCAT(Grupo.nombreGrupo,Grupo.seccion,' - ',modulo.nombreModulo) as Materia, modulo.protegidoPorContra, modulo.idModulo FROM Docente INNER JOIN Modulo ON docente.carnet = modulo.carnet INNER JOIN Horario ON horario.idHorario = modulo.idHorario INNER JOIN grupo ON grupo.idGrupo = horario.idGrupo WHERE modulo.activo = 1 AND modulo.estado = 1 AND Grupo.nombreGrupo = '$nomGrupo' AND Grupo.seccion = 'U'");
+      while($fila = mysqli_fetch_assoc($teoricos))
+      {
+          $docentes[$i] = $fila['Docente'];
+          $materias[$i] = $fila['Materia'];
+          $idModulos[$i] = $fila['idModulo'];
+          $protegidoPorContra[$i] = $fila['protegidoPorContra'];
+          $nomGrupo = $fila['nombreGrupo'];
           $i++;
       }
       for($cant=0;$cant<$i;$cant++)

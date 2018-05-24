@@ -88,7 +88,7 @@ else
           <table class="table table-bordered">
             <thead class="thead-dark">
               <tr>
-                <th></th>
+                <th>Acciones</th>
                 <th>Carnet</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
@@ -116,9 +116,8 @@ else
                   echo "
                     <tr>
                       <td>
-                        <span class=\"oi oi-delete\" data-toggle=\"modal\" data-target=\"#eliminarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\" data-modulo=\"".$idModulo."\"></span>
-                        &nbsp;&nbsp;&nbsp;
-                        <span class=\"oi oi-brush\" data-toggle=\"modal\" data-target=\"#modificarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\"></span>
+                        <a href=\"#\" data-toggle=\"modal\" data-target=\"#eliminarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\" data-modulo=\"".$idModulo."\"><span class=\"oi oi-delete\"></span><small> Eliminar</small></a><br>                   
+                        <a href=\"#\" data-toggle=\"modal\" data-target=\"#modificarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\"><span class=\"oi oi-brush\"></span><small> Editar</small></a>
                       </td>
                       <td>".$fila['carnet']."</td>
                       <td>".$fila['nombres']."</td>
