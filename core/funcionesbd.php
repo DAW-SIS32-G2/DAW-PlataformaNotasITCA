@@ -41,21 +41,41 @@ class funcionesBD
 	}
 
 	//Funcion para registro de alumnos elemental
-	public function registroAlumno($carnet,$nombres,$apellidos,$contra,$anyo,$modif,$idCarrera,$idGrupo)
+	public function registroAlumno($carnet,$nombres,$apellidos,$contra,$anyo,$modif,$idCarrera,$idGrupo,$carnetDoc)
 	{
-		$consulta = "INSERT INTO Usuario(carnet,nombres,apellidos,contra,anyoIngreso,permiteModificacion,idCarrera,idGrupo) VALUES ('$carnet','$nombres','$apellidos','$contra',$anyo,$modif,$idCarrera,$idGrupo)";
-		if($this->bd->query($consulta))
+		$res = $this->bd->query("SELECT * FROM usuario WHERE carnet = '$carnet'");
+
+		if(mysqli_num_rows($res) == 0)
 		{
-			//Cerrando conexión
-			$this->bd->close();
-			return "Alumno Registrado correctamente";
+			$consulta = "INSERT INTO Usuario(carnet,nombres,apellidos,contra,anyoIngreso,permiteModificacion,idCarrera,idGrupo) VALUES ('$carnet','$nombres','$apellidos','$contra',$anyo,$modif,$idCarrera,$idGrupo)";
+			if($this->bd->query($consulta))
+			{
+				$consulta = "INSERT INTO InsercionDocente(carnetDoc,CarnetAlumno) VALUES ('$carnetDoc','$carnet')";
+				if($this->bd->query($consulta))
+				{
+					//Cerrando conexión
+					$this->bd->close();
+					return "Alumno Registrado correctamente";
+				}
+				else
+				{
+					$error=$this->bd->error;
+					//Cerrando conexión
+					$this->bd->close();
+					return "Error en la consulta: ". $error;
+				}
+			}
+			else
+			{
+				$error=$this->bd->error;
+				//Cerrando conexión
+				$this->bd->close();
+				return "Error en la consulta: ". $error;
+			}
 		}
 		else
 		{
-			$error=$this->bd->error;
-			//Cerrando conexión
-			$this->bd->close();
-			return "Error en la consulta: ". $error;
+			return "No se puede registrar, el alumno tiene un carnet que ya está registrado";
 		}
 	}
 	//Función de inicio de sesión

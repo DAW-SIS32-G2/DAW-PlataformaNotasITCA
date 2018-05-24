@@ -33,7 +33,8 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="<?= urlBase ?>docente/nota">Ingresar Nota</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="<?= urlBase ?>docente/inscribir">Inscribir estudiantes al grupo</a>
+          <a class="dropdown-item" href="<?= urlBase ?>docente/registrar">Registrar Estudiantes</a><div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="<?= urlBase ?>docente/inscribir">Inscribir Estudiantes al grupo</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/restablecer">Restablecer clave del alumno</a>
         </div>

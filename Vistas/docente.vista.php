@@ -58,6 +58,13 @@
           require_once 'Vistas/paginas/docente/nota.php';
         }
 
+        function registrar()
+        {
+          include 'paginas/docente/plantillas/cabecera.php';
+          include 'paginas/docente/plantillas/menu.php';
+          require_once 'Vistas/paginas/docente/registrar.php';
+        }
+
         function inscribir()
         {
           include 'paginas/docente/plantillas/cabecera.php';
