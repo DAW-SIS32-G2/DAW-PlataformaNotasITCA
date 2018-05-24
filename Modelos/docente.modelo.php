@@ -261,5 +261,50 @@
                 return "Su clave no es correcta, Intentelo nuevamente";
             }
         }
+
+        public function cambiarPassDocente($carnet,$passOrig,$pass1,$pass2)
+        {
+            $objBD = new funcionesBD();
+            $sql = "SELECT contra FROM docente WHERE carnet = '$carnet'";
+            $res = $objBD->ConsultaPersonalizada($sql);
+            while($fila = mysqli_fetch_assoc($res))
+            {
+                $claveDocenteReal = $fila['contra'];
+            }
+
+            $claveDescifrada = descifrar($claveDocenteReal);
+
+            if($carnet != $_SESSION['usuario'])
+            {
+                return "<div class='alert alert-danger'><strong>Error:</strong> el carnet que ha escrito no existe o pertenece a otro docente</div>";
+            }
+            elseif($claveDescifrada != $passOrig)
+            {
+                return "<div class='alert alert-danger'><strong>Error:</strong> Su contraseña actual no es correcta</div>";  
+            }
+            elseif($pass1 != $pass2)
+            {
+                return "<div class='alert alert-danger'><strong>Error:</strong> Las claves ingresadas no coinciden</div>";
+            }
+            elseif($pass1 == $passOrig)
+            {
+                return "<div class='alert alert-warning'><strong>Advertencia:</strong> La nueva clave es igual a la clave actual. No se ha cambiado</div>";
+            }
+            else
+            {
+                $nuevaclave = cifrar($pass2);
+                $objBD = new funcionesBD();
+                $sql = "UPDATE docente SET contra = '$nuevaclave' WHERE carnet='$carnet'";
+                $resultado = $objBD->ConsultaPersonalizada($sql);
+                if(gettype($resultado) == "boolean" && $resultado === true)
+                {
+                    return "<div class='alert alert-success'>Clave actualizada correctamente</div>";
+                }
+                else
+                {
+                    return $resultado;
+                }
+            }
+        }
     }
 ?>

@@ -25,7 +25,8 @@
                     <a class="dropdown-item nav-but">Programas</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/buzon_archivos">Buz&oacute;n de Archivos</a>
-                </div>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item nav-but" >HTML5</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link nav-but dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -51,17 +52,6 @@
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/subir_Prac">Subir Practicas</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/inscribir">Inscribir</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link nav-but dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    Otros
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item nav-but" >HTML5</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item nav-but" >Grupos</a>
                 </div>
             </li>
             <li class="nav-item">
