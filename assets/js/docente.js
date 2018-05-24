@@ -58,6 +58,15 @@ function mostrarDiv(tipoDiv,idModulo)
 					';
 					mostrarAdminSeguridad(idModulo);
 	}
+	else if(tipoDiv == 'Ponderaciones' && div.classList.contains('visible'))
+	{
+		div.innerHTML='\
+					\
+					<button onclick="mostrarDiv(\''+tipoDiv+'\','+idModulo+')">X</button><br><br><h3>Administrar ponderaciones</h3><br>\
+					<div id="adminPonderaciones"></div>\
+					';
+					mostrarAdminPonderaciones(idModulo);
+	}
 
 	
 }
@@ -103,6 +112,7 @@ function borrarZip(ruta)
 	  });
 }
 */
+
 function actualizarTotal(idTotal,idAgregar,valorActual)
 {
 	var total = document.getElementById(idTotal);
@@ -134,9 +144,9 @@ function verificarPonderaciones(idTotal)
 {
 	var total=document.getElementById(idTotal);
 	
-	if(total.value != 100)
+	if(total.value > 100 || total.value < 0)
 	{
-		alert('Error. El total de las ponderaciones debe ser igual a 100%.');
+		alert('Error. El total de las ponderaciones no debe ser mayor a 100% ni menor a 0%.');
 		return false;
 	}
 	else
@@ -194,6 +204,19 @@ function mostrarAdminSeguridad(idModulo)
 	      success   : function(respuesta)
 	      {
 	        document.getElementById('adminSeguridad').innerHTML = respuesta;
+	      }
+	  });
+}
+
+function mostrarAdminPonderaciones(idModulo)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/adminGrupo',
+	      data      : {idModulo: idModulo, mostrarModificarPonderaciones : true},
+	      success   : function(respuesta)
+	      {
+	        document.getElementById('adminPonderaciones').innerHTML = respuesta;
 	      }
 	  });
 }

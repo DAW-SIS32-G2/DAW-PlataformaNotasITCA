@@ -32,11 +32,16 @@
             return $resultado;
         }
 
-        public function actualizarPonderaciones($valor,$idPonderacion)
+        public function actualizarPonderaciones($nombrePonderacion,$valor,$idPonderacion)
         {
             @$conex=new funcionesBD();
 
             $resultado=$conex->ActualizarRegistro('Ponderacion','porcentaje',$valor,"idPonderacion=$idPonderacion");
+
+            @$conex=new funcionesBD();
+
+            $resultado=$conex->ActualizarRegistro('Ponderacion','nombrePonderacion',$nombrePonderacion,"idPonderacion=$idPonderacion");
+
 
             return $resultado;
         }
@@ -61,7 +66,7 @@
 
         public function InsertarPracticas($nombreTarea,$porcentaje,$cantidadEjercicios,$idPonderacion,$carpetaMod,$anyoModulo)
         {
-            $directorio = "Archivos/Practicas/".$carpetaMod."-$anyoModulo/".$nombreTarea;
+            $directorio = "Archivos/Practicas/".$carpetaMod."-$anyoModulo/Ponderacion_$idPonderacion/".$nombreTarea;
 
             if(file_exists($directorio))
             {

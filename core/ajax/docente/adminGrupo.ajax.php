@@ -165,4 +165,73 @@ if(isset($_REQUEST['validarContraDocente']))
     }
 }
 
+if(isset($_REQUEST['mostrarModificarPonderaciones']))
+{
+    $objDocenteModelo=new docenteModelo();
+    $idModulo=$_REQUEST['idModulo'];
+    ?>
+        <form action="<?= urlBase ?>docente/admingrupo" method="post">
+            <?php
+
+                $ponderaciones=$objDocenteModelo->BuscarPonderaciones($idModulo);
+
+                if (gettype($ponderaciones)=="string")
+                {
+                    echo $ponderaciones;
+
+                }
+                else
+                {
+                    $i=0;
+
+                    while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
+                    {
+                        $ponderacionesOrdenadas[$i]=$arrayPonderaciones['nombrePonderacion'];
+                        $porcentajesOrdenados[$i]=$arrayPonderaciones['porcentaje'];
+                        $idPonderaciones[$i]=$arrayPonderaciones['idPonderacion'];
+                        $i++;
+                    }
+
+                    $cantidadPonderaciones=$ponderaciones->num_rows;
+
+                    if ($cantidadPonderaciones == 0)
+                    {
+                        echo "Este modulo no tiene ponderaciones asignadas.<br> Por favor comuniquese con el administrador.";
+                    }
+                    else
+                    {
+                        $totalPorcentajes=0;
+                        for ($j=0;$j<$cantidadPonderaciones;$j++)
+                        {
+                            ?>
+                                <span>
+                                    <input type="hidden" name="idPonderaciones[]" value="<?= $idPonderaciones[$j] ?>">
+
+                                    <input type="text" name="nombrePonderaciones[]" value="<?= $ponderacionesOrdenadas[$j] ?>" style="width: 60px;">
+
+                                    <label>
+                                        <input type="number" step="0.1" max="100" min="0" id="<?= $idPonderaciones[$j] ?>" name="porcentajePonderaciones[]" value="<?= $porcentajesOrdenados[$j] ?>" style="width: 50px;"  onkeyup="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)" onchange="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)">%
+                                    </label>
+
+                                    <button class="btn btn-info" name="borrarPonderacion">Eliminar</button>
+
+                                </span>
+                                <br>
+                            <?php
+                            $totalPorcentajes+=$porcentajesOrdenados[$j];
+
+                        }
+                        ?>
+                            <font>Total:</font>
+                            <input type="text" id="<?= $idModulo ?>" name="total" value="<?= $totalPorcentajes ?>" onfocus="this.blur()" style="width: 70px;">%
+
+                            <button class="btn btn-info" name="guardarPonderaciones" onclick="return verificarPonderaciones(<?= $idModulo ?>)">Guardar<br>Ponderaciones</button>
+                        <?php
+                    }
+                }
+            ?>
+        </form>
+    <?php
+}
+
 ?>

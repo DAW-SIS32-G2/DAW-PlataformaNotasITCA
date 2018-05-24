@@ -34,7 +34,7 @@ if(isset($_REQUEST['guardarPonderaciones']))
 		for ($i=0;$i<$cantidadG;$i++)
 		{
 
-			$resultado=$objDocenteModelo->actualizarPonderaciones($porcentajePonderacionesG[$i],$idPonderacionesG[$i]);
+			$resultado=$objDocenteModelo->actualizarPonderaciones($nombrePonderacionesG[$i],$porcentajePonderacionesG[$i],$idPonderacionesG[$i]);
 
 			if (gettype($resultado)=="string")
 			{
@@ -139,6 +139,10 @@ if(isset($_REQUEST['eliminarContra']))
 
 	</div>
 
+	<div id="divPonderaciones" class="oculto">
+
+	</div>
+
 	<br><br><br>
 
 	<table class="table table-bordered table-light table-hover">
@@ -239,85 +243,11 @@ if(isset($_REQUEST['eliminarContra']))
 					</td>
 
 					<td>
+						<button class="btn btn-info" onclick="mostrarDiv('Ponderaciones','<?= $idModulo[$k] ?>')">Administrar<br>ponderaciones</button>
+					</td>
+					<td>*boton que no se para que es*</td>
 
-						<form action="<?= urlBase ?>docente/admingrupo" method="post">
-
-
-
-								<?php
-
-									$ponderaciones=$objDocenteModelo->BuscarPonderaciones($idModulo[$k]);
-
-									if (gettype($ponderaciones)=="string")
-									{
-										echo $ponderaciones;
-
-									}
-									else
-									{
-
-
-										$i=0;
-
-										while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
-										{
-											$ponderacionesOrdenadas[$i]=$arrayPonderaciones['nombrePonderacion'];
-											$porcentajesOrdenados[$i]=$arrayPonderaciones['porcentaje'];
-											$idPonderaciones[$i]=$arrayPonderaciones['idPonderacion'];
-											$i++;
-										}
-
-										$cantidadPonderaciones=$ponderaciones->num_rows;
-
-										if ($cantidadPonderaciones == 0)
-										{
-											echo "Este modulo no tiene ponderaciones asignadas.<br> Por favor comuniquese con el administrador.";
-										}
-										else
-										{
-											$totalPorcentajes=0;
-											for ($j=0;$j<$cantidadPonderaciones;$j++)
-											{
-												?>
-													<span>
-														<input type="hidden" name="idPonderaciones[]" value="<?= $idPonderaciones[$j] ?>">
-
-														<input type="text" onfocus="this.blur()" name="nombrePonderaciones[]" value="<?= $ponderacionesOrdenadas[$j] ?>" style="width: 60px;">
-
-														<label>
-															<input type="number" step="0.1" max="100" min="0" id="<?= $idPonderaciones[$j] ?>" name="porcentajePonderaciones[]" value="<?= $porcentajesOrdenados[$j] ?>" style="width: 50px;"  onkeyup="actualizarTotal(<?= $idModulo[$k] ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)" onchange="actualizarTotal(<?= $idModulo[$k] ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)">%
-														</label>
-													</span>
-													<br>
-												<?php
-												$totalPorcentajes+=$porcentajesOrdenados[$j];
-
-											}
-
-											?>
-												<font>Total:</font>
-												<input type="text" id="<?= $idModulo[$k] ?>" name="total" value="<?= $totalPorcentajes ?>" onfocus="this.blur()" style="width: 70px;">%
-
-												<button class="btn btn-info" name="guardarPonderaciones" onclick="return verificarPonderaciones(<?= $idModulo[$k] ?>)">Guardar<br>Ponderaciones</button>
-
-											<?php
-										}
-
-
-
-
-									}
-
-								?>
-
-
-
-						</form>
-
-				</td>
-				<td>*boton que no se para que es*</td>
-
-			</tr>
+					</tr>
 
 			<?php }
 
