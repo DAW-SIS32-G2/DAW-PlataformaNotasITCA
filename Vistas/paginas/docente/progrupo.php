@@ -29,8 +29,9 @@
                 while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
                 {
                   $nombreModulos[]=$arrayGrupos['nombreModulo'];
-                  $nombreGrupos[]=$arrayGrupos['nombreGrupo'];
+                  $nombreGrupos[]=$arrayGrupos['nombreGrupo'].$arrayGrupos['seccion'];
                   $idModulos[]=$arrayGrupos['idModulo'];
+                  $tipo[]=$arrayGrupos['tipoModulo'];
                   $i++;
                 }
                 $conteo=count($nombreModulos);
@@ -39,7 +40,7 @@
                 { 
                   ?>
                     <option value='<?php echo $idModulos[$j]; ?>'>
-                      <?php echo $nombreGrupos[$j]."-".$nombreModulos[$j]; ?>
+                      <?php echo $nombreGrupos[$j]." - ".$nombreModulos[$j]." (".$tipo[$j].")"; ?>
                     </option>
                   <?php
                 }

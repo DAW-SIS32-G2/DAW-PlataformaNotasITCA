@@ -390,13 +390,38 @@ function modificarAlumno()
 					  },
 			success : function(mensaje)
 					  {
-					  		if(mensaje == '1')
+					  		if(mensaje == 1)
 					  		{
 					  			$("#modificarModal").modal('hide');
 					  			$("#respuestaForm").modal('show');
-					  		}
+					  		};
 					  }
 		});
 		
 	}
+}
+
+//Funcion para desinscribir un alumno
+function EliminarAlumno()
+{
+	$.ajax({
+		type	: "post",
+		url		: "ajax/progrupo",
+		data    : {
+					'eliminar' 	: 1,
+					'carnet'	: $("#carnet").val(),
+					'idModulo'  : $("#idmodulo").val()
+				  },
+		success : function(e) {
+					if(e == 1)
+					{
+						$("#eliminarModal").modal('hide');
+					  	$("#respuestaForm").modal('show');
+					}
+					else
+					{
+						alert(e);
+					}
+				  }
+	})
 }
