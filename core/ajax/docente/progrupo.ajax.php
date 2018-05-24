@@ -4,8 +4,7 @@
   require_once(RAIZ."/funcionesbd.php");
   $idModulo = $_POST['grupo'];
   $objDocenteModelo=new docenteModelo();
-?>
-<?php
+
 if(isset($_POST['modificar']))
 {
     $nombres = $_POST['nombres'];
@@ -17,10 +16,31 @@ if(isset($_POST['modificar']))
     if(gettype($res) == "boolean" && $res === true)
     {
       echo "1";
+      exit;
     }
     else
     {
       echo $res;
+      exit;
+    }
+}
+elseif(isset($_POST['eliminar']))
+{
+  $carnet = $_POST['carnet'];
+  $idModulo = $_POST['idModulo'];
+
+  $sql = "DELETE FROM UsuarioActivo WHERE carnet = '$carnet' AND idModulo = '$idModulo'";
+  $objBD = new funcionesBD();
+    $res = $objBD->ConsultaPersonalizada($sql);
+    if(gettype($res) == "boolean" && $res === true)
+    {
+      echo "1";
+      exit;
+    }
+    else
+    {
+      echo $res;
+      exit;
     }
 }
 else
@@ -34,10 +54,13 @@ else
       var recipient = button.data('whatever') // extraer los datos del atributo data-*
       var nombre = button.data('nombre')
       var apellido = button.data('apellido')
+      var modulo = button.data('modulo')
       var modal = $(this)
-      modal.find('.modal-title').text('Eliminar el alumno con carnet: ' + recipient)
+
+      modal.find('.modal-title').text('Desinscribir al alumno con carnet: ' + recipient)
       modal.find('.modal-body input').val(recipient)
       modal.find("#nombre").html(nombre+' '+apellido)
+      modal.find('#idmodulo').val(modulo)
       })
 
       $('#modificarModal').on('show.bs.modal', function (event) {
@@ -46,7 +69,6 @@ else
       var nombre = button.data('nombre')
       var apellido = button.data('apellido')
       var modal = $(this)
-      //modal.find('.modal-title').text('Eliminar el alumno con carnet: ' + recipient)
       modal.find('#carnet2').val(recipient)
       modal.find('#nombres').val(nombre)
       modal.find('#apellidos').val(apellido)
@@ -58,7 +80,7 @@ else
     </script>
     <?php
     $objeto = new funcionesBD();
-    $sql = "Select DISTINCT Usuario.carnet, Usuario.nombres, Usuario.apellidos, Usuario.foto FROM Usuario INNER JOIN Nota ON Nota.carnet = Usuario.carnet INNER JOIN Tarea ON Tarea.idTarea = Nota.idTarea INNER JOIN Ponderacion ON Tarea.idPonderacion = Ponderacion.idPonderacion INNER JOIN Modulo ON Ponderacion.idModulo = Modulo.idModulo Where Modulo.idModulo = $idModulo";
+    $sql = "Select DISTINCT Usuario.carnet, Usuario.nombres, Usuario.apellidos, Usuario.foto FROM Usuario INNER JOIN Nota ON Nota.carnet = Usuario.carnet INNER JOIN Tarea ON Tarea.idTarea = Nota.idTarea INNER JOIN Ponderacion ON Tarea.idPonderacion = Ponderacion.idPonderacion INNER JOIN Modulo ON Ponderacion.idModulo = Modulo.idModulo INNER JOIN UsuarioActivo ON UsuarioActivo.carnet = Usuario.carnet Where Modulo.idModulo = $idModulo AND UsuarioActivo.idModulo = $idModulo";
     $res = $objeto->ConsultaPersonalizada($sql);
     if(mysqli_num_rows($res) != 0)
     {
@@ -87,14 +109,14 @@ else
             <tbody>
               <?php
                 $objeto = new funcionesBD();
-                $sql = "Select DISTINCT Usuario.carnet, Usuario.nombres, Usuario.apellidos, Usuario.foto FROM Usuario INNER JOIN Nota ON Nota.carnet = Usuario.carnet INNER JOIN Tarea ON Tarea.idTarea = Nota.idTarea INNER JOIN Ponderacion ON Tarea.idPonderacion = Ponderacion.idPonderacion INNER JOIN Modulo ON Ponderacion.idModulo = Modulo.idModulo Where Modulo.idModulo = $idModulo";
+                $sql = "SELECT DISTINCT Usuario.carnet, Usuario.nombres, Usuario.apellidos, Usuario.foto FROM Usuario INNER JOIN Nota ON Nota.carnet = Usuario.carnet INNER JOIN Tarea ON Tarea.idTarea = Nota.idTarea INNER JOIN Ponderacion ON Tarea.idPonderacion = Ponderacion.idPonderacion INNER JOIN Modulo ON Ponderacion.idModulo = Modulo.idModulo INNER JOIN UsuarioActivo ON Usuario.carnet = UsuarioActivo.carnet Where Modulo.idModulo = $idModulo";
                 $res = $objeto->ConsultaPersonalizada($sql);
                 while($fila = $res->fetch_array(MYSQLI_ASSOC))
                 {
                   echo "
                     <tr>
                       <td>
-                        <span class=\"oi oi-delete\" data-toggle=\"modal\" data-target=\"#eliminarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\"></span>
+                        <span class=\"oi oi-delete\" data-toggle=\"modal\" data-target=\"#eliminarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\" data-modulo=\"".$idModulo."\"></span>
                         &nbsp;&nbsp;&nbsp;
                         <span class=\"oi oi-brush\" data-toggle=\"modal\" data-target=\"#modificarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\"></span>
                       </td>
@@ -144,12 +166,16 @@ else
               <form method="post">
                 <div class="modal-body">
                     <div class="form-group">
+                      <p class="text-justify"><i>Nota: Desinscribir a un alumno de la materia provocará que todas sus notas y prácticas subidas se eliminen. El alumno deberá volverse a inscribir a esta materia, para lo cual debe estar habilitada su inscripción. Proceda con cuidado.</i></p>
+                    </div>
+                    <div class="form-group">
                       <label for="recipient-name" class="col-form-label">Carnet:</label>
                       <input type="text" class="form-control" id="carnet" readonly>
                     </div>
                     <div class="form-group">
                       <label for="message-text" class="col-form-label">Nombre del alumno</label>
                       <textarea class="form-control" id="nombre" readonly></textarea>
+                      <input type="hidden" id="idmodulo">
                     </div>
                 </div>
                 <div class="modal-footer">
