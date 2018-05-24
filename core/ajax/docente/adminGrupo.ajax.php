@@ -139,7 +139,7 @@ if(isset($_REQUEST['mostrarEliminarContra']))
 
             <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
             <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
-            <input type="submit" name="eliminarContra" value="Elimar contraseña" onclick="return verificarDocente()" class="btn btn-info">
+            <input type="submit" name="eliminarContra" value="Eliminar contraseña" onclick="return verificarDocente()" class="btn btn-info">
         </form>
         <br>
     <?php
@@ -178,7 +178,6 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
                 if (gettype($ponderaciones)=="string")
                 {
                     echo $ponderaciones;
-
                 }
                 else
                 {
@@ -213,7 +212,7 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
                                         <input type="number" step="0.1" max="100" min="0" id="<?= $idPonderaciones[$j] ?>" name="porcentajePonderaciones[]" value="<?= $porcentajesOrdenados[$j] ?>" style="width: 50px;"  onkeyup="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)" onchange="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)">%
                                     </label>
 
-                                    <button class="btn btn-info" name="borrarPonderacion">Eliminar</button>
+                                    <button class="btn btn-info" type="button" onclick="confirmarBorrarPonderacion(<?= $idPonderaciones[$j] ?>,<?= $idModulo ?>)">Eliminar</button>
 
                                 </span>
                                 <br>
@@ -223,13 +222,49 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
                         }
                         ?>
                             <font>Total:</font>
-                            <input type="text" id="<?= $idModulo ?>" name="total" value="<?= $totalPorcentajes ?>" onfocus="this.blur()" style="width: 70px;">%
+                            <input type="text" id="<?= $idModulo ?>" name="total" value="<?= $totalPorcentajes ?>" onfocus="this.blur()" style="width: 70px;">%<br><br>
 
                             <button class="btn btn-info" name="guardarPonderaciones" onclick="return verificarPonderaciones(<?= $idModulo ?>)">Guardar<br>Ponderaciones</button>
                         <?php
                     }
                 }
             ?>
+        </form>
+    <?php
+}
+
+if(isset($_REQUEST['ConfirmarBorrarPonderacion']))
+{
+    session_start();
+    $idPonderacion=$_REQUEST['idPonderacion'];
+    $carnetDocente=$_SESSION['usuario'];
+    $idModulo=$_REQUEST['idModulo'];
+
+    $objDocenteControlador=new DocenteControlador('DocenteModelo');
+
+    $resultado=$objDocenteControlador->obtenerNombrePonderacion($idPonderacion);
+
+    $arrayNombre=$resultado->fetch_assoc();
+
+    $nombrePonderacion=$arrayNombre['nombrePonderacion'];
+
+    ?>
+        <div class="alert alert-warning">
+            ¿Esta seguro de borrar esta ponderacion?<br>
+            "<?= $nombrePonderacion ?>"<br>
+            Al borrarla se eliminaran todas las practicas y notas ligadas a esta ponderacion. Tanto archivos, directorios y registros.
+        </div>
+        
+        <form action="" method="post">
+
+            <label for="contra">Contraseña actual de docente:
+                <input type="password" name="contraDocente" id="contraDocente" class="form-control" required>
+            </label><br>
+
+            <input type="hidden" name="idPonderacion" value="<?= $idPonderacion ?>">
+            <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+            <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
+            <input type="submit" name="EliminarPonderacion" value="Eliminar Ponderacion" onclick="return verificarDocente()" class="btn btn-info">
         </form>
     <?php
 }

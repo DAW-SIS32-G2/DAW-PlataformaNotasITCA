@@ -20,6 +20,8 @@ function mostrarDiv(tipoDiv,idModulo)
 	{
 		div.classList.remove('visible');
 		div.classList.add('oculto');
+
+		div.innerHTML="";
 	}
 	else
 	{
@@ -243,6 +245,19 @@ function mostrarEliminarContra(idModulo)
 	      success   : function(respuesta)
 	      {
 	        document.getElementById('adminSeguridad').innerHTML = respuesta;
+	      }
+	  });
+}
+
+function confirmarBorrarPonderacion(idPonderacion, idModulo)
+{
+		$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/adminGrupo',
+	      data      : {idPonderacion: idPonderacion, idModulo : idModulo, ConfirmarBorrarPonderacion : true},
+	      success   : function(respuesta)
+	      {
+	        document.getElementById('adminPonderaciones').innerHTML = respuesta;
 	      }
 	  });
 }

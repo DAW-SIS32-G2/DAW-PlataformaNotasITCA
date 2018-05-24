@@ -218,5 +218,23 @@
 
             $resultado2=$conex->ActualizarRegistro('Modulo','contraModulo',"","idModulo=$idModulo");
         }
+
+        public function obtenerNombrePonderacion($idPonderacion)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->ConsultaGeneral('Ponderacion',"idPonderacion='$idPonderacion'");
+
+            return $resultado;
+        }
+
+        public function eliminarPonderacion($idPonderacion)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->EliminarRegistro('Ponderacion',"idPonderacion='$idPonderacion'");
+
+            return $resultado;
+        }
     }
 ?>

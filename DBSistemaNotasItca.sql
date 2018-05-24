@@ -351,6 +351,8 @@ select * from TareaSubidaPor;
 select * from ArchivoSubido;
 select * from GuiaModulo;
 
+delete from Ponderacion where idPonderacion=
+
 
 select *
 from Modulo as M

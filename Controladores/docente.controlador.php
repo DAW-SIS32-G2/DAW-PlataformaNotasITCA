@@ -107,7 +107,6 @@
 
         public function eliminarContra($idModulo)
         {
-        
             $resultado = $this->model->eliminarContra($idModulo);
         }
 
@@ -131,6 +130,62 @@
             {
                 return "Las claves no coinciden";
             }
+        }
+
+        public function obtenerNombrePonderacion($idPonderacion)
+        {
+            $resultado=$this->model->obtenerNombrePonderacion($idPonderacion);
+            return $resultado;
+        }
+
+        public function eliminarDirectoriosPonderaciones($idPonderacion,$idModulo)
+        {
+            $resultado=$this->model->CargarGrupoIndividual($idModulo);
+
+            if($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+            {
+                $siglasModulos=$arrayGrupos['siglas'];
+                $anyosModulos=$arrayGrupos['anyo'];
+
+                $ruta="Archivos/Practicas/".$siglasModulos."-".$anyosModulos."/Ponderacion_".$idPonderacion."/";
+
+                $resultado=$this->borrarDirectorio($ruta);
+
+                if($resultado)
+                {
+                    return $resultado;
+                }
+            }
+        }
+
+        public function borrarDirectorio($ruta)
+        {
+            $resultados=scandir($ruta);
+
+            foreach($resultados as $resultado)
+            {
+                if(!($resultado=="." or $resultado==".."))
+                {
+                    if(is_dir($ruta.$resultado))
+                    {
+                        $this->borrarDirectorio($ruta.$resultado."/");
+                    }
+                    elseif(is_file($ruta.$resultado))
+                    {
+                        unlink($ruta.$resultado);
+                    }
+                }
+            }
+            if(rmdir($ruta))
+            {
+                return true;
+            }
+        }
+
+        public function eliminarPonderacion($idPonderacion)
+        {
+            $resultado=$this->model->eliminarPonderacion($idPonderacion);
+            return $resultado;
         }
     }
   ?>

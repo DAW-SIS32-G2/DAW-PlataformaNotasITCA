@@ -122,6 +122,37 @@ if(isset($_REQUEST['eliminarContra']))
 		echo '<div class="alert alert-success"> Contraseña eliminada.</div>';
 	}
 }
+
+if(isset($_REQUEST['EliminarPonderacion']))
+{
+	$idPonderacion=$_REQUEST['idPonderacion'];
+	$idModulo=$_REQUEST['idModulo'];
+
+	$objDocenteControlador=new docenteControlador('docenteModelo');
+
+	$resultado=$objDocenteControlador->eliminarDirectoriosPonderaciones($idPonderacion,$idModulo);
+
+	if($resultado)
+	{
+		$resultado=$objDocenteControlador->eliminarPonderacion($idPonderacion);
+
+		if(gettype($resultado)=="string")
+        {
+            echo '<div class="alert alert-danger">'.$resultado.'</div>';
+        }
+        else
+        {
+        	echo '<div class="alert alert-success"> La ponderacion y sus archivos relacionados han sido eliminados.</div>';
+        }
+	}
+	else
+	{
+		echo "Error: No se pudo borrar el directorio.";
+	}
+
+	/*$resultado=$objDocenteControlador->eliminarPonderacion($idPonderacion);*/
+}
+
 ?>
  <div class="container" style="padding-top: 65px">
 
