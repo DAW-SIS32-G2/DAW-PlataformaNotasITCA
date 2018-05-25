@@ -116,8 +116,8 @@ else
                   echo "
                     <tr>
                       <td>
-                        <a href=\"#\" data-toggle=\"modal\" data-target=\"#eliminarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\" data-modulo=\"".$idModulo."\"><span class=\"oi oi-delete\"></span><small> Eliminar</small></a><br>                   
-                        <a href=\"#\" data-toggle=\"modal\" data-target=\"#modificarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\"><span class=\"oi oi-brush\"></span><small> Editar</small></a>
+                        <a href=\"#\" data-toggle=\"modal\" data-target=\"#eliminarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\" data-modulo=\"".$idModulo."\"><i class='material-icons'>backspace</i><small> Eliminar</small></a><br>                   
+                        <a href=\"#\" data-toggle=\"modal\" data-target=\"#modificarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\"><i class='material-icons'>create</i><small> Editar</small></a>
                       </td>
                       <td>".$fila['carnet']."</td>
                       <td>".$fila['nombres']."</td>
