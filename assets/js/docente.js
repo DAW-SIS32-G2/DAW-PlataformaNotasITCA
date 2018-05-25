@@ -73,15 +73,22 @@ function mostrarDiv(tipoDiv,idModulo)
 	
 }
 
-function comprimirGuias(ruta,archivo)
+function comprimirGuias(rutaG,archivo,rutaP)
 {
 	$.ajax({
 	      type      : 'post',
 	      url       : 'ajax/zip',
-	      data      : {ruta : ruta, archivo : archivo, comprimir : true},
+	      data      : {rutaGuias : rutaG, archivo : archivo, rutaPracticas : rutaP, comprimir : true},
 	      success   : function(respuesta)
 	      {
-	        descargar(respuesta);
+	      	if(!respuesta)
+	      	{
+	      		alert("No hay archivos en este modulo.");
+	      	}
+	      	else
+	      	{
+		        descargar(respuesta);
+	      	}
 	      }
 	  });
 }
@@ -258,6 +265,26 @@ function confirmarBorrarPonderacion(idPonderacion, idModulo)
 	      success   : function(respuesta)
 	      {
 	        document.getElementById('adminPonderaciones').innerHTML = respuesta;
+	      }
+	  });
+}
+
+function comprimirPracticasPonderacion(rutaArchivo, archivo)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/zip',
+	      data      : {rutaArchivo : rutaArchivo, archivo : archivo, comprimirPracticasPonderacion : true},
+	      success   : function(respuesta)
+	      {
+	      	if(!respuesta)
+	      	{
+	      		alert("No hay archivos en esta ponderacion.");
+	      	}
+	      	else
+	      	{
+		        descargar(respuesta);
+	      	}
 	      }
 	  });
 }

@@ -199,9 +199,35 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
                     }
                     else
                     {
+                        $objDocenteControlador=new DocenteControlador('DocenteModelo');
+
                         $totalPorcentajes=0;
                         for ($j=0;$j<$cantidadPonderaciones;$j++)
                         {
+                            $resultado=$objDocenteControlador->ObtenerSiglas($idModulo);
+
+                            while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+                            {
+                                $siglasModulos=$arrayGrupos['siglas'];
+                                $anyosModulos=$arrayGrupos['anyo'];
+                            }
+
+                            $resultado=$objDocenteControlador->obtenerNombrePonderacion($idPonderaciones[$j]);
+
+                            $nombrePonderacion=$resultado->fetch_assoc();
+
+
+
+                            $rutaArchivo="Archivos/Practicas/".$siglasModulos."-".$anyosModulos."/Ponderacion_".$nombrePonderacion['nombrePonderacion']."_".$nombrePonderacion['idPonderacion']."/";
+
+                            $archivo=$siglasModulos."-".$anyosModulos."_ArchivosPonderacion_".$nombrePonderacion['nombrePonderacion']."_".$nombrePonderacion['idPonderacion'];
+
+                            $aux=cifrar($rutaArchivo);
+                            $rutaArchivo=$aux;
+
+                            $aux=cifrar($archivo);
+                            $archivo=$aux;
+
                             ?>
                                 <span>
                                     <input type="hidden" name="idPonderaciones[]" value="<?= $idPonderaciones[$j] ?>">
@@ -213,6 +239,8 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
                                     </label>
 
                                     <button class="btn btn-info" type="button" onclick="confirmarBorrarPonderacion(<?= $idPonderaciones[$j] ?>,<?= $idModulo ?>)">Eliminar</button>
+
+                                    <button class="btn btn-info" type="button" onclick="comprimirPracticasPonderacion('<?= $rutaArchivo ?>','<?= $archivo ?>')">Descargar</button>
 
                                 </span>
                                 <br>
@@ -267,6 +295,16 @@ if(isset($_REQUEST['ConfirmarBorrarPonderacion']))
             <input type="submit" name="EliminarPonderacion" value="Eliminar Ponderacion" onclick="return verificarDocente()" class="btn btn-info">
         </form>
     <?php
+}
+
+if(isset($_REQUEST['descargarPracticasPonderacion']))
+{
+    $idPonderacion=$_REQUEST['idPonderacion'];
+    $idModulo=$_REQUEST['idModulo'];
+
+    $objDocenteControlador=new DocenteControlador('DocenteModelo');
+
+    $resultado=$objDocenteControlador->descargarPracticasPonderacion($idPonderacion,$idModulo);
 }
 
 ?>

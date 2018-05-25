@@ -72,6 +72,12 @@
             return $resultado;
         }
 
+        public function CargarGrupoIndividual($idModulo)
+        {
+            $resultado = $this->model->CargarGrupoIndividual($idModulo);
+            return $resultado;
+        }
+
         public function asignarContra($idModulo,$contra)
         {
             $resultado = $this->model->asignarContra($idModulo,$contra);
@@ -147,7 +153,13 @@
                 $siglasModulos=$arrayGrupos['siglas'];
                 $anyosModulos=$arrayGrupos['anyo'];
 
-                $ruta="Archivos/Practicas/".$siglasModulos."-".$anyosModulos."/Ponderacion_".$idPonderacion."/";
+                $resultado=$this->model->obtenerNombrePonderacion($idPonderacion);
+
+                $arrayPonderacion=$resultado->fetch_array(MYSQLI_ASSOC);
+
+                $nombrePonderacion=$arrayPonderacion['nombrePonderacion'];
+
+                $ruta="Archivos/Practicas/".$siglasModulos."-".$anyosModulos."/Ponderacion_".$nombrePonderacion."_".$idPonderacion."/";
 
                 $resultado=$this->borrarDirectorio($ruta);
 
@@ -187,5 +199,24 @@
             $resultado=$this->model->eliminarPonderacion($idPonderacion);
             return $resultado;
         }
+
+        public function descargarPracticasPonderacion($idPonderacion,$idModulo)
+        {
+            $resultado=$this->model->descargarPracticasPonderacion($idPonderacion,$idModulo);
+            return $resultado;
+        }
+
+        public function cerrarGrupo($idModulo)
+        {
+            $resultado=$this->model->cerrarGrupo($idModulo);
+            return $resultado;
+        }
+
+        public function abrirGrupo($idModulo)
+        {
+            $resultado=$this->model->abrirGrupo($idModulo);
+            return $resultado;
+        }
+        
     }
   ?>

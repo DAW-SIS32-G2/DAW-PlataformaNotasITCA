@@ -32,6 +32,16 @@
             return $resultado;
         }
 
+        public function CargarGruposActivos()
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->ConsultaPersonalizada("select * from Modulo as M inner join Horario as H on M.idHorario = H.idHorario inner join Grupo as G on H.idGrupo = G.idGrupo where M.carnet='".$_SESSION['usuario']."' and M.activo=1");
+
+            return $resultado;
+        }
+        
+
         public function actualizarPonderaciones($nombrePonderacion,$valor,$idPonderacion)
         {
             @$conex=new funcionesBD();
@@ -66,7 +76,13 @@
 
         public function InsertarPracticas($nombreTarea,$porcentaje,$cantidadEjercicios,$idPonderacion,$carpetaMod,$anyoModulo)
         {
-            $directorio = "Archivos/Practicas/".$carpetaMod."-$anyoModulo/Ponderacion_$idPonderacion/".$nombreTarea;
+            $conex=new funcionesBD();
+
+            $resultado=$conex->ConsultaPersonalizada("SELECT P.nombrePonderacion from Ponderacion as P where idPonderacion=$idPonderacion");
+
+            $nombrePonderacion=$resultado->fetch_assoc();
+
+            $directorio = "Archivos/Practicas/".$carpetaMod."-$anyoModulo/Ponderacion_".$nombrePonderacion['nombrePonderacion']."_$idPonderacion/".str_replace(" ", "_", $nombreTarea);
 
             if(file_exists($directorio))
             {
@@ -76,7 +92,7 @@
             {
                 $conex=new funcionesBD();
 
-                $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo","'$nombreTarea',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',1");
+                $resultado=$conex->insertar("Tarea","nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo","'".str_replace(" ", "_", $nombreTarea)."',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',1");
 
                 if($resultado)
                 {
@@ -329,6 +345,24 @@
                     return $resultado;
                 }
             }
+        }
+
+        public function cerrarGrupo($idModulo)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->ActualizarRegistro('Modulo', 'estado', '0', "idModulo=$idModulo");
+
+            return $resultado;
+        }
+
+        public function abrirGrupo($idModulo)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->ActualizarRegistro('Modulo', 'estado', '1', "idModulo=$idModulo");
+
+            return $resultado;
         }
     }
 ?>

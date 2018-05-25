@@ -149,8 +149,44 @@ if(isset($_REQUEST['EliminarPonderacion']))
 	{
 		echo "Error: No se pudo borrar el directorio.";
 	}
+}
 
-	/*$resultado=$objDocenteControlador->eliminarPonderacion($idPonderacion);*/
+if(isset($_REQUEST['cerrarGrupo']))
+{
+	$idModulo=$_REQUEST['idModulo'];
+
+	$objDocenteControlador=new docenteControlador('docenteModelo');
+
+	$resultado=$objDocenteControlador->cerrarGrupo($idModulo);
+
+
+	if(gettype($resultado)=="string")
+    {
+        echo '<div class="alert alert-danger">'.$resultado.'</div>';
+    }
+    else
+    {
+    	echo '<div class="alert alert-success"> El grupo ha sido cerrado.</div>';
+    }
+}
+
+if(isset($_REQUEST['abrirGrupo']))
+{
+	$idModulo=$_REQUEST['idModulo'];
+
+	$objDocenteControlador=new docenteControlador('docenteModelo');
+
+	$resultado=$objDocenteControlador->abrirGrupo($idModulo);
+
+
+	if(gettype($resultado)=="string")
+    {
+        echo '<div class="alert alert-danger">'.$resultado.'</div>';
+    }
+    else
+    {
+    	echo '<div class="alert alert-success"> El grupo ha sido abierto.</div>';
+    }
 }
 
 ?>
@@ -193,7 +229,7 @@ if(isset($_REQUEST['EliminarPonderacion']))
 
 		<?php
 
-			$resultado=$objDocenteModelo->CargarGrupos();
+			$resultado=$objDocenteModelo->CargarGruposActivos();
 
 			if (gettype($resultado)=="string")
 			{
@@ -254,16 +290,56 @@ if(isset($_REQUEST['EliminarPonderacion']))
 
 
 
-		                $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/";
+		                $rutaArchivoGuias="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/";
+		                $rutaArchivoPracticas="Archivos/Practicas/".$siglasModulos."-".$anyosModulos."/";
 		                $archivo=$siglasModulos."-".$anyosModulos."_";
+
+		                $aux=cifrar($rutaArchivoGuias);
+		                $rutaArchivoGuias=$aux;
+
+		                $aux=cifrar($rutaArchivoPracticas);
+		                $rutaArchivoPracticas=$aux;
+
+		                $aux=cifrar($archivo);
+		                $archivo=$aux;
 
 						 ?>
 
-						<button class="btn btn-info" onclick="comprimirGuias('<?= $rutaArchivo ?>','<?= $archivo ?>')">Descargar<br>todas las<br>guias</button>
+						<button class="btn btn-info" onclick="comprimirGuias('<?= $rutaArchivoGuias ?>','<?= $archivo ?>','<?= $rutaArchivoPracticas ?>')">Descargar<br>todas las<br>guias</button>
 					</td>
 
 					<td>
-						Grupo Activo<br>
+						<?php 
+
+							$objDocenteControlador=new docenteControlador('docenteModelo');
+
+							$resultado=$objDocenteControlador->CargarGrupoIndividual($idModulo[$k]);
+
+							$estadoModulo=$resultado->fetch_assoc();
+
+							if($estadoModulo['estado']==0)
+							{
+								?>
+									Grupo Cerrado<br>
+									<form action="" method="post">
+										<input type="hidden" name="idModulo" value="<?= $idModulo[$k] ?>">
+										<button class="btn btn-info" name="abrirGrupo">Abrir grupo</button>
+									</form><br>
+								<?php
+							}
+							elseif($estadoModulo['estado']==1)
+							{
+								?>
+									Grupo Abierto<br>
+									<form action="" method="post">
+										<input type="hidden" name="idModulo" value="<?= $idModulo[$k] ?>">
+										<button class="btn btn-info" name="cerrarGrupo">Cerrar grupo</button>
+									</form><br>
+								<?php
+							}
+
+						?>
+						
 						<button class="btn btn-info" onclick="mostrarDiv('Contra','<?= $idModulo[$k] ?>')">Administrar<br>seguridad</button>
 					</td>
 

@@ -315,23 +315,29 @@ select * from TareaSubidaPor;
 select * from ArchivoSubido;
 select * from GuiaModulo;
 
+select P.nombrePonderacion from Ponderacion as P where idPonderacion=11;
+
 select *
 from Modulo as M
 inner join Horario as H
 on M.idHorario = H.idHorario
 inner join Grupo as G
 on H.idGrupo = G.idGrupo
-where M.carnet='funes';
+where M.carnet='funes' and M.activo=1;
+
 select * from Ponderacion as P
 inner join Modulo as M
 on M.idModulo=P.idModulo
 where P.idModulo='1';
+
 SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios
 from Ponderacion as P
 inner join Tarea as T
 on P.idPonderacion=T.idPonderacion
 where P.idModulo=1;
+
 SELECT M.siglas,M.anyo FROM Modulo AS M WHERE M.idModulo= 100;
+
 select M.protegidoPorContra, M.contraModulo from Modulo as M where idModulo=100;
 ---- Select por docente -----
 Select Modulo.nombreModulo, CONCAT(Grupo.nombreGrupo,' ',Grupo.seccion) AS 'clase', DetalleModulo.horaInicio, DetalleModulo.horaFin, DetalleModulo.aula, CONCAT(Docente.nombres,' ',Docente.apellidos) as 'docente', DetalleModulo.horas, DetalleModulo.dia from modulo inner join DetalleModulo on Modulo.idModulo = DetalleModulo.idModulo INNER JOIN Grupo on Grupo.idGrupo = Modulo.idGrupo inner join Docente on Docente.carnet = Modulo.carnet WHERE Docente.carnet = '$carnet' order by DetalleModulo.horaInicio
@@ -355,7 +361,7 @@ values(101,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueb
 
 insert into
 Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, contraModulo, idHorario, carnet)
-values(103,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31A','practico','2018','1','1',1,'AMATS-Prueba31A','101','funes');
+values(103,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31A','practico','2018','1','0',1,'AMATS-Prueba31A','101','funes');
 
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','15','100');
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','15','100');

@@ -308,6 +308,34 @@ class funcionesBD
         return $res;
     }
 
+    public function EliminarRegistro($tabla,$condicion)
+	{
+		if($condicion!="")
+		{
+			$resultado=$this->bd->query("DELETE from $tabla where $condicion");
+		}
+		else
+		{
+			$resultado="Error. Por seguridad no puede hacer un DELETE sin una condición.";
+		}
+
+		if($resultado)
+		{
+			//Cerrando conexión
+			$this->bd->close();
+			return $resultado;
+		}
+		else
+		{
+			$error=$this->bd->error;
+			//Cerrando conexión
+			$this->bd->close();
+			return "Error en la consulta: ". $error;
+		}
+
+	}
+
+
 
 }
 
