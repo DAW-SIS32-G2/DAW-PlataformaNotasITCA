@@ -1,11 +1,15 @@
 drop database if exists SistemaNotasItca;
+
 create database SistemaNotasItca;
+
 use SistemaNotasItca;
+
 create table Departamento(
 idDepartamento int auto_increment not null,
 nombreDepartamento varchar(50) not null,
 primary key pkDepartamento(idDepartamento)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Insercion de departamentos*/
 insert into Departamento(nombreDepartamento) values('Sistemas');
 INSERT INTO Departamento(nombreDepartamento) VALUES('Eléctrica');
@@ -13,6 +17,7 @@ INSERT INTO Departamento(nombreDepartamento) VALUES('Área básica');
 INSERT INTO Departamento(nombreDepartamento) VALUES('Administración');
 INSERT INTO Departamento(nombreDepartamento) VALUES('Patrimonio');
 INSERT INTO Departamento(nombreDepartamento) VALUES('Servicio Desarrollo prof.');
+
 create table Carrera(
 idCarrera int auto_increment not null,
 nombreCarrera varchar(60) not null,
@@ -20,18 +25,21 @@ idDepartamento int not null,
 primary key pkCarrera(idCarrera),
 foreign key fkCarreraXDepartamento(idDepartamento) references Departamento(idDepartamento)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Insercion de carreras*/
 INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Sistemas Informáticos','1');
 INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Ingeniería Eléctrica','2');
 INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Mantenimiento de Computadoras','2');
 INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Gestión Tecnológica del Patrimonio Cultural','5');
 INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Cursos libres','6');
+
 create table BuzonArchivos(
 idBuzonArchivos int auto_increment not null,
 carnet varchar(6) not null,
 estado boolean not null,
 primary key pkBuzonArchivos(idBuzonArchivos)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table Grupo(
 idGrupo int auto_increment not null,
 nombreGrupo varchar(10) not null,
@@ -39,6 +47,7 @@ seccion varchar(1) not null,
 anyo int null,
 primary key pkGrupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Inserción de grupos*/
 insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS31','A','2018');
 insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS31','B','2018');
@@ -48,6 +57,7 @@ insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS32','B','2018');
 insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS32','U','2018');
 insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS33','A','2018');
 insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS33','U','2018');
+
 create table Usuario(
 idUsuario int auto_increment not null,
 carnet varchar(6) not null,
@@ -67,6 +77,7 @@ primary key pkUsuario(idUsuario),
 foreign key fkUsuarioXCarrera(idCarrera) references Carrera(idCarrera),
 foreign key fkUsuarioXGrupo(idGrupo) references Grupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table Docente(
 idDocente int auto_increment not null,
 carnet varchar(20) NOT NULL,
@@ -81,12 +92,23 @@ idDepartamento int not null,
 primary key pkDocente(idDocente),
 foreign key fkDocenteXDepartamento(idDepartamento) references Departamento(idDepartamento)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('funes', 'Roberto Enrique', 'Funes Rivera', 'administrador', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('vladimir', 'Vladimir Edenilson', 'Aguilar', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('magari', 'Henry Magari', 'Vanegas', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('quintanilla', 'Ricardo Edgardo', 'Quintanilla', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('yaqueline', 'Yaqueline Catalina', 'Pimentel', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('melbin', 'Melbin', 'Barrera', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
+
+create table InsercionDocente(
+idInsercion int auto_increment not null,
+carnetDoc varchar(20) not null comment 'Carnet del docente que lo registró',
+carnetAlumno varchar(6) not null comment 'Carnet del alumno registrado', 
+idDocente int not null comment 'foranea',
+primary key pkInserDoc(idInsercion),
+foreign key fkInsercionDocenteXDocente(idDocente) references Docente(idDocente)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table Archivo(
 idArchivo int auto_increment not null,
 nombreArchivo varchar(256) not null,
@@ -99,6 +121,7 @@ primary key pkArchivo(idArchivo),
 foreign key fkArchivoXUsuario(idUsuario) references Usuario(idUsuario),
 foreign key fkArchivoXBuzonArchivos(idBuzonArchivos) references BuzonArchivos(idBuzonArchivos)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table ArchivoCompartido(
 idArchivoCompartido int auto_increment not null,
 carnet varchar(6) not null,
@@ -107,6 +130,7 @@ idArchivo int not null comment 'foranea',
 primary key pkArchivoCompartido(idArchivoCompartido),
 foreign key fkArchivoCompartidoXArchivo(idArchivo) references Archivo(idArchivo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table Horario(
 idHorario int auto_increment not null,
 anyo int not null,
@@ -115,6 +139,7 @@ idGrupo int not null comment 'foranea',
 primary key pkHorario(idHorario),
 foreign key fkHorarioXGrupo(idGrupo) references Grupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Inserción de horarios*/
 /*Horario para SIS31A*/
 insert into Horario(anyo, periodo, idGrupo) values('2018','1','1');
@@ -132,6 +157,7 @@ insert into Horario(anyo, periodo, idGrupo) values('2018','1','6');
 insert into Horario(anyo, periodo, idGrupo) values('2018','1','7');
 /*Horario para SIS33U*/
 insert into Horario(anyo, periodo, idGrupo) values('2018','1','8');
+
 create table Modulo(
 idModulo int auto_increment not null,
 nombreModulo varchar(100) not null,
@@ -147,6 +173,7 @@ carnet varchar(20) NULL,
 primary key pkModulo(idModulo),
 foreign key fkModuloXHorario(idHorario) references Horario(idHorario)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32A','practico','2018',1,1,0,'4','quintanilla');
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32B','practico','2018',1,1,0,'5','magari');
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32U','teorico','2018',1,1,0,'6','magari');
@@ -158,6 +185,7 @@ insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, prote
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32U','teorico','2018',1,1,0,'6','vladimir');
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Comunicación Oral y Escrita', 'COE-SIS32U','teorico','2018',1,1,0,'6','yaqueline');
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Física', 'FIS-SIS32U','teorico','2018',1,1,0,'6','melbin');
+
 create table DetalleModulo(
 id_detalle int auto_increment not null,
 aula varchar(10) not null,
@@ -171,6 +199,7 @@ idModulo int not null comment 'Hace referencia al modulo al que pertenece',
 primary key pkdetmod(id_detalle),
 foreign key fkmodulo(idModulo) references Modulo(idModulo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Inserción de detalles de modulo*/
 insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','07:00:00','08:40:00','1','Lunes','4','2','7');
 insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('CC1','09:00:00','10:40:00','1','Lunes','4','2','7');
@@ -195,6 +224,7 @@ insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModu
 insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('C102','10:40:00','12:20:00','1','Jueves','6','2','3');
 insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','07:00:00','08:40:00','1','Viernes','6','2','10');
 insert into DetalleModulo(aula,horaInicio,horaFin,ciclo,dia,idGrupo,horas,idModulo) values ('101','09:00:00','10:40:00','1','Viernes','6','2','6');
+
 create table GuiaModulo(
 idGuiaModulo int auto_increment not null,
 nombreGuia varchar(200) not null,
@@ -203,6 +233,7 @@ idModulo int not null comment 'foranea',
 primary key pkGuiaModulo(idGuiaModulo),
 foreign key fkGuiaModuloXModulo(idModulo) references Modulo(idModulo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table UsuarioActivo(
 idUsuarioActivo int auto_increment not null,
 carnet varchar(6) not null,
@@ -210,6 +241,7 @@ idModulo int not null comment 'foranea',
 primary key pkUsuarioActivo(idUsuarioActivo),
 foreign key fkUsuarioActivoXModulo(idModulo) references Modulo(idModulo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table ArchivoSubido(
 idArchivoSubido int auto_increment not null,
 nombre varchar(200) not null,
@@ -219,6 +251,7 @@ idModulo int not null comment 'foranea',
 primary key pkArchivoSubido(idArchivoSubido),
 foreign key fkArchivoSubidoXModulo(idModulo) references Modulo(idModulo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table Ponderacion(
 idPonderacion int auto_increment not null,
 nombrePonderacion varchar(20) not null,
@@ -227,6 +260,7 @@ idModulo int not null comment 'foranea',
 primary key pkPonderacion(idPonderacion),
 foreign key fkPonderacionXModulo(idModulo) references Modulo(idModulo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Insercion de ponderaciones*/
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','15','1');
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','15','1');
@@ -238,6 +272,7 @@ insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('Trabajo','0','2');
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EJP','0','2');
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','0','2');
+
 create table Tarea(
 idTarea int auto_increment not null,
 nombreTarea varchar(30) not null,
@@ -251,8 +286,10 @@ idPonderacion int not null comment 'foranea',
 primary key pkTarea(idTarea),
 foreign key fkTareaXPonderacion(idPonderacion) references Ponderacion(idPonderacion)  on update cascade on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Inserción de tareas*/
 insert into Tarea(nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo) values('practica05',8.55,'100',5,'practica05',1);
+
 create table TareaSubidaPor(
 idTareaSubidaPor int auto_increment not null,
 carnet varchar(6) not null,
@@ -261,6 +298,7 @@ ruta varchar(250) not null comment 'Aquí se guardará donde esta el archivo sub
 primary key pkTareaSubidaPor(idTareaSubidaPor),
 foreign key fkTareaSubidaPorXTarea(idTarea) references Tarea(idTarea)  on update cascade on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table Nota(
 idNota int auto_increment not null,
 carnet varchar(6) not null,
@@ -269,14 +307,6 @@ idTarea int not null comment 'foranea',
 primary key pkNota(idNota),
 foreign key fkNotaXTarea(idTarea) references Tarea(idTarea)  on update cascade on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-create table InsercionDocente(
-idInsercion int auto_increment not null,
-carnetDoc varchar(20) not null comment 'Carnet del docente que lo registró',
-carnetAlumno varchar(6) not null comment 'Carnet del alumno registrado', 
-primary key pkInserDoc(idInsercion)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 delimiter //
 CREATE function activa(_idTarea int)
@@ -300,6 +330,7 @@ end if;
 return valo;
 end //
 delimiter ;
+
 /****************Select's de las tablas****************/
 /* Descomentar solo cuando se usara el select*/
 /*
@@ -344,6 +375,7 @@ Select Modulo.nombreModulo, CONCAT(Grupo.nombreGrupo,' ',Grupo.seccion) AS 'clas
 ---- Select por grupo ----
 Select Modulo.nombreModulo, CONCAT(Grupo.nombreGrupo,' ',Grupo.seccion) AS 'clase', DetalleModulo.horaInicio, DetalleModulo.horaFin, DetalleModulo.aula, CONCAT(Docente.nombres,' ',Docente.apellidos) as 'docente', DetalleModulo.horas, DetalleModulo.dia from modulo inner join DetalleModulo on Modulo.idModulo = DetalleModulo.idModulo INNER JOIN Grupo on Grupo.idGrupo = Modulo.idGrupo inner join Docente on Docente.carnet = Modulo.carnet WHERE CONCAT() = '$carnet' order by DetalleModulo.horaInicio
 */
+
 /****************Insercion de registros de prueba Roberto (no borrar)****************/
 insert into grupo(idGrupo,nombreGrupo,seccion,anyo) values (100,'Prueba31','U','2018');
 insert into grupo(idGrupo,nombreGrupo,seccion,anyo) values (101,'Prueba31','A','2018');
