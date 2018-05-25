@@ -10,7 +10,7 @@
       </li>
       <li class="nav-item active dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="material-icons">schedule</i>&nbsp;Horarios
+          <i class="material-icons">event_note</i>&nbsp;Horarios
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="<?= urlBase ?>docente/mihorario">Mi horario</a>
