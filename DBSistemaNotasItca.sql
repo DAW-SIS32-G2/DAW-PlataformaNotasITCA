@@ -96,13 +96,12 @@ insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) 
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('magari', 'Henry Magari', 'Vanegas', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('quintanilla', 'Ricardo Edgardo', 'Quintanilla', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('yaqueline', 'Yaqueline Catalina', 'Pimentel', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
-insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('melbin', 'Melbin', 'Barrera', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
+insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('melvin', 'Melvin', 'Barrera', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 
 create table InsercionDocente(
 idInsercion int auto_increment not null,
-carnetDoc varchar(20) not null comment 'Carnet del docente que lo registró',
 carnetAlumno varchar(6) not null comment 'Carnet del alumno registrado', 
-carnet varchar(20) NOT NULL comment 'foranea',
+carnet varchar(20) NOT NULL comment 'foranea, carnet del docente que lo registro',
 primary key pkInserDoc(idInsercion),
 foreign key fkInsercionDocenteXDocente(carnet) references Docente(carnet)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -178,7 +177,7 @@ insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, prote
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32A','practico','2018',1,1,0,'4','vladimir');
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32B','practico','2018',1,1,0,'5','magari');
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Aplicación de Metodologías Ágiles y Testeo de Software','AMATS-SIS32U','teorico','2018',1,1,0,'6','magari');
-insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32A','practico','2018',1,'activo',1,'4','vladimir');
+insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32A','practico','2018',1,1,1,'4','vladimir');
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32B','practico','2018',1,1,0,'5','vladimir');
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Instalación y Configuración de Software y Hardware', 'ICH-SIS32U','teorico','2018',1,1,0,'6','vladimir');
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Comunicación Oral y Escrita', 'COE-SIS32U','teorico','2018',1,1,0,'6','yaqueline');

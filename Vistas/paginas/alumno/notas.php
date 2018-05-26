@@ -15,7 +15,7 @@ while($fila = mysqli_fetch_assoc($res))
             <div class="card" style="border-color: red;">
                 <div class="card-body">
                     <?php
-                            if($datos['foto'] != "")
+                            if(@$datos['foto'] != "")
                             {
                                 ?>
                                 <img src="<?= $datos['foto'] ?>" alt="Foto" class="img-fluid">
@@ -36,7 +36,7 @@ while($fila = mysqli_fetch_assoc($res))
             <h4>Carnet: <?= $_SESSION['usuario'] ?></h4>
             <form action="">
                 <label>Materia:
-                    <select name="" id="" class="form-control">
+                    <select name="materia" id="materia" class="form-control">
                         <option value="">--Seleccione Uno--</option>
                         <?php
                         $sql = "Select Modulo.idModulo, Modulo.nombreModulo, Modulo.tipoModulo from UsuarioActivo INNER JOIN Modulo ON UsuarioActivo.idModulo = Modulo.idModulo Where UsuarioActivo.carnet = '".$_SESSION['usuario']."'";

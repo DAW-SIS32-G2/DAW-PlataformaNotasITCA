@@ -47,10 +47,10 @@
                 {
                     mkdir("Archivos/Guias/".$siglasModulos."-".$anyosModulos,0777,true);
                 }
-                
+
                 move_uploaded_file($nombreTemporal,$rutaArchivo);
 
-                echo $yaExiste."Archivo subido con exito. Ocupara ". $file['size']." bytes de memoria en disco";
+                echo @$yaExiste."Archivo subido con exito. Ocupara ". $file['size']." bytes de memoria en disco";
 
                 $this->model->GuardarGuiasBaseDatos($nombre,$rutaArchivo,$idModulo);
             }
@@ -104,10 +104,10 @@
                 }
             }
         }
-        
+
         public function modificarContra($idModulo,$contra)
         {
-        
+
             $resultado = $this->model->modificarContra($idModulo,$contra);
         }
 

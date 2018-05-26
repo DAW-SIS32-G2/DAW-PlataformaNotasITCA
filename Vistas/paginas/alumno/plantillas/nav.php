@@ -54,9 +54,6 @@
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/inscribir">Inscribir</a>
                 </div>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link nav-but" href="<?= urlBase ?>logout"><i class="material-icons">arrow_back</i>&nbsp;Cerrar</a>
-            </li>
             <li class="nav-item dropdown active">
                 <a class="nav-link nav-but dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
@@ -65,6 +62,9 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item nav-but disabled" href="#">No hay notificaciones nuevas</a>
                 </div>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link nav-but" href="<?= urlBase ?>logout"><i class="material-icons">arrow_back</i>&nbsp;Cerrar</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">

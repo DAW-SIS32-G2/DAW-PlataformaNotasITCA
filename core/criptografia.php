@@ -12,7 +12,7 @@ $key = "bRuD5WYw5wd0rdHR9yLlM6wt2vteuiniQBqE70nAuhU=";
 function cifrar($datos)
 {
     # Quitamos la codificacion base64 de nuestra llave
-    $clave_cifrado = base64_decode($key);
+    @$clave_cifrado = base64_decode($key);
 
     # Generamos un vector de inicialización para nuestra clave
     $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
