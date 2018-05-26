@@ -42,6 +42,15 @@
             return $resultado;
           }
       }
+
+      public function ObtenerSiglas($idModulo)
+        {
+            $conex = new funcionesBD();
+
+            $resultado=$conex->ConsultaPersonalizada("SELECT M.siglas,M.anyo FROM Modulo AS M WHERE M.idModulo= '$idModulo'");
+
+            return $resultado;
+        }
       
   }
 ?>

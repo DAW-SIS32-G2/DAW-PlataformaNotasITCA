@@ -131,65 +131,7 @@ if(isset($_POST['idModulo']))
 	        </div>
 	    </div>
 	</div>
-	<script type="text/javascript">
-		$("#subirMod").on('show.bs.modal', function(event) {
-			var button = $(event.relatedTarget);
-			var practica = button.data('practica');
-			var idTarea = button.data('idtarea');
-			var carnet = button.data('carnet');
-			var ruta = button.data('ruta');
-			var modal = $(this);
-
-			modal.find("#idtarea").val(idTarea);
-			modal.find("#carnet").val(carnet);
-			modal.find("#ruta").val(ruta);
-			modal.find(".modal-title").text("Subir Práctica: " + practica);
-		});
-
-		$("#subirMod").on('hide.bs.modal', function(event) {
-			$("#archivo").val(null);
-		})
-
-		$("#subPractica").on("submit", function(e){
-			e.preventDefault();
-			var f = $(this);
-
-			var formData = new FormData(document.getElementById("subPractica"));
-			formData.append("subirPrac",1);
-
-			$.ajax({
-				url			: "ajax/practicas",
-				type 		: "post",
-				dataType	: "html",
-				data 		: formData,
-				contentType : false,
-				processData : false
-			})
-			.done(function(res){
-				$("#subirMod").modal('hide');
-				swal({
-					text: res,
-					icon: "success",
-					button: "Aceptar"
-				})
-			});
-		});
-
-		function descargar(archivo)
-		{
-			$.ajax({
-			      type      : 'post',
-			      url       : 'ajax/procesarDescarga',
-			      data      : {ruta: archivo},
-			      success   : function(respuesta)
-			      {
-			        window.location.href="descargar";
-			      }
-			  });
-			
-		}
-	</script>
-	<?php
+<?php
 }
 else if(isset($_POST['subirPrac']))
 {

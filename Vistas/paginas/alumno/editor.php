@@ -37,23 +37,3 @@
 		</div>
 	</div>
 </body>
-<script type="text/javascript">
-	function visualizar()
-	{
-		$.ajax({
-			type 	: "post",
-			url 	: "ajax/resultadoEditor",
-			data 	: {
-						 "html" : $("#html").val(),
-						 "css"	: $("#css").val(),
-						 "js"	: $("#js").val()
-					  },
-			success : function(mensaje)
-					  {
-					  		$("#resultado").html(mensaje);
-					  		var iframe = document.getElementById("res");
-					  		iframe.src = iframe.src;
-					  }
-		})
-	}
-</script>
