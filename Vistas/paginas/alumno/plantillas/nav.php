@@ -8,18 +8,18 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link nav-but" href="<?= urlBase ?>alumno">Inicio</a>
+                <a class="nav-link nav-but" href="<?= urlBase ?>alumno"><i class="material-icons">home</i>&nbsp;Inicio</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link nav-but" href="<?= urlBase ?>alumno/actualizar">Actualizar Datos</a>
+            <li class="nav-item active">
+                <a class="nav-link nav-but" href="<?= urlBase ?>alumno/actualizar"><i class="material-icons">update</i>&nbsp;Actualizar Datos</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link nav-but" href="<?= urlBase ?>alumno/notas">Notas</a>
+            <li class="nav-item active">
+                <a class="nav-link nav-but" href="<?= urlBase ?>alumno/notas"><i class="material-icons">assignment_turned_in</i>&nbsp;Notas</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link nav-but dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    Servicios
+                    <i class="material-icons">dashboard</i>&nbsp;Servicios
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item nav-but">Programas</a>
@@ -28,23 +28,23 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item nav-but" >HTML5</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link nav-but dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    Servicios Estudiantiles
+                    <i class="material-icons">book</i>&nbsp;Servicios Estudiantiles
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item nav-but">Editor Web Html</a>
+                    <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/editor">Editor Web Html</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/practica_prof">Practica Profesional</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item nav-but">Historial</a>
                 </div>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link nav-but dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    Modulos
+                    <i class="material-icons">assignment</i>&nbsp;Modulos
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/guias">Guias</a>
@@ -54,9 +54,26 @@
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/inscribir">Inscribir</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link nav-but" href="<?= urlBase ?>logout">Cerrar</a>
+            <li class="nav-item active">
+                <a class="nav-link nav-but" href="<?= urlBase ?>logout"><i class="material-icons">arrow_back</i>&nbsp;Cerrar</a>
             </li>
+            <li class="nav-item dropdown active">
+                <a class="nav-link nav-but dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons">mail</i>&nbsp;Notificaciones
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item nav-but disabled" href="#">No hay notificaciones nuevas</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <!-- Usuario -->
+          <li class="nav-item active">        
+            <span class="nav-link">
+              <i class="material-icons">person</i>&nbsp;Usuario: <?= $_SESSION['usuario'] ?>
+            </span>
+          </li>
         </ul>
     </div>
 </nav>

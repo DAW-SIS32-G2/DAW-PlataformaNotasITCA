@@ -62,7 +62,7 @@ class alumnoVista
   }
   function subir_Prac()
   {
-     include 'paginas/alumno/plantillas/head.php';
+    include 'paginas/alumno/plantillas/head.php';
     include 'paginas/alumno/plantillas/nav.php';
     require_once 'Vistas/paginas/alumno/subir_Prac.php';
   }
@@ -71,5 +71,18 @@ class alumnoVista
   {
     require_once 'Vistas/paginas/alumno/subir_Prac2.php';
   }
+
+  function editor()
+  {
+    include 'paginas/alumno/plantillas/head.php';
+    include 'paginas/alumno/plantillas/nav.php';
+    require_once 'Vistas/paginas/alumno/editor.php';
+  }
+
+  function res()
+  {
+    include './core/ajax/alumno/resultado.html';
+  }
+
 }
 ?>

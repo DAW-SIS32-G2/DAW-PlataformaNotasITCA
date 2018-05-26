@@ -76,12 +76,18 @@ class funcionesBD
      */
     public function registroAlumno($carnet, $nombres, $apellidos, $contra, $anyo, $modif, $idCarrera, $idGrupo, $carnetDoc)
     {
+        $idDoc = $this->bd->query("SELECT idDocente FROM docente WHERE carnet = '$carnetDoc'");
+        while($fila = mysqli_fetch_assoc($idDoc))
+        {
+            $idDocente = $fila['idDocente'];
+        }
+
         $res = $this->bd->query("SELECT * FROM usuario WHERE carnet = '$carnet'");
 
         if (mysqli_num_rows($res) == 0) {
             $consulta = "INSERT INTO Usuario(carnet,nombres,apellidos,contra,anyoIngreso,permiteModificacion,idCarrera,idGrupo) VALUES ('$carnet','$nombres','$apellidos','$contra',$anyo,$modif,$idCarrera,$idGrupo)";
             if ($this->bd->query($consulta)) {
-                $consulta = "INSERT INTO InsercionDocente(carnetDoc,CarnetAlumno) VALUES ('$carnetDoc','$carnet')";
+                $consulta = "INSERT INTO InsercionDocente(carnetDoc,CarnetAlumno,idDocente) VALUES ('$carnetDoc','$carnet','$idDocente')";
                 if ($this->bd->query($consulta)) {
                     //Cerrando conexión
                     $this->bd->close();
