@@ -82,7 +82,7 @@ class funcionesBD
         if (mysqli_num_rows($res) == 0) {
             $consulta = "INSERT INTO Usuario(carnet,nombres,apellidos,contra,anyoIngreso,permiteModificacion,idCarrera,idGrupo) VALUES ('$carnet','$nombres','$apellidos','$contra',$anyo,$modif,$idCarrera,$idGrupo)";
             if ($this->bd->query($consulta)) {
-                $consulta = "INSERT INTO InsercionDocente(carnetDoc,CarnetAlumno) VALUES ('$carnetDoc','$carnet')";
+                $consulta = "INSERT INTO InsercionDocente(carnet,CarnetAlumno) VALUES ('$carnetDoc','$carnet')";
                 if ($this->bd->query($consulta)) {
                     //Cerrando conexión
                     $this->bd->close();
