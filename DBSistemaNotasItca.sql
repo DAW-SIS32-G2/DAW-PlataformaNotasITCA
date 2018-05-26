@@ -333,7 +333,7 @@ delimiter ;
 
 /****************Select's de las tablas****************/
 /* Descomentar solo cuando se usara el select*/
-/*
+
 select * from Grupo;
 select * from Horario;
 select * from Docente;

@@ -165,6 +165,61 @@ if(isset($_REQUEST['validarContraDocente']))
     }
 }
 
+if(isset($_REQUEST['mostrarAdminModulo']))
+{
+    session_start();
+    $idModulo=$_REQUEST['idModulo'];
+    $carnetDocente=$_SESSION['usuario'];
+
+    ?>
+        <div class="alert alert-warning">
+            ¿Esta seguro que quiere desactivar el modulo?<br>
+            Al borrarlo desaparecera de los grupos para administrar y ningun alumno podra visualizarlo hasta que se vuelva a activar.
+        </div>
+        <form action="" method="post">
+
+            <label for="contra">Contraseña actual de docente:
+                <input type="password" name="contraDocente" id="contraDocente" class="form-control" required>
+            </label><br>
+
+            <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+            <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
+            <input type="submit" name="desactivarModulo" value="Desactivar modulo" onclick="return verificarDocente()" class="btn btn-info">
+        </form>
+        <br>
+    <?php
+}
+
+if(isset($_REQUEST['agregarPonderacion']))
+{
+    $idModulo=$_REQUEST['idModulo'];
+    $totalPorcentajes=$_REQUEST['totalPorcentajes'];
+    
+    $porcentajeUtilizable=(100-$totalPorcentajes);
+
+    ?>
+        <div class="alert alert-info">
+            Agregar ponderacion.
+        </div>
+        <form action="" method="post">
+
+            <label for="nombrePonderacion">Nombre de la ponderacion:
+                <input type="text" name="nombrePonderacion" id="nombrePonderacion" class="form-control" required>
+            </label><br>
+
+            <label for="porcentajePonderacion">Porcentaje de la ponderacion:
+                <input type="number" name="porcentajePonderacion" id="porcentajePonderacion" min="0" max="<?= $porcentajeUtilizable ?>" class="form-control" required>
+            </label><br>
+
+            <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+            <input type="hidden" name="porcentajeUtilizable" id="porcentajeUtilizable" value="<?= $porcentajeUtilizable ?>">
+
+            <input type="submit" name="agregarPonderacion" value="Agregar ponderacion" onclick="return verificarMaximoPorcentaje('<?= $porcentajeUtilizable ?>')" class="btn btn-info">
+        </form>
+        <br>
+    <?php
+}
+
 if(isset($_REQUEST['mostrarModificarPonderaciones']))
 {
     $objDocenteModelo=new docenteModelo();
@@ -195,7 +250,13 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
 
                     if ($cantidadPonderaciones == 0)
                     {
-                        echo "Este modulo no tiene ponderaciones asignadas.<br> Por favor comuniquese con el administrador.";
+                        echo "Este modulo no tiene ponderaciones asignadas.<br> Por favor comuniquese con el administrador o ponderelo usted mismo.<br>";
+                       
+                        ?>
+                        <br>
+                        <button class="btn btn-success" type="button" onclick="agregarPonderacion('<?= $idModulo ?>','0')">Ponderar modulo</button>
+                        <?php
+                        
                     }
                     else
                     {
@@ -247,6 +308,14 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
                             <?php
                             $totalPorcentajes+=$porcentajesOrdenados[$j];
 
+                        }
+
+                        if($totalPorcentajes<100)
+                        {
+                            ?>
+                            <br>
+                            <button class="btn btn-success" type="button" onclick="agregarPonderacion('<?= $idModulo ?>','<?= $totalPorcentajes ?>')">agregar ponderacion</button>
+                            <?php
                         }
                         ?>
                             <font>Total:</font>

@@ -1,5 +1,5 @@
 <?php
-echo "<br><br><br>";
+echo '<div class="container" style="padding-top: 65px">';
 define("__ROOT__", dirname(__FILE__,4));
 require_once(__ROOT__.'/core/funcionesbd.php');
 
@@ -189,11 +189,55 @@ if(isset($_REQUEST['abrirGrupo']))
     }
 }
 
+
+if(isset($_REQUEST['desactivarModulo']))
+{
+	$idModulo=$_REQUEST['idModulo'];
+
+	$objDocenteControlador=new docenteControlador('docenteModelo');
+
+	$resultado=$objDocenteControlador->desactivarModulo($idModulo);
+
+
+	if(gettype($resultado)=="string")
+    {
+        echo '<div class="alert alert-danger">'.$resultado.'</div>';
+    }
+    else
+    {
+    	echo '<div class="alert alert-success"> El grupo ha sido desactivado.</div>';
+    }
+}
+
+if(isset($_REQUEST['agregarPonderacion']))
+{
+	$nombrePonderacion=$_REQUEST['nombrePonderacion'];
+	$porcentajePonderacion=$_REQUEST['porcentajePonderacion'];
+	$porcentajeUtilizable=$_REQUEST['porcentajeUtilizable'];
+	$idModulo=$_REQUEST['idModulo'];
+
+	if($porcentajePonderacion>$porcentajeUtilizable)
+	{
+		echo '<div class="alert alert-danger">El porcentaje no puede ser mayor que $porcentajeUtilizable%.</div>';
+	}
+	else
+	{
+		$objDocenteControlador=new docenteControlador('docenteModelo');
+
+		$resultado=$objDocenteControlador->agregarPonderacion($idModulo,$nombrePonderacion,$porcentajePonderacion);
+
+		if(gettype($resultado)=="string")
+	    {
+	        echo '<div class="alert alert-danger">'.$resultado.'</div>';
+	    }
+	    else
+	    {
+	    	echo '<div class="alert alert-success">La ponderacion ha sido agregada.</div>';
+	    }
+	}
+}
+
 ?>
- <div class="container" style="padding-top: 65px">
-
-<div class="container">
-
 	<div id="divPracticas" class="oculto">
 
 	</div>
@@ -210,23 +254,25 @@ if(isset($_REQUEST['abrirGrupo']))
 
 	</div>
 
-	<br><br><br>
+	<div id="divEstadoModulo" class="oculto">
+
+	</div>
 
 	<table class="table table-bordered table-light table-hover">
-
+	<thead>
 		<tr>
 
-			<th>ID</th>
-			<th>Grupo</th>
-			<th>Guias</th>
-			<th>Estado</th>
-			<th>Grupo Cerrado</th>
-			<th>Modulo</th>
-			<th>Ponderaciones</th>
-			<th>X</th>
+			<th scope="col">ID</th>
+			<th scope="col">Grupo</th>
+			<th scope="col">Guias</th>
+			<th scope="col">Estado</th>
+			<th scope="col">Modulo</th>
+			<th scope="col">Ponderaciones</th>
+			<th scope="col">Opciones</th>
 
 		</tr>
-
+	</thead>
+	<tbody>
 		<?php
 
 			$resultado=$objDocenteModelo->CargarGruposActivos();
@@ -259,15 +305,15 @@ if(isset($_REQUEST['abrirGrupo']))
 				{
 
 			 	?>
-
+			
 				<tr>
 
-					<td>
+					<td scope="row">
 						<?php echo $idModulo[$k]; ?>
 					</td>
 
 					<td>
-						<?php echo $nombreGrupos[$k].$seccion[$k]."-".$anyoGrupos[$k]; ?>
+						<?= $nombreGrupos[$k].$seccion[$k]."-".$anyoGrupos[$k] ?>
 					</td>
 
 					<td>
@@ -343,8 +389,6 @@ if(isset($_REQUEST['abrirGrupo']))
 						<button class="btn btn-info" onclick="mostrarDiv('Contra','<?= $idModulo[$k] ?>')">Administrar<br>seguridad</button>
 					</td>
 
-					<td>*boton Cerrar inscripciones en el grupo*</td>
-
 					<td>
 						<?php echo $nombreModulos[$k]; ?>
 					</td>
@@ -352,7 +396,10 @@ if(isset($_REQUEST['abrirGrupo']))
 					<td>
 						<button class="btn btn-info" onclick="mostrarDiv('Ponderaciones','<?= $idModulo[$k] ?>')">Administrar<br>ponderaciones</button>
 					</td>
-					<td>*boton que no se para que es*</td>
+
+					<td>
+						<button class="btn btn-info" onclick="mostrarDiv('EstadoModulo','<?= $idModulo[$k] ?>')">Desactivar<br>modulo</button>
+					</td>
 
 					</tr>
 
@@ -361,7 +408,7 @@ if(isset($_REQUEST['abrirGrupo']))
 			}
 
 			 ?>
-
+	</tbody>
 	</table>
 <br><br>
 </div>

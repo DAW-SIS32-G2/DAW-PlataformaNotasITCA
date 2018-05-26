@@ -187,61 +187,67 @@ class Zip
     //nombre del archivo de guias
     $archivo = "Archivos/temp/$usuario/".$arcivo."-ZIP_guias.zip";
 
-    //Obteniendo la ruta real del directorio de las guias
-    $directorioRaiz = realpath($rutaArchivo);
-
-    //Contador que verificara si existen arcivos a comprimir
-    $contador=0;
-
-    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directorioRaiz),RecursiveIteratorIterator::LEAVES_ONLY);
-      
-    foreach($files as $name => $file)
+    if(file_exists($rutaArchivo))
     {
-        // Saltandonos los directorios
-        if (!$file->isDir())
-        {
-          $contador++;
-        }
-    }
+      //Obteniendo la ruta real del directorio de las guias
+      $directorioRaiz = realpath($rutaArchivo);
 
-    if(!($contador==0))
-    {
-      // instanciando ZipArchive
-      $zip = new ZipArchive();
-
-      $zip->open($archivo, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
-      //Creando iterador recursivo de directorios
+      //Contador que verificara si existen arcivos a comprimir
+      $contador=0;
 
       $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directorioRaiz),RecursiveIteratorIterator::LEAVES_ONLY);
-      
-
+        
       foreach($files as $name => $file)
       {
           // Saltandonos los directorios
           if (!$file->isDir())
           {
-              //Obtenemos la ruta real y la relativa para el archivo actual
-              $filePath = $file->getRealPath();
-              $relativePath = substr($filePath, strlen($directorioRaiz) + 1);
-
-              //añadimos el archivo actual al zip
-              $zip->addFile($filePath, $relativePath);
+            $contador++;
           }
-
       }
-      //Cerrando la instancia para que se creee el zip
-      $zip->close();
 
-      //guardamos la direccion del primer archivo
-      return $archivo;
+      if(!($contador==0))
+      {
+        // instanciando ZipArchive
+        $zip = new ZipArchive();
+
+        $zip->open($archivo, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+        //Creando iterador recursivo de directorios
+
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directorioRaiz),RecursiveIteratorIterator::LEAVES_ONLY);
+        
+
+        foreach($files as $name => $file)
+        {
+            // Saltandonos los directorios
+            if (!$file->isDir())
+            {
+                //Obtenemos la ruta real y la relativa para el archivo actual
+                $filePath = $file->getRealPath();
+                $relativePath = substr($filePath, strlen($directorioRaiz) + 1);
+
+                //añadimos el archivo actual al zip
+                $zip->addFile($filePath, $relativePath);
+            }
+
+        }
+        //Cerrando la instancia para que se creee el zip
+        $zip->close();
+
+        //guardamos la direccion del primer archivo
+        return $archivo;
+      }
+      else
+      {
+        return false;
+      }
     }
     else
     {
       return false;
     }
   }
-
 }
 
 if(isset($_REQUEST['comprimir']))

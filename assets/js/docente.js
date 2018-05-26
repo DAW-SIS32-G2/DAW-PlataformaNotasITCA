@@ -69,6 +69,15 @@ function mostrarDiv(tipoDiv,idModulo)
 					';
 					mostrarAdminPonderaciones(idModulo);
 	}
+	else if(tipoDiv == 'EstadoModulo' && div.classList.contains('visible'))
+	{
+		div.innerHTML='\
+					\
+					<button onclick="mostrarDiv(\''+tipoDiv+'\','+idModulo+')">X</button><br><br><h3>Administrar modulo</h3><br>\
+					<div id="adminModulo"></div>\
+					';
+					mostrarAdminModulo(idModulo);
+	}
 
 	
 }
@@ -230,6 +239,32 @@ function mostrarAdminPonderaciones(idModulo)
 	  });
 }
 
+function mostrarAdminModulo(idModulo)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/adminGrupo',
+	      data      : {idModulo: idModulo, mostrarAdminModulo : true},
+	      success   : function(respuesta)
+	      {
+	        document.getElementById('adminModulo').innerHTML = respuesta;
+	      }
+	  });
+}
+
+function agregarPonderacion(idModulo, totalPorcentajes)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/adminGrupo',
+	      data      : {idModulo: idModulo, totalPorcentajes : totalPorcentajes, agregarPonderacion : true},
+	      success   : function(respuesta)
+	      {
+	        document.getElementById('adminPonderaciones').innerHTML = respuesta;
+	      }
+	  });
+}
+
 function mostrarModificarContra(idModulo)
 {
 	$.ajax({
@@ -287,6 +322,22 @@ function comprimirPracticasPonderacion(rutaArchivo, archivo)
 	      	}
 	      }
 	  });
+}
+
+function verificarMaximoPorcentaje(porcentajeMaximo)
+{
+	var porcentaje=document.getElementById('porcentajePonderacion');
+
+	if(porcentaje.value>parseInt(porcentajeMaximo))
+	{
+		alert('El porcentaje no puede exceder el '+porcentajeMaximo+'%.');
+		porcentaje.focus();
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 

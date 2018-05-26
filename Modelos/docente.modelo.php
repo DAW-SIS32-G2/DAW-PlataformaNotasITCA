@@ -364,5 +364,23 @@
 
             return $resultado;
         }
+
+        public function desactivarModulo($idModulo)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->ActualizarRegistro('Modulo', 'activo', '0', "idModulo=$idModulo");
+
+            return $resultado;
+        }
+
+        public function agregarPonderacion($idModulo,$nombrePonderacion,$porcentajePonderacion)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->insertar('Ponderacion','nombrePonderacion,porcentaje,idModulo',"'$nombrePonderacion','$porcentajePonderacion',$idModulo");
+
+            return $resultado;
+        }
     }
 ?>

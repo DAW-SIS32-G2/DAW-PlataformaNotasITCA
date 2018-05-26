@@ -161,8 +161,11 @@
 
                 $ruta="Archivos/Practicas/".$siglasModulos."-".$anyosModulos."/Ponderacion_".$nombrePonderacion."_".$idPonderacion."/";
 
-                $resultado=$this->borrarDirectorio($ruta);
-
+                if(file_exists($ruta))
+                {
+                    $resultado=$this->borrarDirectorio($ruta);
+                }
+                
                 if($resultado)
                 {
                     return $resultado;
@@ -217,6 +220,17 @@
             $resultado=$this->model->abrirGrupo($idModulo);
             return $resultado;
         }
-        
+
+        public function desactivarModulo($idModulo)
+        {
+            $resultado=$this->model->desactivarModulo($idModulo);
+            return $resultado;
+        }
+
+        public function agregarPonderacion($idModulo,$nombrePonderacion,$porcentajePonderacion)
+        {
+            $resultado=$this->model->agregarPonderacion($idModulo,$nombrePonderacion,$porcentajePonderacion);
+            return $resultado;
+        }
     }
   ?>
