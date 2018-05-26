@@ -20,23 +20,37 @@
           return $resultado;
       }
 
-      public function verificarSubida($carnet,$idTarea)
+      public function guardarPractica($carnet,$ruta,$idTarea)
       {
-        $conex = new funcionesBD();
-        $resultado = $conex->ConsultaPersonalizada("SELECT * FROM TareaSubidaPor WHERE carnet='$carnet' AND idTarea = '$idTarea'");
-        $cant = mysqli_num_rows($resultado);
-        return $cant;
+         $conex = new funcionesBD();
+         $resultado = $conex->insertar("TareaSubidaPor","carnet,idTarea,ruta","'$carnet','$idTarea','$ruta'");
+          if(gettype($resultado) != "string")
+          {
+            $conex = new funcionesBD();
+            $resultado = $conex->insertar("Nota","carnet,valor,idTarea","'$carnet','0','$idTarea'");
+            if(gettype($resultado) != "string")
+            {
+               return 1;
+            }
+            else
+            {
+              return $resultado;
+            }
+          }
+          else
+          {
+            return $resultado;
+          }
       }
 
-      public function verificarActivo($idTarea)
-      {
-        $conex = new funcionesBD();
-        $resultado = $conex->ConsultaPersonalizada("SELECT activo FROM Tarea WHERE idTarea='$idTarea'");
-        while($fila = $resultado->fetch_array(MYSQLI_ASSOC))
+      public function ObtenerSiglas($idModulo)
         {
-          $res = $fila['activo'];
+            $conex = new funcionesBD();
+
+            $resultado=$conex->ConsultaPersonalizada("SELECT M.siglas,M.anyo FROM Modulo AS M WHERE M.idModulo= '$idModulo'");
+
+            return $resultado;
         }
-        return $res;
-      }
+      
   }
 ?>

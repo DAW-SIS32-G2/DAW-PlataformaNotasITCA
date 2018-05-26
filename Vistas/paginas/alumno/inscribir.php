@@ -60,7 +60,7 @@ print_r($modulosInscritos);
         else
         {
           $modal = "";
-          $clave = "onclick='inscribirSinClave(".$idModulos[$cant].")'";
+          $clave = "onclick='inscribirSinClave(".$idModulos[$cant].",'".$_SESSION['usuario']."')'";
         }
         echo "<tr>";
         echo "<td>".$docentes[$cant]."</td>";
@@ -117,6 +117,7 @@ print_r($modulosInscritos);
             <label for="pass">Contraseña</label>
             <input type="password" class="form-control" name="passwd" id="pass"><br>
             <input type="hidden" id="idenModulo">
+            <input type="hidden" id="carnetIns" value="<?= $_SESSION['usuario'] ?>">
             <div id="resspass"></div>
           </div>
           <button class="btn btn-primary" type="button" onclick="inscribirConClave()">Inscribir</button>
@@ -157,73 +158,3 @@ print_r($modulosInscritos);
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  
-  $("#inscribirSinClave").on("hidden.bs.modal", function(e) {
-    location.reload();
-  })
-
-  $("#inscribirModal").on("hidden.bs.modal", function(e) {
-    $("#inscribirModal").modal('dispose')
-    $("#resspass").html("")
-    $("#pass").val("")
-  })
-
-  function mandarModulo(valor)
-  {
-    $("#idenModulo").attr("value",valor)
-  }
-
-  function inscribirConClave()
-  {
-    $.ajax({
-        type    : "post",
-        url     : "ajax/inscribir",
-        data    : {
-                      "carnet"   : <?= $_SESSION['usuario'] ?>,
-                      "idModulo" : $("#idenModulo").val(),
-                      "contra"   : $("#pass").val()
-                  },
-        success : function(mensaje)
-                  {
-                      if(mensaje == '1')
-                      {
-                          $("#resspass").html("<small style='color: red'>La clave es incorrecta, intente nuevamente</small>")
-                      }
-                      else
-                      {
-                          $("#inscribirModal").modal('hide');
-                          $("#inscribirSinClave").modal('show');
-                          $("#inscribirModal").modal('dispose');
-                      }    
-                  }
-    });
-  }
-
-  function inscribirSinClave(valor)
-  {
-    $.ajax({
-      type      : "post",
-      url       : "ajax/inscribir",
-      data      : {
-                    "carnet"   : <?= $_SESSION['usuario'] ?>,
-                    "idModulo" : valor,
-                    "sinClave" : 1
-                  },
-      success   : function(mensaje)
-                  {
-                    if(mensaje != "1")
-                    {
-                      $("#mensajeError").html(mensaje);
-                      $("#errorModal").modal('show');
-                    }
-                    else
-                    {
-                      $("#inscribirSinClave").modal('show');
-                    }
-                  }
-    });
-  }
-
-</script>

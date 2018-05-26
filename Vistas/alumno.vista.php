@@ -67,9 +67,10 @@ class alumnoVista
     require_once 'Vistas/paginas/alumno/subir_Prac.php';
   }
 
-  function subir_Prac2()
+  function descargar()
   {
-    require_once 'Vistas/paginas/alumno/subir_Prac2.php';
+    include 'paginas/alumno/plantillas/head.php';
+    require_once 'core/descargar.php';
   }
 
   function editor()

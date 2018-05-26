@@ -30,17 +30,3 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
-  function cargarPracticas()
-  {
-    $.ajax({
-      type    : "post",
-      url     : "ajax/practicas",
-      data    : {"idModulo" : $("#materia").val()},
-      success : function(practicas)
-                {
-                  $("#practicas").html(practicas);
-                }
-    })
-  }
-</script>
