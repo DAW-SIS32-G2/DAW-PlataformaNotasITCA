@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="assets/css/cust.css">
 </head>
 <body>
+<script src="assets/js/jquery-latest.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/cust.js"></script>
 <div class="container">
     <?php
     if (!isset($_GET['funcion'])) {
@@ -22,21 +25,25 @@
             <div class="row">
                 <div class="col-md-5"></div>
                 <div class="col-md-2 text-center">
-                    <button class="btn btn-primary btn-lg" onclick="cambio('index.php?funcion=f2')">Instalar</button>
+                    <button class="btn btn-primary btn-lg btn-block" onclick="cambio('index.php?funcion=f2')">Instalar</button>
+                    <span class="text-muted">
+                        Este proceso extraera las carpetas en la raiz de su servidor. Además se le solicitara su usuario y
+                        contraseña de su servidor de base de datos.
+                    </span>
                 </div>
                 <div class="col-md-5"></div>
             </div>
             <div class="row">
                 <div class="col-md-5"></div>
                 <div class="col-md-2 text-center">
-                    <button class="btn btn-danger btn-lg">Desintalar</button>
+                    <button class="btn btn-danger btn-lg btn-block">Desintalar</button>
                 </div>
                 <div class="col-md-5"></div>
             </div>
             <div class="row">
                 <div class="col-md-5"></div>
                 <div class="col-md-2 text-center">
-                    <button class="btn btn-success btn-lg">Acerca de</button>
+                    <button class="btn btn-success btn-lg btn-block">Acerca de</button>
                 </div>
                 <div class="col-md-5"></div>
             </div>
@@ -51,8 +58,6 @@
     ?>
 </div>
 
-<script src="assets/js/jquery-latest.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/cust.js"></script>
+
 </body>
 </html>

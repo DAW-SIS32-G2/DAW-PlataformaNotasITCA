@@ -1,11 +1,9 @@
 <?php
 
-class instalar
-{
+class install{
     private $bd;
 
-    function __construct($usuario, $passwd)
-    {
+    function __construct($usuario, $passwd){
         $this->bd = new mysqli('localhost', $usuario, $passwd, 'mysql', '3306');
         if ($this->bd->connect_error) {
             return '<script>console.log("La conexión ha fallado: ' . ($this->bd->connect_error) . '");</script>';
@@ -31,24 +29,29 @@ class instalar
         $this->bd = new mysqli('localhost', $usuario, $passwd, 'SistemaNotasItca');
     }
 
-    function unzip($ruta)
-    {
+    function unzip($ruta){
         try {
             $zip = new ZipArchive();
-            if ($zip->open($ruta)) {
-                $zip->extractTo('/jm/');
+            $zip_status = $zip->open($ruta);
+            if ($zip_status === true) {
+                if ($zip->setPassword('sisNotas')) {
+                    if (!$zip->extractTo('../../')){
+                        die("<script>console.log('Failed extracting archive 0: " . @$zip->getStatusString() . " (code: " . $zip_status . ")');</script>");
+                    }else
+                        echo("<script>console.log('Archivo Extraido');</script>");
+                }
+
                 $zip->close();
-                echo 'extraccion completa';
             } else {
-                echo 'fallo al abrir';
+                die("<script>console.log('Failed opening archive: " . @$zip->getStatusString() . " (code: " . $zip_status . ")');</script>");
             }
         } catch (Exception $e) {
             echo $e->getMessage();
         }
+
     }
 
-    function createDB()
-    {
+    function createDB(){
         try {
             $fp = fopen('recursos/DBSistemaNotasItca.sql', 'r');
             $text = '';
@@ -71,6 +74,27 @@ class instalar
 
         } catch (Exception $e) {
             echo '<script>console.log("' . $e->getMessage() . '");</script>';
+        }
+    }
+
+    function desin($dir) {
+        try{
+            $files = scandir($dir);
+            array_shift($files);    // remove '.' from array
+            array_shift($files);    // remove '..' from array
+
+            foreach ($files as $file) {
+                $file = $dir . '/' . $file;
+                if (is_dir($file)) {
+                    desin($file);
+                    rmdir($file);
+                } else {
+                    unlink($file);
+                }
+            }
+            rmdir($dir);
+        }catch (Exception $e){
+            echo $e->getMessage();
         }
     }
 }
