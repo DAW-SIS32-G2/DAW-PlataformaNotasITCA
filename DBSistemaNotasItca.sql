@@ -100,9 +100,8 @@ insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) 
 
 create table InsercionDocente(
 idInsercion int auto_increment not null,
-carnetDoc varchar(20) not null comment 'Carnet del docente que lo registró',
 carnetAlumno varchar(6) not null comment 'Carnet del alumno registrado', 
-carnet varchar(20) NOT NULL comment 'foranea',
+carnet varchar(20) NOT NULL comment 'foranea, carnet del docente que lo registro',
 primary key pkInserDoc(idInsercion),
 foreign key fkInsercionDocenteXDocente(carnet) references Docente(carnet)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -47,7 +47,7 @@ if($idModulo != "")
 					else
 					{
 						echo "
-							<td><button type='button' class='btn btn-info' data-toggle='modal' data-target='#subirMod' data-idTarea='".$fila['idTarea']."' data-carnet='".$_SESSION['usuario']."' data-practica='".$fila['nombreTarea']."'>Subir Práctica</button></td>
+							<td><button type='button' class='btn btn-info' data-toggle='modal' data-target='#subirMod' data-idTarea='".$fila['idTarea']."' data-carnet='".$_SESSION['usuario']."' data-practica='".$fila['nombreTarea']."' data-ruta='".$fila['directorio']."'>Subir Práctica</button></td>
 							<td>Sin Subir</td>
 							<td>No disponible</td>
 						";
@@ -103,26 +103,20 @@ else
                 <h4 class="modal-title">Cambio de contraseña</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form class="form-group" action="index.html" method="post">
+            <form class="form-group" action="" method="post">
             <div class="modal-body">
-
-                   <div class="container-fluid">
-                       <div class="form-group row">
-                           <input class="form-control" type="password" placeholder="Clave actual" required>
-                       </div>
-                       <div class="form-group row">
-                           <input class="form-control" type="password" placeholder="Nueva Clave" required>
-                       </div>
-                       <div class="form-group row">
-                           <input class="form-control" type="password" placeholder="Repetir Nueva Clave" required>
-                       </div>
-                   </div>
+				<div class="container">
+					<div class="form-group row">
+						<label class="form-label"for="archivo">Seleccione un archivo</label>
+						<input class="form-control"type="file" name="archivo" id="archivo">
+						<input type="hidden" id="idtarea">
+						<input type="hidden" id="carnet">
+					</div>
+				</div>
             </div>
-
-
             <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Enviar</button>
-                <button type="button" class="btn btn-primary">Cerrar</button>
+                <button type="button" class="btn btn-secondary">Subir Práctica</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
             </div>
             </form>
         </div>
@@ -136,6 +130,12 @@ else
 		var carnet = button.data('carnet');
 		var modal = $(this);
 
+		modal.find("#idtarea").val(practica);
+		modal.find("#carnet").val(carnet);
 		modal.find(".modal-title").text("Subir Práctica: " + practica);
+	});
+
+	$("#subirMod").on('hide.bs.modal', function(event) {
+		$("#archivo").val(null);
 	})
 </script>
