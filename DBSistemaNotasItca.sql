@@ -59,7 +59,6 @@ insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS33','A','2018');
 insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS33','U','2018');
 
 create table Usuario(
-idUsuario int auto_increment not null,
 carnet varchar(6) not null,
 nombres varchar(50) not null,
 apellidos varchar(50) not null,
@@ -73,13 +72,12 @@ anyoIngreso int not null,
 permiteModificacion boolean not null comment 'campo para verificar si el usuario ya igreso por primera vez al sistema',
 idCarrera int not null comment 'foranea',
 idGrupo int not null comment 'foranea',
-primary key pkUsuario(idUsuario),
+primary key pkUsuario(carnet),
 foreign key fkUsuarioXCarrera(idCarrera) references Carrera(idCarrera),
 foreign key fkUsuarioXGrupo(idGrupo) references Grupo(idGrupo)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Docente(
-idDocente int auto_increment not null,
 carnet varchar(20) NOT NULL,
 nombres varchar(50) not null,
 apellidos varchar(50) not null,
@@ -89,7 +87,7 @@ telefonoCasa varchar(12) null,
 email varchar(50) null,
 contra varchar(100) not null,
 idDepartamento int not null,
-primary key pkDocente(idDocente),
+primary key pkDocente(carnet),
 foreign key fkDocenteXDepartamento(idDepartamento) references Departamento(idDepartamento)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -104,9 +102,9 @@ create table InsercionDocente(
 idInsercion int auto_increment not null,
 carnetDoc varchar(20) not null comment 'Carnet del docente que lo registró',
 carnetAlumno varchar(6) not null comment 'Carnet del alumno registrado', 
-idDocente int not null comment 'foranea',
+carnet varchar(20) NOT NULL comment 'foranea',
 primary key pkInserDoc(idInsercion),
-foreign key fkInsercionDocenteXDocente(idDocente) references Docente(idDocente)
+foreign key fkInsercionDocenteXDocente(carnet) references Docente(carnet)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Archivo(
@@ -115,10 +113,10 @@ nombreArchivo varchar(256) not null,
 ruta varchar(256) not null,
 tamanyo int not null comment 'Tamaño reflejado en MB',
 compartido boolean not null comment 'Campo para saber si el archivo ha sido compartido con otro alumno',
-idUsuario int not null comment 'foranea',
+carnet varchar(6) not null comment 'foranea',
 idBuzonArchivos int not null comment 'foranea',
 primary key pkArchivo(idArchivo),
-foreign key fkArchivoXUsuario(idUsuario) references Usuario(idUsuario),
+foreign key fkArchivoXUsuario(carnet) references Usuario(carnet),
 foreign key fkArchivoXBuzonArchivos(idBuzonArchivos) references BuzonArchivos(idBuzonArchivos)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -333,7 +331,7 @@ delimiter ;
 
 /****************Select's de las tablas****************/
 /* Descomentar solo cuando se usara el select*/
-
+/*
 select * from Grupo;
 select * from Horario;
 select * from Docente;
@@ -408,8 +406,10 @@ insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('PROY','
 
 
 /****************Insercion de registros de prueba Marcelo****************/
-INSERT INTO `Usuario` (`idUsuario`, `carnet`, `nombres`, `apellidos`, `telefonoMovil`, `jornada`, `sexo`, `foto`, `email`, `contra`, `anyoIngreso`, `permiteModificacion`, `idCarrera`, `idGrupo`) VALUES
-(1, '108117', 'José Marcelo', 'Hernández Cerritos', NULL, NULL, NULL, NULL, NULL, 'RXFORUJ2QmVsK3AvUVh1cTNyTm95Zz09OjqOQIbAqUHX3H7SAu45mQMh', 2018, 1, 1, 5);
+INSERT INTO 
+Usuario (carnet,nombres,apellidos,telefonoMovil,jornada,sexo,foto,email,contra,anyoIngreso,permiteModificacion,idCarrera,idGrupo)
+VALUES
+('108117', 'José Marcelo', 'Hernández Cerritos', NULL, NULL, NULL, NULL, NULL, 'RXFORUJ2QmVsK3AvUVh1cTNyTm95Zz09OjqOQIbAqUHX3H7SAu45mQMh', 2018, 1, 1, 5);
 
 /****************Insercion de registros de prueba Daniel****************/
 /****************Insercion de registros de prueba Joaquin****************/
