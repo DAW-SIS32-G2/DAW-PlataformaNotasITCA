@@ -46,7 +46,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="<?= urlBase ?>docente/admingrupo">Administrar grupos activos</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="<?= urlBase ?>docente/actgrupo">Activar o desactivar grupos asignados</a>
+          <a class="dropdown-item" href="<?= urlBase ?>docente/estadoGrupos">Activar o desactivar grupos asignados</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/adminarchivo">Administrar archivos</a>
           <div class="dropdown-divider"></div>

@@ -165,7 +165,7 @@
                 {
                     $resultado=$this->borrarDirectorio($ruta);
                 }
-                
+
                 if($resultado)
                 {
                     return $resultado;
@@ -224,6 +224,12 @@
         public function desactivarModulo($idModulo)
         {
             $resultado=$this->model->desactivarModulo($idModulo);
+            return $resultado;
+        }
+
+        public function activarModulo($idModulo)
+        {
+            $resultado=$this->model->activarModulo($idModulo);
             return $resultado;
         }
 

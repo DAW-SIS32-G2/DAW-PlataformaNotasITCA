@@ -106,29 +106,12 @@
           require_once 'Vistas/paginas/docente/cambiarclave.php';
         }
 
-        
-        /*function descargar($idTarea)
+        function estadoGrupos()
         {
-            include 'paginas/docente/plantillas/cabecera.php';
-            include 'paginas/docente/plantillas/menu.php';
-            // obtendremos la carpeta en donde estan los archivos
-            require_once("./core/funcionesbd.php");
-            require_once("./core/zip.php");
-            $objBD = new funcionesBD();
-            $res = $objBD->ConsultaPersonalizada("SELECT directorio from tarea where idTarea = '".$idTarea."'");
-            while($fila = $res->fetch_array(MYSQLI_ASSOC))
-            {
-                $ruta = $fila['directorio'];
-            }
-            $zip = comprimir("./Practicas/".$ruta."/");
-            echo "
-              <script type='text/javascript'>
-                window.location.replace('http://localhost/DAW-PlataformaNotasITCA/Practicas/temp/practicas.zip');
-              </script>
-            ";
-            
-        }*/
-
-
+          include 'paginas/docente/plantillas/cabecera.php';
+          include 'paginas/docente/plantillas/menu.php';
+          require_once 'Vistas/paginas/docente/estadoGrupos.php';
+        }
+        
     }
 ?>

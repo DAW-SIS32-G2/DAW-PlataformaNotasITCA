@@ -22,12 +22,32 @@ if(isset($_REQUEST['mostrarGuias']))
 
     $guias=scandir($directorio);
 
+    ?>
+        
+        <table class="table table-bordered table-light table-hover">
+            <thead>
+                <tr>
+                    <th scope="col"># de guia</th>
+                    <th scope="col">Nombre de la guia</th>
+                    <th scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+    <?php
+
     $contador=0;
     foreach ($guias as $guia)
     {
         if(!($guia == ".") and !($guia==".."))
         {
-            echo "$contador - ".$guia." ";
+            echo "<tr>
+                    <td scope='row'>";
+
+            echo "$contador";
+
+            echo "</td><td>";
+            echo $guia."</td><td>";
+
             $contador++;
             
             $rutaArchivo=$directorio."/".$guia;
@@ -35,16 +55,26 @@ if(isset($_REQUEST['mostrarGuias']))
             $archivoAux=cifrar($rutaArchivo);
 
             ?>
-                    <button onclick='descargar(<?php echo '"'.$archivoAux.'"';?>)'>Descargar</button>
+                    <button class="btn btn-info" onclick='descargar(<?php echo '"'.$archivoAux.'"';?>)'>Descargar</button>
             <?php 
-            echo "<br><br>";
+            echo "</td></tr>";
         }
 
     }
     if($contador==0)
     {
-        echo "No hay guias en este modulo";
+        ?>
+            <tr>
+                <td colspan="3" scope='row'>
+                    No hay guias en este modulo.
+                </td>
+            </tr>
+        <?php
     }
+    ?>
+        </tbody>
+    </table>
+    <?php
 }
 
 

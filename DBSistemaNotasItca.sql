@@ -352,7 +352,7 @@ inner join Horario as H
 on M.idHorario = H.idHorario
 inner join Grupo as G
 on H.idGrupo = G.idGrupo
-where M.carnet='funes' and M.activo=1;
+where M.carnet='funes';
 
 select * from Ponderacion as P
 inner join Modulo as M
@@ -387,11 +387,11 @@ values(100,'Desarrollo de Aplicaciones para la Web','DAW-Prueba31B','practico','
 
 insert into
 Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet)
-values(101,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31B','practico','2018','1','1',0,'100','funes');
+values(101,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31B','practico','2018','1','0',0,'100','funes');
 
 insert into
 Modulo(idModulo,nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, contraModulo, idHorario, carnet)
-values(103,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31A','practico','2018','1','0',1,'AMATS-Prueba31A','101','funes');
+values(103,'Aplicacion de Metodologias Agiles y Testeo de Software','AMATS-Prueba31A','practico','2018','0','0',1,'AMATS-Prueba31A','101','funes');
 
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP1','15','100');
 insert into Ponderacion(nombrePonderacion, porcentaje, idModulo) values('EVP2','15','100');

@@ -198,7 +198,6 @@ if(isset($_REQUEST['desactivarModulo']))
 
 	$resultado=$objDocenteControlador->desactivarModulo($idModulo);
 
-
 	if(gettype($resultado)=="string")
     {
         echo '<div class="alert alert-danger">'.$resultado.'</div>';
@@ -238,6 +237,7 @@ if(isset($_REQUEST['agregarPonderacion']))
 }
 
 ?>
+<!--Divs que son usados como ventanas emergentes-->
 	<div id="divPracticas" class="oculto">
 
 	</div>
@@ -257,6 +257,7 @@ if(isset($_REQUEST['agregarPonderacion']))
 	<div id="divEstadoModulo" class="oculto">
 
 	</div>
+<!--Divs que son usados como ventanas emergentes-->
 
 	<table class="table table-bordered table-light table-hover">
 	<thead>
@@ -287,123 +288,133 @@ if(isset($_REQUEST['agregarPonderacion']))
 
 				$cantidad=$res->num_rows;
 
-				/*Guardando los grupos en un array*/
-				unset($idModulo);
-				$i=0;
-				while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+				if($cantidad==0)
 				{
-					$idModulo[$i]=$arrayGrupos['idModulo'];
-					$nombreGrupos[$i]=$arrayGrupos['nombreGrupo'];
-					$seccion[$i]=$arrayGrupos['seccion'];
-					$anyoGrupos[$i]=$arrayGrupos['anyo'];
-					$nombreModulos[$i]=$arrayGrupos['nombreModulo'];
-					$i++;
+					echo '<tr><td colspan="7" scope="row"><div class="alert alert-info">No hay modulos activos o registrados.</div></td></tr></tbody></table>';
+				}
+				else
+				{
+					/*Guardando los grupos en un array*/
+					unset($idModulo);
+					$i=0;
+					while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+					{
+						$idModulo[$i]=$arrayGrupos['idModulo'];
+						$nombreGrupos[$i]=$arrayGrupos['nombreGrupo'];
+						$seccion[$i]=$arrayGrupos['seccion'];
+						$anyoGrupos[$i]=$arrayGrupos['anyo'];
+						$nombreModulos[$i]=$arrayGrupos['nombreModulo'];
+						$i++;
+					}
+
+
+					for ($k=0;$k<$cantidad;$k++)
+					{
+
+				 	?>
+				
+					<tr>
+
+						<td scope="row">
+							<?php echo $idModulo[$k]; ?>
+						</td>
+
+						<td>
+							<?= $nombreGrupos[$k].$seccion[$k]."-".$anyoGrupos[$k] ?>
+						</td>
+
+						<td>
+							<button class="btn btn-info" onclick="mostrarDiv('SubirGuias','<?= $idModulo[$k]; ?>')">Subir guias</button>
+							<br><br>
+
+							<button class="btn btn-info" onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver guias</button><br>
+							<br>
+
+							<?php
+
+
+							$resultado=$objDocenteModelo->CargarGrupoIndividual($idModulo[$k]);
+
+			                while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+			                {
+			                    $siglasModulos=$arrayGrupos['siglas'];
+			                    $anyosModulos=$arrayGrupos['anyo'];
+			                }
+
+
+
+			                $rutaArchivoGuias="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/";
+			                $rutaArchivoPracticas="Archivos/Practicas/".$siglasModulos."-".$anyosModulos."/";
+			                $archivo=$siglasModulos."-".$anyosModulos."_";
+
+			                $aux=cifrar($rutaArchivoGuias);
+			                $rutaArchivoGuias=$aux;
+
+			                $aux=cifrar($rutaArchivoPracticas);
+			                $rutaArchivoPracticas=$aux;
+
+			                $aux=cifrar($archivo);
+			                $archivo=$aux;
+
+							 ?>
+
+							<button class="btn btn-info" onclick="comprimirGuias('<?= $rutaArchivoGuias ?>','<?= $archivo ?>','<?= $rutaArchivoPracticas ?>')">Descargar<br>todas las<br>guias</button>
+						</td>
+
+						<td>
+							<?php 
+
+								$objDocenteControlador=new docenteControlador('docenteModelo');
+
+								$resultado=$objDocenteControlador->CargarGrupoIndividual($idModulo[$k]);
+
+								$estadoModulo=$resultado->fetch_assoc();
+
+								if($estadoModulo['estado']==0)
+								{
+									?>
+										Grupo Cerrado<br>
+										<form action="" method="post">
+											<input type="hidden" name="idModulo" value="<?= $idModulo[$k] ?>">
+											<button class="btn btn-info" name="abrirGrupo">Abrir grupo</button>
+										</form><br>
+									<?php
+								}
+								elseif($estadoModulo['estado']==1)
+								{
+									?>
+										Grupo Abierto<br>
+										<form action="" method="post">
+											<input type="hidden" name="idModulo" value="<?= $idModulo[$k] ?>">
+											<button class="btn btn-info" name="cerrarGrupo">Cerrar grupo</button>
+										</form><br>
+									<?php
+								}
+
+							?>
+							
+							<button class="btn btn-info" onclick="mostrarDiv('Contra','<?= $idModulo[$k] ?>')">Administrar<br>seguridad</button>
+						</td>
+
+						<td>
+							<?php echo $nombreModulos[$k]; ?>
+						</td>
+
+						<td>
+							<button class="btn btn-info" onclick="mostrarDiv('Ponderaciones','<?= $idModulo[$k] ?>')">Administrar<br>ponderaciones</button>
+						</td>
+
+						<td>
+							<button class="btn btn-info" onclick="mostrarDiv('EstadoModulo','<?= $idModulo[$k] ?>')">Desactivar<br>modulo</button>
+						</td>
+
+						</tr>
+
+					<?php
+					}
 				}
 
-
-				for ($k=0;$k<$cantidad;$k++)
-				{
-
-			 	?>
-			
-				<tr>
-
-					<td scope="row">
-						<?php echo $idModulo[$k]; ?>
-					</td>
-
-					<td>
-						<?= $nombreGrupos[$k].$seccion[$k]."-".$anyoGrupos[$k] ?>
-					</td>
-
-					<td>
-						<button class="btn btn-info" onclick="mostrarDiv('SubirGuias','<?= $idModulo[$k]; ?>')">Subir guias</button>
-						<br><br>
-
-						<button class="btn btn-info" onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver guias</button><br>
-						<br>
-
-						<?php
-
-
-						$resultado=$objDocenteModelo->CargarGrupoIndividual($idModulo[$k]);
-
-		                while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
-		                {
-		                    $siglasModulos=$arrayGrupos['siglas'];
-		                    $anyosModulos=$arrayGrupos['anyo'];
-		                }
-
-
-
-		                $rutaArchivoGuias="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/";
-		                $rutaArchivoPracticas="Archivos/Practicas/".$siglasModulos."-".$anyosModulos."/";
-		                $archivo=$siglasModulos."-".$anyosModulos."_";
-
-		                $aux=cifrar($rutaArchivoGuias);
-		                $rutaArchivoGuias=$aux;
-
-		                $aux=cifrar($rutaArchivoPracticas);
-		                $rutaArchivoPracticas=$aux;
-
-		                $aux=cifrar($archivo);
-		                $archivo=$aux;
-
-						 ?>
-
-						<button class="btn btn-info" onclick="comprimirGuias('<?= $rutaArchivoGuias ?>','<?= $archivo ?>','<?= $rutaArchivoPracticas ?>')">Descargar<br>todas las<br>guias</button>
-					</td>
-
-					<td>
-						<?php 
-
-							$objDocenteControlador=new docenteControlador('docenteModelo');
-
-							$resultado=$objDocenteControlador->CargarGrupoIndividual($idModulo[$k]);
-
-							$estadoModulo=$resultado->fetch_assoc();
-
-							if($estadoModulo['estado']==0)
-							{
-								?>
-									Grupo Cerrado<br>
-									<form action="" method="post">
-										<input type="hidden" name="idModulo" value="<?= $idModulo[$k] ?>">
-										<button class="btn btn-info" name="abrirGrupo">Abrir grupo</button>
-									</form><br>
-								<?php
-							}
-							elseif($estadoModulo['estado']==1)
-							{
-								?>
-									Grupo Abierto<br>
-									<form action="" method="post">
-										<input type="hidden" name="idModulo" value="<?= $idModulo[$k] ?>">
-										<button class="btn btn-info" name="cerrarGrupo">Cerrar grupo</button>
-									</form><br>
-								<?php
-							}
-
-						?>
-						
-						<button class="btn btn-info" onclick="mostrarDiv('Contra','<?= $idModulo[$k] ?>')">Administrar<br>seguridad</button>
-					</td>
-
-					<td>
-						<?php echo $nombreModulos[$k]; ?>
-					</td>
-
-					<td>
-						<button class="btn btn-info" onclick="mostrarDiv('Ponderaciones','<?= $idModulo[$k] ?>')">Administrar<br>ponderaciones</button>
-					</td>
-
-					<td>
-						<button class="btn btn-info" onclick="mostrarDiv('EstadoModulo','<?= $idModulo[$k] ?>')">Desactivar<br>modulo</button>
-					</td>
-
-					</tr>
-
-			<?php }
+				
 
 			}
 
