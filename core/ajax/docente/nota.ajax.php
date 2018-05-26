@@ -53,7 +53,7 @@ else if(isset($_POST['idTarea']))
   if(!empty($idTarea))
   {
       $bd = new funcionesBD();
-      $sql = "Select Usuario.carnet, CONCAT(Usuario.nombres,' ',Usuario.apellidos) AS Estudiante, Nota.valor, Tarea.nombreTarea, Tarea.cantidadEjercicios FROM Usuario INNER JOIN Nota ON Nota.carnet = Usuario.carnet INNER JOIN Tarea ON Tarea.idTarea = Nota.idTarea INNER JOIN Ponderacion ON Tarea.idPonderacion = Ponderacion.idPonderacion INNER JOIN UsuarioActivo ON UsuarioActivo.carnet = Usuario.carnet WHERE Tarea.idTarea = '$idTarea' AND Ponderacion.idModulo = '$idModulo' AND UsuarioActivo.idModulo = '$idModulo'";
+      $sql = "Select Usuario.carnet, CONCAT(Usuario.nombres,' ',Usuario.apellidos) AS Estudiante, Nota.valor, Tarea.nombreTarea, Tarea.cantidadEjercicios, TareaSubidaPor.ruta FROM Usuario INNER JOIN Nota ON Nota.carnet = Usuario.carnet INNER JOIN Tarea ON Tarea.idTarea = Nota.idTarea INNER JOIN Ponderacion ON Tarea.idPonderacion = Ponderacion.idPonderacion INNER JOIN UsuarioActivo ON UsuarioActivo.carnet = Usuario.carnet INNER JOIN TareaSubidaPor ON TareaSubidaPor.idTarea = Tarea.idTarea WHERE Tarea.idTarea = '$idTarea' AND Ponderacion.idModulo = '$idModulo' AND UsuarioActivo.idModulo = '$idModulo'";
       $resultado = $bd->ConsultaPersonalizada($sql);
       if(mysqli_num_rows($resultado) != 0)
       {
@@ -91,7 +91,7 @@ else if(isset($_POST['idTarea']))
                 }
                 ?>
                 <tr>
-                  <td colspan='5' class='text-center'>
+                  <td colspan='6' class='text-center'>
                     <input type="button" onclick="validarNotas(<?= $i ?>)" value="Actualizar Notas" class="btn btn-success">
                   </td>
                 </tr>
