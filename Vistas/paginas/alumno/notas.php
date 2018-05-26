@@ -15,7 +15,7 @@ while($fila = mysqli_fetch_assoc($res))
             <div class="card" style="border-color: red;">
                 <div class="card-body">
                     <?php
-                            if($datos['foto'] != "")
+                            if(@$datos['foto'] != "")
                             {
                                 ?>
                                 <img src="<?= $datos['foto'] ?>" alt="Foto" class="img-fluid">

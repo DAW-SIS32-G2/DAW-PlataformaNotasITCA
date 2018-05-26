@@ -96,7 +96,7 @@ insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) 
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('magari', 'Henry Magari', 'Vanegas', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('quintanilla', 'Ricardo Edgardo', 'Quintanilla', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('yaqueline', 'Yaqueline Catalina', 'Pimentel', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
-insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('melbin', 'Melbin', 'Barrera', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
+insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('melvin', 'Melvin', 'Barrera', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 
 create table InsercionDocente(
 idInsercion int auto_increment not null,
