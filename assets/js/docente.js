@@ -1,3 +1,61 @@
+/*Funciones generales*/
+
+
+function descargar(archivo)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/procesarDescarga',
+	      data      : {ruta: archivo},
+	      success   : function(respuesta)
+	      {
+	        window.location.href="descargar";
+	      }
+	  });
+	
+}
+/*Fuera de uso*/
+/*
+function borrarZip(ruta)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/zip',
+	      data      : {ruta: ruta, borrar : true},
+	      success   : function(respuesta)
+	      {
+	        
+	      }
+	  });
+}
+*/
+
+var resultadoVerificarDocente="";
+function verificarDocente()
+{
+	var carnet=document.getElementById('carnetDocente');
+	var contra=document.getElementById('contraDocente');
+
+	verificarEnvioFormulario(contra.value,carnet.value);
+
+	var resultado=resultadoVerificarDocente;
+	
+	if(resultado==1)
+	{
+		return true;
+	}
+	else if(resultado==0)
+	{
+		alert("Las contraseñas no coinciden. Intentelo de nuevo");
+		document.getElementById('contraDocente').value="";
+		document.getElementById('contraDocente').focus();
+		return false;
+	}
+	
+}
+
+/*Funciones para admin grupo*/
+
 function mostrarGuias(idModulo)
 {
   $.ajax({
@@ -102,34 +160,6 @@ function comprimirGuias(rutaG,archivo,rutaP)
 	  });
 }
 
-function descargar(archivo)
-{
-	$.ajax({
-	      type      : 'post',
-	      url       : 'ajax/procesarDescarga',
-	      data      : {ruta: archivo},
-	      success   : function(respuesta)
-	      {
-	        window.location.href="descargar";
-	      }
-	  });
-	
-}
-/*Fuera de uso*/
-/*
-function borrarZip(ruta)
-{
-	$.ajax({
-	      type      : 'post',
-	      url       : 'ajax/zip',
-	      data      : {ruta: ruta, borrar : true},
-	      success   : function(respuesta)
-	      {
-	        
-	      }
-	  });
-}
-*/
 
 function actualizarTotal(idTotal,idAgregar,valorActual)
 {
@@ -173,29 +203,7 @@ function verificarPonderaciones(idTotal)
 	}
 }
 	
-var resultadoVerificarDocente="";
-function verificarDocente()
-{
-	var carnet=document.getElementById('carnetDocente');
-	var contra=document.getElementById('contraDocente');
 
-	verificarEnvioFormulario(contra.value,carnet.value);
-
-	var resultado=resultadoVerificarDocente;
-	
-	if(resultado==1)
-	{
-		return true;
-	}
-	else if(resultado==0)
-	{
-		alert("Las contraseñas no coinciden. Intentelo de nuevo");
-		document.getElementById('contraDocente').value="";
-		document.getElementById('contraDocente').focus();
-		return false;
-	}
-	
-}
 
 function verificarEnvioFormulario(contra,carnet)
 {
@@ -554,4 +562,36 @@ function cambiarPassDocente()
 	{
 		$("#respuesta").html("<div class='alert alert-danger'><strong>Error:</strong> Uno o más campos están vacíos, revise e intente de nuevo</div>")
 	}
+}
+
+/*Funciones para administrarPracticas.php*/
+
+function mostrarPonderaciones()
+{
+  //Procesar
+  $.ajax({
+      type      : 'post',
+      url       : 'ajax/administrarPracticas',
+      data      : {modulo: $('#moduloIngresar').val(),administrar: "true"},
+      success   : function(respuesta)
+      {
+        document.getElementById('resultado').innerHTML = respuesta;
+      }
+  })
+
+}
+
+function mostrarPracticas()
+{
+  //Procesar
+  $.ajax({
+      type      : 'post',
+      url       : 'ajax/administrarPracticas',
+      data      : {modulo: $('#moduloMostrar').val(),mostrar: "true"},
+      success   : function(respuesta)
+      {
+        document.getElementById('resultadoPracticas').innerHTML = respuesta;
+      }
+  })
+
 }

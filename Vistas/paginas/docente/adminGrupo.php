@@ -1,7 +1,6 @@
 <?php
 echo '<div class="container" style="padding-top: 65px">';
 define("__ROOT__", dirname(__FILE__,4));
-require_once(__ROOT__.'/core/funcionesbd.php');
 
 $objDocenteModelo=new docenteModelo();
 

@@ -1,9 +1,8 @@
 <?php
-echo "<br><br><br>";
-	@define("__ROOT__", dirname(__FILE__,4));
-	require_once(__ROOT__.'/core/funcionesbd.php');
+	echo '<div class="container" style="padding-top: 65px">';
+	define("__ROOT__", dirname(__FILE__,4));
 	require_once(__ROOT__.'/controladores/docente.controlador.php');
-	$objDocenteModelo=new DocenteModelo();
+	$objDocenteControlador=new DocenteControlador('DocenteModelo');
 
 	if (isset($_REQUEST['guardarPracticas']))
 	{
@@ -11,8 +10,6 @@ echo "<br><br><br>";
 		$cantidadEjercicios=$_REQUEST['cantidad'];
 		$idPonderacion=$_REQUEST['ponderacion'];
 		$idModulo = $_REQUEST['modulo'];
-
-		$objDocenteControlador=new DocenteControlador('DocenteModelo');
 
 		$resultado=$objDocenteControlador->ObtenerSiglas($idModulo);
 
@@ -22,7 +19,7 @@ echo "<br><br><br>";
             $anyoModulo=$arrayModulo['anyo'];
         }
 
-		$cantidadTareas=$objDocenteModelo->obtenerCantidadTareas($idPonderacion);
+		$cantidadTareas=$objDocenteControlador->obtenerCantidadTareas($idPonderacion);
 
 		if(gettype($cantidadTareas)=="string")
 		{
@@ -30,7 +27,7 @@ echo "<br><br><br>";
 		}
 		else
 		{
-			$resultado=$objDocenteModelo->obtenerPorcentajePonderacion($idPonderacion);
+			$resultado=$objDocenteControlador->obtenerPorcentajePonderacion($idPonderacion);
 
 			$porcentajePonderacion=$resultado->fetch_array(MYSQLI_ASSOC);
 
@@ -40,15 +37,15 @@ echo "<br><br><br>";
 			$porcentajeTarea=number_format(($porcentajePonderacion['porcentaje']/$cantidadTareas),2);
 
 
-			$resultado=$objDocenteModelo->InsertarPracticas($nombrePractica,$porcentajeTarea,$cantidadEjercicios,$idPonderacion,$carpetaMod,$anyoModulo);
+			$resultado=$objDocenteControlador->InsertarPracticas($nombrePractica,$porcentajeTarea,$cantidadEjercicios,$idPonderacion,$carpetaMod,$anyoModulo);
 
 			if(gettype($resultado)=="string")
 			{
-				echo $resultado;
+				echo "<div class='alert alert-danger'>".$resultado."</div>";
 			}
 			else
 			{
-				$resultado=$objDocenteModelo->actualizarPorcentajesPracticas($idPonderacion,$porcentajeTarea);
+				$resultado=$objDocenteControlador->actualizarPorcentajesPracticas($idPonderacion,$porcentajeTarea);
 
 				if(gettype($resultado)=="string")
 				{
@@ -56,7 +53,7 @@ echo "<br><br><br>";
 				}
 				else
 				{
-					echo "practica agregada";
+					echo "<div class='alert alert-success'>practica agregada</div>";
 				}
 			}
 		}
@@ -64,178 +61,139 @@ echo "<br><br><br>";
 
 	}
 ?>
-<div class="container" style="padding-top: 65px">
+	<div class="container">
 
-	<script type="text/javascript">
-	function mostrarPonderaciones()
-	{
-	  //Procesar
-	  $.ajax({
-	      type      : 'post',
-	      url       : 'ajax/administrarPracticas',
-	      data      : {modulo: $('#moduloIngresar').val(),administrar: "true"},
-	      success   : function(respuesta)
-	      {
-	        document.getElementById('resultado').innerHTML = respuesta;
-	      }
-	  })
+		<font style="font-weight: bold;">Practicas guardadas</font><br>
 
-	}
+			<select name="modulo" id="moduloMostrar" class="form-control" onchange="mostrarPracticas()">
 
-	function mostrarPracticas()
-	{
-	  //Procesar
-	  $.ajax({
-	      type      : 'post',
-	      url       : 'ajax/administrarPracticas',
-	      data      : {modulo: $('#moduloMostrar').val(),mostrar: "true"},
-	      success   : function(respuesta)
-	      {
-	        document.getElementById('resultadoPracticas').innerHTML = respuesta;
-	      }
-	  })
+				<?php
 
-	}
-	</script>
+					$resultado=$objDocenteControlador->CargarGrupos();
 
-	<form method="post">
-		<table class="table">
-			<tr>
-				<th colspan="2">Agregar prácticas</th>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<font>Grupo:</font>
-					<select name="modulo" class="form-control" id="moduloIngresar" onchange="mostrarPonderaciones()">
-
-						<?php
-
-
-
-							$resultado=$objDocenteModelo->CargarGrupos();
-
-							if (gettype($resultado)=="string")
-							{
-								echo "Error al cargar los grupos...";
-							}
-							else
-							{
-								$i=0;
-								while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
-								{
-									$nombreModulos[]=$arrayGrupos['nombreModulo'];
-									$secciones[]=$arrayGrupos['seccion'];
-									$nombreGrupos[]=$arrayGrupos['nombreGrupo'];
-									$idModulos[]=$arrayGrupos['idModulo'];
-									$i++;
-								}
-
-								$conteo=count($nombreModulos);
-
-								echo "<option>--Seleccione una opcion--</option>";
-
-								for($j=0;$j<$conteo;$j++)
-								{
-									?>
-
-										<option value='<?php echo $idModulos[$j]; ?>'>
-											<?php echo $nombreGrupos[$j].$secciones[$j]."-".$nombreModulos[$j]; ?>
-										</option>
-
-									<?php
-								}
-							}
-						 ?>
-
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="nombre">Nombre:</label>
-				</td>
-				<td>
-					<input type="text" class="form-control" name="nombre" required>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="cantidad">Cantidad de ejercicios:</label>
-				</td>
-				<td>
-					<input type="number" class="form-control" min="1" name="cantidad" required>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="ponderacion">Ponderacion:</label>
-				</td>
-				<td>
-					<div id="resultado">
-						<font>Seleccione un modulo.</font>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<button class="btn btn-secondary" name="guardarPracticas">Guardar practica</button>
-				</td>
-			</tr>
-		</table>
-	</form>
-</div>
-
-<br><br>
-
-<div class="container">
-
-	<font>Practicas</font><br>
-
-		<select name="modulo" id="moduloMostrar" class="form-control" onchange="mostrarPracticas()">
-
-			<?php
-
-				$resultado=$objDocenteModelo->CargarGrupos();
-
-				if (gettype($resultado)=="string")
-				{
-					echo "Error al cargar los grupos...";
-				}
-				else
-				{
-					unset($nombreModulos,$nombreGrupos,$idModulos);
-					$i=0;
-					while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+					if (gettype($resultado)=="string")
 					{
-						$nombreModulos[]=$arrayGrupos['nombreModulo'];
-						$secciones[]=$arrayGrupos['seccion'];
-						$nombreGrupos[]=$arrayGrupos['nombreGrupo'];
-						$idModulos[]=$arrayGrupos['idModulo'];
-						$i++;
+						echo "<div class='alert alert-danger'>".$resultado."</div>";
 					}
-
-					$conteo=count($nombreModulos);
-
-
-					echo "<option>--Seleccione una opcion--</option>";
-
-					for($j=0;$j<$conteo;$j++)
+					else
 					{
-						?>
+						unset($nombreModulos,$nombreGrupos,$idModulos);
+						while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+						{
+							$nombreModulos[]=$arrayGrupos['nombreModulo'];
+							$secciones[]=$arrayGrupos['seccion'];
+							$nombreGrupos[]=$arrayGrupos['nombreGrupo'];
+							$idModulos[]=$arrayGrupos['idModulo'];
+						}
 
-							<option value='<?php echo $idModulos[$j]; ?>'>
-								<?php echo $nombreGrupos[$j].$secciones[$j]."-".$nombreModulos[$j]; ?>
-							</option>
+						$conteo=count($nombreModulos);
 
-						<?php
+
+						echo "<option>--Seleccione una opcion--</option>";
+
+						for($j=0;$j<$conteo;$j++)
+						{
+							?>
+
+								<option value='<?php echo $idModulos[$j]; ?>'>
+									<?php echo $nombreGrupos[$j].$secciones[$j]."-".$nombreModulos[$j]; ?>
+								</option>
+
+							<?php
+						}
 					}
-				}
-			 ?>
+				 ?>
 
-		</select>
+			</select>
+			<br>
 
+			<div class="container" id="resultadoPracticas">
 
-		<div class="container" id="resultadoPracticas">
+				<br><br><br>
 
-		</div>
+			</div>
+	</div>
+
+	<div class="container">
+		<form method="post">
+			<table class="table">
+				<tr>
+					<th colspan="2">Agregar prácticas</th>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<font>Grupo:</font>
+						<select name="modulo" class="form-control" id="moduloIngresar" onchange="mostrarPonderaciones()">
+
+							<?php
+								$resultado=$objDocenteControlador->CargarGrupos();
+
+								if (gettype($resultado)=="string")
+								{
+									echo "<div class='alert alert-danger'>".$resultado."</div>";
+								}
+								else
+								{
+									unset($nombreModulos);
+									while($arrayGrupos=$resultado->fetch_array(MYSQLI_ASSOC))
+									{
+										$nombreModulos[]=$arrayGrupos['nombreModulo'];
+										$secciones[]=$arrayGrupos['seccion'];
+										$nombreGrupos[]=$arrayGrupos['nombreGrupo'];
+										$idModulos[]=$arrayGrupos['idModulo'];
+									}
+
+									$conteo=count($nombreModulos);
+
+									echo "<option>--Seleccione una opcion--</option>";
+
+									for($j=0;$j<$conteo;$j++)
+									{
+										?>
+											<option value='<?php echo $idModulos[$j]; ?>'>
+												<?php echo $nombreGrupos[$j].$secciones[$j]."-".$nombreModulos[$j]; ?>
+											</option>
+										<?php
+									}
+								}
+							 ?>
+
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="nombre">Nombre:</label>
+					</td>
+					<td>
+						<input type="text" class="form-control" name="nombre" required>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="cantidad">Cantidad de ejercicios:</label>
+					</td>
+					<td>
+						<input type="number" class="form-control" min="1" name="cantidad" required>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="ponderacion">Ponderacion:</label>
+					</td>
+					<td>
+						<div id="resultado">
+							<font>Seleccione un modulo.</font>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button class="btn btn-secondary" name="guardarPracticas">Guardar practica</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
 </div>

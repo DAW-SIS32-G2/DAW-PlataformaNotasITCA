@@ -1,8 +1,11 @@
 <?php
+    define("__ROOT__", dirname(__FILE__,2));
+    require_once(__ROOT__.'/core/funcionesbd.php');
 
     class docenteModelo
     {
         private $pagina;
+
 
         function __construct()
         {

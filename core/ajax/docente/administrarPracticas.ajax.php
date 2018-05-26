@@ -1,5 +1,5 @@
 <?php
-  define('__ROOT__',dirname(dirname(dirname(dirname(__FILE__)))));
+  define('__ROOT__',dirname(__FILE__,3));
   require_once(__ROOT__.'/core/funcionesbd.php');
   $objDocenteModelo=new docenteModelo();
 
@@ -18,7 +18,7 @@
     {
       if ($resultado->num_rows==0)
       {
-        echo "Este modulo no tiene ponderaciones asignadas. Por favor comuniquese con su administrador de bases de datos.";
+        echo "<div class='alert alert-warning'>Este modulo no tiene ponderaciones asignadas. Por favor comuniquese con su administrador de bases de datos.</div>";
       }
       else
       {
@@ -50,7 +50,8 @@
     }
 
   }
-  elseif(isset($_POST['mostrar']))
+  
+  if(isset($_POST['mostrar']))
   {
     $idModulo = $_POST['modulo'];
 
@@ -58,13 +59,13 @@
 
     if ($resultado->num_rows<1)
     {
-      echo "Este modulo no tiene practicas asignadas.";
+      echo "<div class='alert alert-warning'>Este modulo no tiene practicas asignadas.</div>";
     }
     else
     {
       ?>
         
-        <table border="1px">
+        <table class="table table-bordered table-light table-hover">
             
           <tr>
             <th>Evaluación</th>

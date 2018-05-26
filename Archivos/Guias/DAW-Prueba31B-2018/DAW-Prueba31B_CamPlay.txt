@@ -1,0 +1,288 @@
+Camtasia Player 7.0.0 - README file                   18 January 2010
+
+----------------------------------------------------------------------
+                        ~ TABLE OF CONTENTS ~
+----------------------------------------------------------------------
+1.  Description
+
+2.  System Requirements
+
+3.  Setup and Configuration
+    3.1  Installation Instructions
+    3.2  Uninstall Instructions
+
+4.  How to use Camtasia Player
+    4.1  Command Line Parameters
+
+5.  WHAT'S NEW
+    5.1  Version History
+
+6.  Contact Information
+
+
+----------------------------------------------------------------------
+1.  Description
+----------------------------------------------------------------------
+Media Players have become large complicated applications that depend
+on the latest Windows features (e.g. the current version of DirectX).
+The common Media Players have also become a battleground for streaming
+formats, entertainment portals, advertising, etc.  These players tend
+to be optimized for entertainment content and are often simply not
+appropriate for playing screen recordings.  Camtasia Player is
+designed to guarantee simple high quality playback of your Camtasia
+Studio videos.
+
+Camtasia Player is a simple, standalone video player, optimized for
+playing screen recordings.  Camtasia Player always plays movies at
+100% of their original size so that they remain readable.  It runs
+on any 32-bit Windows platform, with no dependencies on runtime
+libraries, OS version, or DirectX.  The Player is a single .EXE file
+that does not need any setup, nor does it use the registry or any
+configuration files.  Camtasia Player is designed to be as easy to
+use as possible to avoid support issues.  Command line options are
+provided which allow Camtasia Player to be invoked in various ways
+from CD-ROMs, multimedia authoring tools, and scripting languages or
+batch files.  The command line options are listed below in the "How
+to Use Camtasia Player" section.
+
+Camtasia Player only plays AVI video files.  Beginning with v2.0,
+Camtasia Player has built-in support for the TechSmith Screen Capture
+Codec (TSCC).  This means that an AVI encoded with the TSCC codec
+will always play in the Camtasia Player, even if the TSCC codec is
+not installed on the system.  Any other audio or video codecs
+required by the AVI file must be installed before Camtasia Player can
+play the movie. Camtasia Player does not setup any shell associations
+to become the default AVI player.  However, this could be setup by an
+install program that you provide, or by an end user.
+
+Please refer to CAMPLAYLICENSE.TXT for details about the software
+license agreement and about redistribution of Camtasia Player
+(CAMPLAY.EXE) with your Camtasia movies.
+
+
+----------------------------------------------------------------------
+2.  System Requirements
+----------------------------------------------------------------------
+In order to run Camtasia Player, your system must meet these
+specifications:
+
+o  Microsoft Windows XP, Vista, Windows 7 or later version
+o  Windows-compatible sound card and speakers (recommended)
+o  About 640 KB of hard-disk space for program installation
+o  Any audio or video codecs required by your AVI files must be
+   installed in order to play the AVIs.
+
+   ** Note: Beginning with v2.0, Camtasia Player can play AVIs encoded
+   with the TechSmith Screen Capture Codec (TSCC), even if the TSCC
+   codec is not installed on the system.  However, you may still wish
+   to install the TSCC codec so that the AVIs will play in other media
+   players.  You can freely distribute and install the TSCC video
+   codec using the TSCC.EXE codec installer, included with Camtasia
+   Studio.
+
+----------------------------------------------------------------------
+3.  Setup and Configuration
+----------------------------------------------------------------------
+3.1 Installation Instructions
+
+    The Camtasia Player distribution file contains the following
+    files.
+
+       CAMPLAY.EXE          Camtasia Player executable
+       CAMPLAYLICENSE.TXT   Software license description
+       CAMPLAY.TXT          This file
+
+    To install Camtasia Player, simply unzip the contents of
+    the distribution file to a new folder.
+
+3.2 Uninstall Instructions
+
+    To uninstall Camtasia Player, simply delete the files listed
+    above from your computer.
+
+----------------------------------------------------------------------
+4.  How to use Camtasia Player
+----------------------------------------------------------------------
+
+4.1 Command Line Parameters
+
+    When you launch Camtasia Player, by default it has a title bar,
+    a menu bar, a tool bar, a status bar.  You can customize those
+    elements by specifying arguments on the command line when
+    launching Camtasia Player.  Here is the exact syntax for the
+    command line arguments:
+
+       CAMPLAY [<options>] [<file>]
+
+    where <file> is an optional movie file name and <options> is an
+    optional set of options among the following:
+
+    /A    - Launches with "Always on top" option
+    /BC RGB(255,0,255) - Set background color, default is black
+    /D    - Launches without allowing "Dragging" by the movie area
+    /E    - Exits after playing the movie
+    /F    - Launches in Full Screen Mode
+    /M    - Launches without a menu bar
+    /MX   - Launches with its window maximized
+    /open - Open the specified movie (<file>) but does not play it
+    /play - Immediately play the specified movie (<file>) [default]
+    /R    - Repeats the movie forever
+    /S    - Launches without a status bar
+    /ST   - Stay on last frame after playing
+    /T    - Launches without a title bar
+    /TB   - Launches without a tool bar
+
+    Notes:
+    - For the /BC background color, you must supply a color argument
+      with the syntax RGB(r,g,b) where r, g, and b are the red, green
+      and blue components of the color.  Valid values for r, g, and b
+      are in the range 0 to 255.  For example:
+         RGB(0,0,0)        =  black
+         RGB(255,255,255)  =  white
+         RGB(0,0,255)      =  blue
+         RGB(128,128,128)  =  dark gray
+      The background color shows only when the movie that is playing
+      does not fill the entire frame.  For example, if the player is
+      maximized while a 360x240 movie is playing, the background color
+      will show. 
+
+    Examples:
+    CAMPLAY "movie1.avi"
+    - play "movie1.avi" with the default user interface
+
+    CAMPLAY /E /F "movie2.avi"
+    - play "movie2.avi" full screen and exit after playing
+
+    CAMPLAY /M "movie3.avi"
+    - open "movie3.avi" without a menu bar (i.e. no File>Open menu
+      option)
+
+    CAMPLAY /BC RGB(128,128,128) /F "movie4.avi"
+    - play "movie4.avi" full screen and fill the background with dark
+      gray if the movie does not fill the entire screen.
+
+
+----------------------------------------------------------------------
+5.  WHAT'S NEW
+----------------------------------------------------------------------
+5.1 Version history
+
+  v7.0.0  No change.
+
+  v6.0.1  No change.
+
+  v6.0.0  No change.
+
+  v5.0.0  No change.
+
+  v4.0.1  No change.
+
+  v4.0.0  No change.
+
+  v3.1.1  Camtasia Player now available in Japanese and Korean.
+
+  v2.1.1  Fixed playback problems with some 256 color AVIs.  A default
+          palette was used instead of the actual palette contained in
+          the AVI, causing some colors to appear distorted.
+
+  v2.1.0  Added drag and drop support to the player.
+
+  v2.0.5  Camtasia Player now available in German.
+
+  v2.0.4  Added a warning to inform the user of possible playback
+          problems for AVI files which exceed 1GB.
+
+  v2.0.3  Changed program logo and icon for consistent branding with
+          Camtasia Studio 2.x.
+
+  v2.0.2  Changed program logo and icon for consistent branding with
+          Camtasia Studio 1.x.
+
+  v2.0.1  Internal changes only.  No visible changes to the player.
+
+  v2.0.0  The player can now play AVI files which use the TechSmith
+          Screen Capture Codec (TSCC) even if the codec is not
+          installed on the system.
+
+          Added /ST "Stay on last frame" option.  When a movie
+          finishes playing, instead of rewinding to the beginning of
+          the movie, the player will stop on the last frame.
+
+          Added /BC "Background color" option.  This command line
+          option requires a parameter of the form RGB(red,green,blue)
+          which specifies the red, green, and blue components that
+          make up the the background color.  Valid values for the red,
+          green, and blue components are in the range 0 to 255.  The
+          background color only shows when the movie is not big enough
+          to fill the frame.
+
+          Added volume controls to the player.
+
+          Improved seeking performance.  You can now seek while the
+          movie is playing.  You can now click anywhere on the slider
+          to jump to that point in the movie.  You can also use the
+          left and right arrow keys for frame by frame navigation.
+
+  v1.0.4  Added /A "Always on top" option to keep player on top of
+          other windows.  The Play>Always on top option only appears
+          if the /A command line option is used.
+
+          The player can now be moved around the screen by a click-n-
+          drag inside the movie playback area. No dragging is allowed
+          when the player is maximized or when in fullscreen mode. For
+          backward compatibility, the /D option was added to disable
+          this "Dragging" behavior in case it is not desired.
+
+          Added Exit toolbar button when the player is run with no
+          menu (/M) and with no title bar (/T) to make it easier to
+          close the player.
+
+          Fixed problem where player would forget its window position
+          due to the sequence: maximize, enter fullscreen, exit full-
+          screen, restore.
+
+          Fixed problem where player was not positioned correctly in
+          the window z-order when switching out of fullscreen mode.
+
+          Fixed initial refresh problem on NT4 when /t /mx were used.
+
+  v1.0.3  Fixed problems with Camtasia Player not exiting or repeating
+          at the the end of a movie (/E and /R command line options).
+
+          Fixed excessive flashing when playing a clip with palette
+          shifts on a 256 color desktop with Camtasia Player.
+
+          Fixed problems with the player stopping unexpectedly when
+          dragging the seek bar.
+
+          Added Play>Repeat menu option.
+
+  v1.0.2  Change the command line parsing to understand options
+          without spaces.
+
+  v1.0.1  Added the Space bar as an accelerator key for Play/Pause.
+
+  v1.0.0  Initial release.
+
+
+----------------------------------------------------------------------
+6.  Contact Information
+----------------------------------------------------------------------
+
+   TechSmith Corporation 
+   2405 Woodlake Drive 
+   Okemos, MI 48864-5910
+
+   Voice   : +1.517.381.2300
+   Fax     : +1.517.381.2336
+   Web     : http://www.techsmith.com
+   Support : http://support.techsmith.com
+
+----------------------------------------------------------------------
+(C) 1999-2010 TechSmith Corporation. All Rights Reserved. TechSmith, Camtasia,
+Camtasia Studio, Dubit, Ensharpen, Enterprise Wide, Morae, Rich Recording
+Technology, Screencast.com, Smartfocus, Snagit, TSCC, and UserVue are all
+registered marks of TechSmith Corporation, and Camtasia Relay, Expressshow,
+and Jing are marks of TechSmith Corporation. All other registered trademarks
+and trademarks are the property of their respective companies.
+----------------------------------------------------------------------

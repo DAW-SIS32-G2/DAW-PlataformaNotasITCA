@@ -66,6 +66,30 @@
             return $resultado;
         }
 
+        public function obtenerCantidadTareas($idPonderacion)
+        {
+            $resultado = $this->model->obtenerCantidadTareas($idPonderacion);
+            return $resultado;
+        }
+
+        public function obtenerPorcentajePonderacion($idPonderacion)
+        {
+            $resultado = $this->model->obtenerPorcentajePonderacion($idPonderacion);
+            return $resultado;
+        }
+
+        public function InsertarPracticas($nombrePractica,$porcentajeTarea,$cantidadEjercicios,$idPonderacion,$carpetaMod,$anyoModulo)
+        {
+            $resultado = $this->model->InsertarPracticas($nombrePractica,$porcentajeTarea,$cantidadEjercicios,$idPonderacion,$carpetaMod,$anyoModulo);
+            return $resultado;
+        }
+
+        public function actualizarPorcentajesPracticas($idPonderacion,$porcentajeTarea)
+        {
+            $resultado = $this->model->actualizarPorcentajesPracticas($idPonderacion,$porcentajeTarea);
+            return $resultado;
+        }
+
         public function obtenerInfoSeguridadModulo($idModulo)
         {
             $resultado = $this->model->obtenerInfoSeguridadModulo($idModulo);
@@ -236,6 +260,12 @@
         public function agregarPonderacion($idModulo,$nombrePonderacion,$porcentajePonderacion)
         {
             $resultado=$this->model->agregarPonderacion($idModulo,$nombrePonderacion,$porcentajePonderacion);
+            return $resultado;
+        }
+
+        public function CargarGrupos()
+        {
+            $resultado=$this->model->CargarGrupos();
             return $resultado;
         }
     }
