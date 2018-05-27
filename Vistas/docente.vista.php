@@ -1,23 +1,36 @@
 <?php
 
-    /**
-    * The home page view
-    */
+/**
+ * Class docenteVista
+ *  Clase que se encarga de proveer de su modelo y controlador respectivos a cada vista.
+ */
     class docenteVista
     {
-
+        /**
+         * @var $model : Contiene el modelo necesario para la interfaz
+         * @var $controller : Contiene el controlador de la interfaz
+         */
         private $model;
 
         private $controller;
 
-
+        /**
+         * docenteVista constructor.
+         * @param $controller
+         * @param $model
+         *
+         * Se cargan el modelo y el controlador de la interfaz dentro de las propiedades correspondientes
+         */
         function __construct($controller, $model)
         {
             $this->controller = $controller;
             $this->model = $model;
         }
 
-        //Vistas de las distintas páginas del módulo docente
+        /**
+         *  Funciones que administran el modelo y el controlador para cada vista
+         */
+
         public function index()
         {
             return $this->controller->loadView();
