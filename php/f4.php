@@ -3,30 +3,40 @@
 class install{
     private $bd;
 
-    function __construct($usuario, $passwd){
-        $this->bd = new mysqli('localhost', $usuario, $passwd, 'mysql', '3306');
-        if ($this->bd->connect_error) {
-            return '<script>console.log("La conexión ha fallado: ' . ($this->bd->connect_error) . '");</script>';
-        } else {
-            echo '<script>console.log("Conexion Iniciada");</script>';
-        }
-        $fp = fopen('recursos/usuario.sql', 'r');
-        $text = '';
-        while (!feof($fp)) {
-
-            if ($linea = fgets($fp)) {
-                $text .= $linea;
+    function __construct($usuario, $passwd, $unins){
+        if(empty($unins)){
+            $this->bd = new mysqli('localhost', $usuario, $passwd, 'mysql', '3306');
+            if ($this->bd->connect_error) {
+                return '<script>console.log("La conexión ha fallado: ' . ($this->bd->connect_error) . '");</script>';
+            } else {
+                echo '<script>console.log("Conexion Iniciada");</script>';
             }
-        }
+            $fp = fopen('recursos/usuario.sql', 'r');
+            $text = '';
+            while (!feof($fp)) {
 
-        $array = explode(';', $text);
-        foreach ($array as $l) {
-            $this->bd->query($l);
-            if ($this->bd->error) {
-                echo '<script>console.log("' . $this->bd->error . '");</script>';
+                if ($linea = fgets($fp)) {
+                    $text .= $linea;
+                }
             }
+
+            $array = explode(';', $text);
+            foreach ($array as $l) {
+                $this->bd->query($l);
+                if ($this->bd->error) {
+                    echo '<script>console.log("' . $this->bd->error . '");</script>';
+                }
+            }
+            $this->bd = new mysqli('localhost', $usuario, $passwd, 'SistemaNotasItca');
+        }elseif(!empty($unins) && ($unins === TRUE || $unins != '')){
+            $this->bd = new mysqli('localhost', $usuario, $passwd, 'mysql', '3306');
+            if ($this->bd->connect_error) {
+                return '<script>console.log("La conexión ha fallado: ' . ($this->bd->connect_error) . '");</script>';
+            } else {
+                echo '<script>console.log("Conexion Iniciada");</script>';
+            }
+
         }
-        $this->bd = new mysqli('localhost', $usuario, $passwd, 'SistemaNotasItca');
     }
 
     function unzip($ruta){
@@ -35,7 +45,7 @@ class install{
             $zip_status = $zip->open($ruta);
             if ($zip_status === true) {
                 if ($zip->setPassword('sisNotas')) {
-                    if (!$zip->extractTo('../../')){
+                    if (!$zip->extractTo('../')){
                         die("<script>console.log('Failed extracting archive 0: " . @$zip->getStatusString() . " (code: " . $zip_status . ")');</script>");
                     }else
                         echo("<script>console.log('Archivo Extraido');</script>");
@@ -86,13 +96,36 @@ class install{
             foreach ($files as $file) {
                 $file = $dir . '/' . $file;
                 if (is_dir($file)) {
-                    desin($file);
+                    $this->desin($file);
                     rmdir($file);
                 } else {
                     unlink($file);
                 }
             }
-            rmdir($dir);
+            if(rmdir($dir)){
+                $fp = fopen('recursos/desinstalar.sql', 'r');
+                $text = '';
+                while (!feof($fp)) {
+
+                    if ($linea = fgets($fp)) {
+                        $text .= $linea;
+                    }
+                }
+
+                $array = explode(';', $text);
+                $i=0;
+                foreach ($array as $l) {
+                    $this->bd->query($l);
+                    if ($this->bd->error) {
+                        echo '<script>console.log("' . $this->bd->error . '");</script>';
+                    }else{
+                        $i++;
+                    }
+                }
+                if($i==count($array)){
+                    echo '<script>console.log("Desinstalación Completa");</script>';
+                }
+            }
         }catch (Exception $e){
             echo $e->getMessage();
         }

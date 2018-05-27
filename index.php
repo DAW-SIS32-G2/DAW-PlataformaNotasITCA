@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-md-5"></div>
                 <div class="col-md-2 text-center">
-                    <button class="btn btn-danger btn-lg btn-block">Desintalar</button>
+                    <button class="btn btn-danger btn-lg btn-block" onclick="cambio('index.php?funcion=f5')">Desintalar</button>
                 </div>
                 <div class="col-md-5"></div>
             </div>
