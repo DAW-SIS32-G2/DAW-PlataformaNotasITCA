@@ -19,5 +19,6 @@ if(!isset($_SESSION['usuario']) || $_SESSION['tipo'] != "docente")
     <script src="<?= js ?>popper.min.js"></script>
     <script src="<?= js ?>bootstrap.min.js"></script>
     <script src="<?= js ?>docente.js"></script>
+    <script src="<?= js ?>sweetalert.min.js"></script>
     <title>ITCA Docentes</title>
   </head>

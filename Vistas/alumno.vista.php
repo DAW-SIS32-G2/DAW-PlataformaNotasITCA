@@ -1,4 +1,5 @@
 <?php
+@session_start();
 class alumnoVista
 {
   private $model;
@@ -40,13 +41,6 @@ class alumnoVista
     require_once 'Vistas/paginas/alumno/notas.php';
   }
 
-  function practica_prof()
-  {
-    include 'paginas/alumno/plantillas/head.php';
-    include 'paginas/alumno/plantillas/nav.php';
-    require_once 'Vistas/paginas/alumno/practica_prof.php';
-  }
-
   function guias()
   {
     include 'paginas/alumno/plantillas/head.php';
@@ -82,7 +76,17 @@ class alumnoVista
 
   function res()
   {
-    include './core/ajax/alumno/resultado.html';
+    @include "./Archivos/Editor/resultado".$_SESSION['usuario'].".html";
+    $archivo = fopen("./Archivos/Editor/resultado".$_SESSION['usuario'].".html","w");
+    fputs($archivo,"");
+    fclose($archivo);
+  }
+
+  function html5()
+  {
+    include 'paginas/alumno/plantillas/head.php';
+    include 'paginas/alumno/plantillas/nav.php';
+    include 'paginas/alumno/html5.php';
   }
 
 }

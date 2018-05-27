@@ -39,7 +39,7 @@
                 while(file_exists($rutaArchivo))
                 {
                         $rutaArchivo="Archivos/Guias/".$siglasModulos."-".$anyosModulos."/($contador)".$nombre;
-                        $yaExiste="Ya existe un archivo con ese nombre. El archivo fue guardado como: ($contador)".$nombre."<br>";
+                        $yaExiste="Ya existe un archivo con ese nombre. El archivo fue guardado como: ($contador)".$nombre;
                         $contador++;
                 }
 
@@ -50,13 +50,32 @@
 
                 move_uploaded_file($nombreTemporal,$rutaArchivo);
 
-                echo @$yaExiste."Archivo subido con exito. Ocupara ". $file['size']." bytes de memoria en disco";
+                $estado =  @$yaExiste."\\nArchivo subido con exito. Ocupara ". $file['size']." bytes de memoria en disco";
 
                 $this->model->GuardarGuiasBaseDatos($nombre,$rutaArchivo,$idModulo);
+                ?>
+                <script type="text/javascript">
+                    swal({
+                        text    : "<?= $estado ?>",
+                        icon    : "success",
+                        button  : "Aceptar"
+                    })
+                </script>
+                <?php
             }
             else
             {
-                echo "Ocurrio un error al subir el archivo: El error es el numero ".$file['error'].". Para saber más sobre este error de click <a target='_blank' href='http://php.net/manual/es/features.file-upload.errors.php'>Aquí</a>";
+                $estado =  "Ocurrio un error al subir el archivo: El error es el numero ".$file['error'];
+
+                ?>
+                <script type="text/javascript">
+                    swal({
+                        text    : "<?= $estado ?>",
+                        icon    : "error",
+                        button  : "Aceptar"
+                    })
+                </script>
+                <?php
             }
         }
 

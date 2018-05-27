@@ -26,7 +26,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/buzon_archivos">Buz&oacute;n de Archivos</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item nav-but" >HTML5</a>
+                    <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/html5">HTML5</a>
             </li>
             <li class="nav-item dropdown active">
                 <a class="nav-link nav-but dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -35,10 +35,6 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/editor">Editor Web Html</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/practica_prof">Practica Profesional</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item nav-but">Historial</a>
                 </div>
             </li>
             <li class="nav-item dropdown active">

@@ -24,7 +24,7 @@ if(isset($_REQUEST['mostrarGuias']))
 
     ?>
         
-        <table class="table table-bordered table-light table-hover">
+        <table class="table table-responsive w-100 d-block d-md-table table-bordered table-light table-hover">
             <thead>
                 <tr>
                     <th scope="col"># de guia</th>
@@ -102,11 +102,14 @@ if(isset($_REQUEST['adminSeguridad']))
                 ?>
                     <div class="alert alert-info">El modulo no tiene contraseña</div>
                     <form action="" method="post">
-                        <label for="contra">Nueva contraseña:
+                        <div class="form-group row">
+                            <label class="form-label" for="contra">Nueva contraseña:</label>
                             <input type="password" name="contra" class="form-control" required>
-                        </label><br>
-                        <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
-                        <input type="submit" name="asignarContra" value="Asignar contraseña" class="btn btn-info">
+                            <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+                        </div>
+                        <div class="form-group row">
+                            <input type="submit" name="asignarContra" value="Asignar contraseña" class="btn btn-info">
+                        </div>
                     </form>
                     <br>
                 <?php
@@ -137,17 +140,19 @@ if(isset($_REQUEST['mostrarModificarContra']))
     ?>
         <h5>Modificar contraseña actual</h5>
         <form action="" method="post">
-            <label for="contra">Nueva contraseña:
+            <div class="form-group row">
+                <label class="form-label" for="contra">Nueva contraseña:</label>
                 <input type="password" name="contra" id="contra" class="form-control" required>
-            </label><br>
-
-            <label for="contra">Contraseña actual de docente:
-                <input type="password" name="contraDocente" id="contraDocente" class="form-control" required>
-            </label><br>
-
-            <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
-            <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
-            <input type="submit" name="modificarContra" value="Modificar contraseña" onclick="return verificarDocente()" class="btn btn-info">
+            </div>
+            <div class="form-group row">
+                <label for="contra">Contraseña actual de docente:</label>
+                <input type="password" name="contraDocente" id="contraDocente" class="form-control" required>                
+            </div>
+            <div class="form-group row">
+                <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+                <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
+                <input type="submit" name="modificarContra" value="Modificar contraseña" onclick="return verificarDocente()" class="btn btn-info">
+            </div>
         </form>
         <br>
     <?php
@@ -162,14 +167,15 @@ if(isset($_REQUEST['mostrarEliminarContra']))
     ?>
         <h5>Eliminar contraseña actual</h5>
         <form action="" method="post">
-
-            <label for="contra">Contraseña actual de docente:
+            <div class="form-group row">
+                <label class="form-label" for="contra">Contraseña actual de docente:</label>
                 <input type="password" name="contraDocente" id="contraDocente" class="form-control" required>
-            </label><br>
-
-            <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
-            <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
-            <input type="submit" name="eliminarContra" value="Eliminar contraseña" onclick="return verificarDocente()" class="btn btn-info">
+            </div>
+            <div class="form-group row">
+                <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+                <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
+                <input type="submit" name="eliminarContra" value="Eliminar contraseña" onclick="return verificarDocente()" class="btn btn-info">
+            </div>
         </form>
         <br>
     <?php
@@ -207,14 +213,15 @@ if(isset($_REQUEST['mostrarAdminModulo']))
             Al borrarlo desaparecera de los grupos para administrar y ningun alumno podra visualizarlo hasta que se vuelva a activar.
         </div>
         <form action="" method="post">
-
-            <label for="contra">Contraseña actual de docente:
+            <div class="form-group row">
+                <label for="contra">Contraseña actual de docente:</label>
                 <input type="password" name="contraDocente" id="contraDocente" class="form-control" required>
-            </label><br>
-
-            <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
-            <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
-            <input type="submit" name="desactivarModulo" value="Desactivar modulo" onclick="return verificarDocente()" class="btn btn-info">
+                <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+                <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
+            </div>
+            <div class="form-group row">
+                <input type="submit" name="desactivarModulo" value="Desactivar modulo" onclick="return verificarDocente()" class="btn btn-info">
+            </div>
         </form>
         <br>
     <?php
@@ -280,7 +287,7 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
 
                     if ($cantidadPonderaciones == 0)
                     {
-                        echo "Este modulo no tiene ponderaciones asignadas.<br> Por favor comuniquese con el administrador o ponderelo usted mismo.<br>";
+                        echo "<p class=\"text-justify\">Este módulo no tiene ponderaciones asignadas.<br> Por favor comuníquese con el administrador o pondérelo usted mismo.<br></p>";
                        
                         ?>
                         <br>
@@ -291,7 +298,17 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
                     else
                     {
                         $objDocenteControlador=new DocenteControlador('DocenteModelo');
-
+                        ?>
+                        <table class="table table-bordered table-hover table-responsive w-100 d-block d-md-table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Porcentaje</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        <?php
                         $totalPorcentajes=0;
                         for ($j=0;$j<$cantidadPonderaciones;$j++)
                         {
@@ -320,38 +337,64 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
                             $archivo=$aux;
 
                             ?>
-                                <span>
+                            <tr>
+                                <td>
                                     <input type="hidden" name="idPonderaciones[]" value="<?= $idPonderaciones[$j] ?>">
-
-                                    <input type="text" name="nombrePonderaciones[]" value="<?= $ponderacionesOrdenadas[$j] ?>" style="width: 60px;">
-
-                                    <label>
-                                        <input type="number" step="0.1" max="100" min="0" id="<?= $idPonderaciones[$j] ?>" name="porcentajePonderaciones[]" value="<?= $porcentajesOrdenados[$j] ?>" style="width: 50px;"  onkeyup="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)" onchange="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)">%
-                                    </label>
-
+                                    <input type="text" name="nombrePonderaciones[]" value="<?= $ponderacionesOrdenadas[$j] ?>" class="form-control">
+                                </td>
+                                <td>
+                                    <div class="row no-gutters">
+                                        <div class="col-md-9">
+                                            <input type="number" step="0.1" max="100" min="0" id="<?= $idPonderaciones[$j] ?>" name="porcentajePonderaciones[]" value="<?= $porcentajesOrdenados[$j] ?>" class="form-control"  onkeyup="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)" onchange="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)">
+                                        </div>
+                                        <div class="col-md-2">
+                                            %
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
                                     <button class="btn btn-info" type="button" onclick="confirmarBorrarPonderacion(<?= $idPonderaciones[$j] ?>,<?= $idModulo ?>)">Eliminar</button>
-
                                     <button class="btn btn-info" type="button" onclick="comprimirPracticasPonderacion('<?= $rutaArchivo ?>','<?= $archivo ?>')">Descargar</button>
 
-                                </span>
-                                <br>
+                                </td>
+                            </tr>
                             <?php
                             $totalPorcentajes+=$porcentajesOrdenados[$j];
 
                         }
-
+                        ?>
+                                </tbody>
+                            </table>
+                        <?php
                         if($totalPorcentajes<100)
                         {
                             ?>
-                            <br>
-                            <button class="btn btn-success" type="button" onclick="agregarPonderacion('<?= $idModulo ?>','<?= $totalPorcentajes ?>')">agregar ponderacion</button>
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <button class="btn btn-success" type="button" onclick="agregarPonderacion('<?= $idModulo ?>','<?= $totalPorcentajes ?>')">agregar ponderacion</button>
+                                </div>
+                            </div>
                             <?php
                         }
                         ?>
-                            <font>Total:</font>
-                            <input type="text" id="<?= $idModulo ?>" name="total" value="<?= $totalPorcentajes ?>" onfocus="this.blur()" style="width: 70px;">%<br><br>
-
-                            <button class="btn btn-info" name="guardarPonderaciones" onclick="return verificarPonderaciones(<?= $idModulo ?>)">Guardar<br>Ponderaciones</button>
+                        <br>
+                        <div class="row no-gutters">
+                                <div class="col-md-1">
+                                    <font>Total:</font>        
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="<?= $idModulo ?>" name="total" value="<?= $totalPorcentajes ?>" onfocus="this.blur()" class="form-control">        
+                                </div>
+                                <div class="col-md-2">
+                                    %
+                                </div>
+                        </div>
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <button class="btn btn-info" name="guardarPonderaciones" onclick="return verificarPonderaciones(<?= $idModulo ?>)">Guardar<br>Ponderaciones</button>
+                            </div>
+                        </div>
                         <?php
                     }
                 }

@@ -64,7 +64,7 @@ function mostrarGuias(idModulo)
       data      : {"idModulo": idModulo, mostrarGuias : true},
       success   : function(respuesta)
       {
-        document.getElementById('verGuias').innerHTML = respuesta;
+        document.getElementById('practicas').innerHTML = respuesta;
       }
   })
 
@@ -229,7 +229,7 @@ function mostrarAdminSeguridad(idModulo)
 	      data      : {idModulo: idModulo, adminSeguridad : true},
 	      success   : function(respuesta)
 	      {
-	        document.getElementById('adminSeguridad').innerHTML = respuesta;
+	        document.getElementById('seguridadMod').innerHTML = respuesta;
 	      }
 	  });
 }
@@ -281,7 +281,9 @@ function mostrarModificarContra(idModulo)
 	      data      : {idModulo: idModulo, mostrarModificarContra : true},
 	      success   : function(respuesta)
 	      {
+	      	$("#seguridadModal").modal('hide')
 	        document.getElementById('adminSeguridad').innerHTML = respuesta;
+	        $("#adminSeguridadModal").modal('show')
 	      }
 	  });
 }
@@ -294,7 +296,9 @@ function mostrarEliminarContra(idModulo)
 	      data      : {idModulo: idModulo, mostrarEliminarContra : true},
 	      success   : function(respuesta)
 	      {
+	      	$("#seguridadModal").modal('hide')
 	        document.getElementById('adminSeguridad').innerHTML = respuesta;
+	        $("#adminSeguridadModal").modal('show')
 	      }
 	  });
 }

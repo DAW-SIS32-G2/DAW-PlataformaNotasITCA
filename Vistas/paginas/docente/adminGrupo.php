@@ -1,3 +1,40 @@
+<script type="text/javascript">
+	$(document).on('show.bs.modal','#subirModal', function(event) {
+		var button = $(event.relatedTarget)
+		var idmodulo = button.data('mod')
+		var modal = $(this)
+
+		modal.find("#modulo").val(idmodulo)
+	});
+
+	$(document).on('show.bs.modal',"#verGuiasModal", function(event) {
+		var button = $(event.relatedTarget)
+		var idmodulo = button.data('mod')
+		var modal = $(this)
+		mostrarGuias(idmodulo)
+	})
+
+	$(document).on('show.bs.modal',"#seguridadModal", function(event) {
+		var button = $(event.relatedTarget)
+		var idmodulo = button.data('mod')
+		var modal = $(this)
+		mostrarAdminSeguridad(idmodulo)
+	})
+
+	$(document).on('show.bs.modal',"#ponderacionesModal", function(event) {
+		var button = $(event.relatedTarget)
+		var idmodulo = button.data('mod')
+		var modal = $(this)
+		mostrarAdminPonderaciones(idmodulo)
+	})
+
+	$(document).on('show.bs.modal',"#administracionModal", function(event) {
+		var button = $(event.relatedTarget)
+		var idmodulo = button.data('mod')
+		var modal = $(this)
+		mostrarAdminModulo(idmodulo)
+	})
+</script>
 <?php
 echo '<div class="container" style="padding-top: 65px">';
 define("__ROOT__", dirname(__FILE__,4));
@@ -18,7 +55,15 @@ if(isset($_REQUEST['guardarPonderaciones']))
 
 	if ($porcentajeTotal>100)
 	{
-		echo "Error. La suma de los porcentajes de las ponderaciones debe ser menor o igual que 100%";
+		?>
+		<script type="text/javascript">
+			swal({
+				text: "Error. La suma de los porcentajes de las ponderaciones debe ser menor o igual que 100%",
+				icon: "error",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
 	}
 	else
 	{
@@ -48,7 +93,15 @@ if(isset($_REQUEST['guardarPonderaciones']))
 
 		if ($funcionoActualizacion)
 		{
-			echo "Ponderaciones actualizadas.";
+			?>
+			<script type="text/javascript">
+				swal({
+					text: "Ponderaciones actualizadas",
+					icon: "success",
+					button: "Aceptar"
+				});
+			</script>
+			<?php
 		}
 	}
 
@@ -77,11 +130,27 @@ if(isset($_REQUEST['asignarContra']))
 
 	if (gettype($resultado)=="string")
 	{
-		echo '<div class="alert alert-danger">'.$resultado.'</div>';
+		?>
+		<script type="text/javascript">
+			swal({
+				text: "<?= $resultado ?>",
+				icon: "error",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
 	}
 	else
 	{
-		echo '<div class="alert alert-success"> Contraseña asignada.</div>';
+		?>
+		<script type="text/javascript">
+			swal({
+				text: "Se ha asignado la contraseña",
+				icon: "success",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
 	}
 }
 
@@ -96,11 +165,27 @@ if(isset($_REQUEST['modificarContra']))
 
 	if (gettype($resultado)=="string")
 	{
-		echo '<div class="alert alert-danger">'.$resultado.'</div>';
+		?>
+		<script type="text/javascript">
+			swal({
+				text: "<?= $resultado ?>",
+				icon: "error",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
 	}
 	else
 	{
-		echo '<div class="alert alert-success"> Contraseña modificada.</div>';
+		?>
+		<script type="text/javascript">
+			swal({
+				text: "Se ha actualizado la contraseña",
+				icon: "success",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
 	}
 }
 
@@ -114,11 +199,27 @@ if(isset($_REQUEST['eliminarContra']))
 
 	if (gettype($resultado)=="string")
 	{
-		echo '<div class="alert alert-danger">'.$resultado.'</div>';
+		?>
+		<script type="text/javascript">
+			swal({
+				text: "<?= $resultado ?>",
+				icon: "error",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
 	}
 	else
 	{
-		echo '<div class="alert alert-success"> Contraseña eliminada.</div>';
+		?>
+		<script type="text/javascript">
+			swal({
+				text: "Contraseña eliminada",
+				icon: "success",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
 	}
 }
 
@@ -137,16 +238,40 @@ if(isset($_REQUEST['EliminarPonderacion']))
 
 		if(gettype($resultado)=="string")
         {
-            echo '<div class="alert alert-danger">'.$resultado.'</div>';
+            ?>
+			<script type="text/javascript">
+				swal({
+					text: "<?= $resultado ?>",
+					icon: "error",
+					button: "Aceptar"
+				});
+			</script>
+			<?php
         }
         else
         {
-        	echo '<div class="alert alert-success"> La ponderacion y sus archivos relacionados han sido eliminados.</div>';
+        	?>
+			<script type="text/javascript">
+				swal({
+					text: "La ponderación y sus archivos relacionados ha sido eliminada",
+					icon: "error",
+					button: "Aceptar"
+				});
+			</script>
+			<?php
         }
 	}
 	else
 	{
-		echo "Error: No se pudo borrar el directorio.";
+		?>
+		<script type="text/javascript">
+			swal({
+				text: "Error. No se pudo borrar el directorio",
+				icon: "error",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
 	}
 }
 
@@ -161,11 +286,27 @@ if(isset($_REQUEST['cerrarGrupo']))
 
 	if(gettype($resultado)=="string")
     {
-        echo '<div class="alert alert-danger">'.$resultado.'</div>';
+        ?>
+		<script type="text/javascript">
+			swal({
+				text: "<?= $resultado ?>",
+				icon: "error",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
     }
     else
     {
-    	echo '<div class="alert alert-success"> El grupo ha sido cerrado.</div>';
+    	?>
+		<script type="text/javascript">
+			swal({
+				text: "El grupo ha sido cerrado.",
+				icon: "success",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
     }
 }
 
@@ -180,11 +321,27 @@ if(isset($_REQUEST['abrirGrupo']))
 
 	if(gettype($resultado)=="string")
     {
-        echo '<div class="alert alert-danger">'.$resultado.'</div>';
+        ?>
+		<script type="text/javascript">
+			swal({
+				text: "<?= $resultado ?>",
+				icon: "error",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
     }
     else
     {
-    	echo '<div class="alert alert-success"> El grupo ha sido abierto.</div>';
+    	?>
+		<script type="text/javascript">
+			swal({
+				text: "El grupo ha sido abierto",
+				icon: "success",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
     }
 }
 
@@ -199,11 +356,27 @@ if(isset($_REQUEST['desactivarModulo']))
 
 	if(gettype($resultado)=="string")
     {
-        echo '<div class="alert alert-danger">'.$resultado.'</div>';
+        ?>
+		<script type="text/javascript">
+			swal({
+				text: "<?= $resultado ?>",
+				icon: "error",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
     }
     else
     {
-    	echo '<div class="alert alert-success"> El grupo ha sido desactivado.</div>';
+    	?>
+		<script type="text/javascript">
+			swal({
+				text: "El módulo ha sido desactivado",
+				icon: "success",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
     }
 }
 
@@ -226,11 +399,27 @@ if(isset($_REQUEST['agregarPonderacion']))
 
 		if(gettype($resultado)=="string")
 	    {
-	        echo '<div class="alert alert-danger">'.$resultado.'</div>';
+	        ?>
+			<script type="text/javascript">
+				swal({
+					text: "<?= $resultado ?>",
+					icon: "error",
+					button: "Aceptar"
+				});
+			</script>
+			<?php
 	    }
 	    else
 	    {
-	    	echo '<div class="alert alert-success">La ponderacion ha sido agregada.</div>';
+	    	?>
+			<script type="text/javascript">
+				swal({
+					text: "La ponderación ha sido agregada",
+					icon: "success",
+					button: "Aceptar"
+				});
+			</script>
+			<?php
 	    }
 	}
 }
@@ -323,10 +512,13 @@ if(isset($_REQUEST['agregarPonderacion']))
 						</td>
 
 						<td>
-							<button class="btn btn-info" onclick="mostrarDiv('SubirGuias','<?= $idModulo[$k]; ?>')">Subir guias</button>
+							<!-- <button class="btn btn-info" onclick="mostrarDiv('SubirGuias','<?= $idModulo[$k]; ?>')">Subir guias</button> -->
+							<button class="btn btn-info" data-toggle="modal" data-target="#subirModal"  data-mod="<?= $idModulo[$k] ?>">Subir Guías</button>
 							<br><br>
 
-							<button class="btn btn-info" onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver guias</button><br>
+							<!-- <button class="btn btn-info" onclick="mostrarDiv('Practicas','<?= $idModulo[$k]; ?>')">Ver guias</button><br> -->
+							<button class="btn btn-info" data-toggle="modal" data-target="#verGuiasModal"  data-mod="<?= $idModulo[$k] ?>">Ver Guías</button>
+							<br>
 							<br>
 
 							<?php
@@ -392,7 +584,8 @@ if(isset($_REQUEST['agregarPonderacion']))
 
 							?>
 							
-							<button class="btn btn-info" onclick="mostrarDiv('Contra','<?= $idModulo[$k] ?>')">Administrar<br>seguridad</button>
+							<!-- <button class="btn btn-info" onclick="mostrarDiv('Contra','<?= $idModulo[$k] ?>')">Administrar<br>seguridad</button> -->
+							<button class="btn btn-info" data-toggle="modal" data-target="#seguridadModal" data-mod="<?= $idModulo[$k] ?>">Administrar<br>Seguridad</button>
 						</td>
 
 						<td>
@@ -400,11 +593,13 @@ if(isset($_REQUEST['agregarPonderacion']))
 						</td>
 
 						<td>
-							<button class="btn btn-info" onclick="mostrarDiv('Ponderaciones','<?= $idModulo[$k] ?>')">Administrar<br>ponderaciones</button>
+							<!-- <button class="btn btn-info" onclick="mostrarDiv('Ponderaciones','<?= $idModulo[$k] ?>')">Administrar<br>ponderaciones</button> -->
+							<button class="btn btn-info" data-toggle="modal" data-target="#ponderacionesModal" data-mod="<?= $idModulo[$k] ?>">Administrar<br>Ponderaciones</button>
 						</td>
 
 						<td>
-							<button class="btn btn-info" onclick="mostrarDiv('EstadoModulo','<?= $idModulo[$k] ?>')">Desactivar<br>modulo</button>
+							<!-- <button class="btn btn-info" onclick="mostrarDiv('EstadoModulo','<?= $idModulo[$k] ?>')">Desactivar<br>modulo</button> -->
+							<button class="btn btn-info" data-toggle="modal" data-target="#administracionModal" data-mod="<?= $idModulo[$k] ?>">Desactivar<br>modulo</button>
 						</td>
 
 						</tr>
@@ -421,4 +616,142 @@ if(isset($_REQUEST['agregarPonderacion']))
 	</tbody>
 	</table>
 <br><br>
+</div>
+<!-- Modal para subir Archivos -->
+<div class="modal fade" id="subirModal" tabindex="-1" role="dialog" aria-labelledby="modal de eliminacion" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h5 class="modal-title" id="exampleModalLabel">Subir Guías</h5>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	  <form method="post" enctype="multipart/form-data" class="form-group">
+	    <div class="modal-body">
+	    	<input type="hidden" name="MAX_FILE_SIZE" value="62914560">
+	    	<div class="container">
+	    		<div class="form-group row">
+	    			<label class="form-label">Archivo:</label>
+					<input class="form-control" type="file" name="guia">
+	    		</div>
+	    	</div>
+			<input type="hidden" name="idModulo" id="modulo">
+	    </div>
+	    <div class="modal-footer">
+	      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		  <input type="submit" class="btn btn-primary" value="Subir Guía al Módulo" name="GuardarGuia">
+	    </div>
+	  </form>
+	  </div>
+	</div>
+</div>
+<!-- Modal para ver Archivos -->
+<div class="modal fade" id="verGuiasModal" tabindex="-1" role="dialog" aria-labelledby="modal de eliminacion" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h5 class="modal-title" id="exampleModalLabel">Subir Guías</h5>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	    <div class="modal-body">
+	    	<div class="container">
+	    		<div id="practicas"></div>
+	    	</div>
+	    </div>
+	    <div class="modal-footer">
+	      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<!-- Modal para ver lo de las claves -->
+<div class="modal fade" id="seguridadModal" tabindex="-1" role="dialog" aria-labelledby="modal de eliminacion" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h5 class="modal-title" id="exampleModalLabel">Administrar Seguridad</h5>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	    <div class="modal-body">
+	    	<div class="container">
+	    		<div id="seguridadMod"></div>
+	    	</div>
+	    </div>
+	    <div class="modal-footer">
+	      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<!-- Modal para administrar Seguridad -->
+<div class="modal fade" id="adminSeguridadModal" tabindex="-1" role="dialog" aria-labelledby="modal de eliminacion" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h5 class="modal-title" id="exampleModalLabel">Administrar Seguridad</h5>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	    <div class="modal-body">
+	    	<div class="container">
+	    		<div id="adminSeguridad"></div>
+	    	</div>
+	    </div>
+	    <div class="modal-footer">
+	      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<!-- Modal para ponderaciones -->
+<div class="modal fade" id="ponderacionesModal" tabindex="-1" role="dialog" aria-labelledby="modal de eliminacion" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h5 class="modal-title" id="exampleModalLabel">Administrar Ponderaciones</h5>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	    <div class="modal-body">
+	    	<div class="container">
+	    		<div id="adminPonderaciones"></div>
+	    	</div>
+	    </div>
+	    <div class="modal-footer">
+	      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<!-- Modal para administracion de módulo -->
+<div class="modal fade" id="administracionModal" tabindex="-1" role="dialog" aria-labelledby="modal de eliminacion" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h5 class="modal-title" id="exampleModalLabel">Administrar Módulo</h5>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	    <div class="modal-body">
+	    	<div class="container">
+	    		<div id="adminModulo"></div>
+	    	</div>
+	    </div>
+	    <div class="modal-footer">
+	      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	    </div>
+	  </div>
+	</div>
 </div>

@@ -15,11 +15,27 @@ if(isset($_REQUEST['activarGrupo']))
 
 	if(gettype($resultado)=="string")
     {
-        echo '<div class="alert alert-danger">'.$resultado.'</div>';
+        ?>
+		<script type="text/javascript">
+			swal({
+				text: "<?= $resultado ?>",
+				icon: "error",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
     }
     else
     {
-    	echo '<div class="alert alert-success"> El grupo ha sido activado.</div>';
+    	?>
+		<script type="text/javascript">
+			swal({
+				text: "El módulo ha sido activado",
+				icon: "success",
+				button: "Aceptar"
+			});
+		</script>
+		<?php
     }
 }
 
