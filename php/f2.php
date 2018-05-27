@@ -5,7 +5,7 @@
             <span class="text-muted">Los datos solicitados son necesarios para poder correr todos los scripts necesarios para la instalación</span>
             <div class="form-group">
                 <label class="col-form-label" for="user">Usuario</label>
-                <input type="text" name="user" class="form-control">
+                <input type="text" name="user" class="form-control" required>
                 <label class="col-form-label" for="passwd">Contraseña</label>
                 <input type="password" name="passwd" class="form-control">
                 <hr>

@@ -28,14 +28,15 @@ class install{
                 }
             }
             $this->bd = new mysqli('localhost', $usuario, $passwd, 'SistemaNotasItca');
+            return 1;
         }elseif(!empty($unins) && ($unins === TRUE || $unins != '')){
             $this->bd = new mysqli('localhost', $usuario, $passwd, 'mysql', '3306');
             if ($this->bd->connect_error) {
                 return '<script>console.log("La conexión ha fallado: ' . ($this->bd->connect_error) . '");</script>';
             } else {
                 echo '<script>console.log("Conexion Iniciada");</script>';
+                return 1;
             }
-
         }
     }
 
@@ -55,8 +56,10 @@ class install{
             } else {
                 die("<script>console.log('Failed opening archive: " . @$zip->getStatusString() . " (code: " . $zip_status . ")');</script>");
             }
+            return 1;
         } catch (Exception $e) {
             echo $e->getMessage();
+            return false;
         }
 
     }
@@ -81,9 +84,10 @@ class install{
                     echo '<script>console.log("Datos Insertados");</script>';
                 }
             }
-
+            return 1;
         } catch (Exception $e) {
             echo '<script>console.log("' . $e->getMessage() . '");</script>';
+            return false;
         }
     }
 
@@ -117,7 +121,7 @@ class install{
                 foreach ($array as $l) {
                     $this->bd->query($l);
                     if ($this->bd->error) {
-                        echo '<script>console.log("' . $this->bd->error . '");</script>';
+                        return '<script>console.log("' . $this->bd->error . '");</script>';
                     }else{
                         $i++;
                     }
@@ -126,8 +130,10 @@ class install{
                     echo '<script>console.log("Desinstalación Completa");</script>';
                 }
             }
+            return 1;
         }catch (Exception $e){
             echo $e->getMessage();
+            return false;
         }
     }
 }
