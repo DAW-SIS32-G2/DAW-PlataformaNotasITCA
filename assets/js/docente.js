@@ -74,6 +74,44 @@ function verificarDocente()
 	
 }
 
+/*Funciones para modales adminGrupo*/
+
+$(document).on('show.bs.modal','#subirModal', function(event) {
+	var button = $(event.relatedTarget)
+	var idmodulo = button.data('mod')
+	var modal = $(this)
+
+	modal.find("#modulo").val(idmodulo)
+});
+
+$(document).on('show.bs.modal',"#verGuiasModal", function(event) {
+	var button = $(event.relatedTarget)
+	var idmodulo = button.data('mod')
+	var modal = $(this)
+	mostrarGuias(idmodulo)
+});
+
+$(document).on('show.bs.modal',"#seguridadModal", function(event) {
+	var button = $(event.relatedTarget)
+	var idmodulo = button.data('mod')
+	var modal = $(this)
+	mostrarAdminSeguridad(idmodulo)
+});
+
+$(document).on('show.bs.modal',"#ponderacionesModal", function(event) {
+	var button = $(event.relatedTarget)
+	var idmodulo = button.data('mod')
+	var modal = $(this)
+	mostrarAdminPonderaciones(idmodulo)
+});
+
+$(document).on('show.bs.modal',"#administracionModal", function(event) {
+	var button = $(event.relatedTarget)
+	var idmodulo = button.data('mod')
+	var modal = $(this)
+	mostrarAdminModulo(idmodulo)
+});
+
 /*Funciones para admin grupo*/
 
 function mostrarGuias(idModulo)
@@ -588,6 +626,16 @@ function cambiarPassDocente()
 	}
 }
 
+/*Funciones para modales administrarPracticas.php*/
+
+$(document).on('show.bs.modal',"#borrarModal", function(event) {
+	var button = $(event.relatedTarget)
+	var idPractica = button.data('mod')
+	var idPonderacion = button.data('ponde')
+	var modal = $(this)
+	ConfirmarBorrarPractica(idPractica,idPonderacion)
+});
+
 /*Funciones para administrarPracticas.php*/
 
 function mostrarPonderaciones()
@@ -601,13 +649,12 @@ function mostrarPonderaciones()
       {
         document.getElementById('resultado').innerHTML = respuesta;
       }
-  })
+  });
 
 }
 
 function mostrarPracticas()
 {
-  //Procesar
   $.ajax({
       type      : 'post',
       url       : 'ajax/administrarPracticas',
@@ -616,6 +663,20 @@ function mostrarPracticas()
       {
         document.getElementById('resultadoPracticas').innerHTML = respuesta;
       }
-  })
+  });
+
+}
+
+function ConfirmarBorrarPractica(idPractica,idPonderacion)
+{
+  $.ajax({
+      type      : 'post',
+      url       : 'ajax/administrarPracticas',
+      data      : {idPractica : idPractica, idPonderacion : idPonderacion, ConfirmarBorrarPractica : true},
+      success   : function(respuesta)
+      {
+        document.getElementById('divBorrarPractica').innerHTML = respuesta;
+      }
+  });
 
 }

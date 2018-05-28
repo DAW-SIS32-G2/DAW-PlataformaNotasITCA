@@ -345,7 +345,7 @@ if(isset($_REQUEST['mostrarModificarPonderaciones']))
                                 <td>
                                     <div class="row no-gutters">
                                         <div class="col-md-9">
-                                            <input type="number" step="0.1" max="100" min="0" id="<?= $idPonderaciones[$j] ?>" name="porcentajePonderaciones[]" value="<?= $porcentajesOrdenados[$j] ?>" class="form-control"  onkeyup="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)" onchange="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)">
+                                            <input type="number" step="1" max="100" min="0" id="<?= $idPonderaciones[$j] ?>" name="porcentajePonderaciones[]" value="<?= $porcentajesOrdenados[$j] ?>" class="form-control"  onkeyup="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)" onchange="actualizarTotal(<?= $idModulo ?>,<?= $idPonderaciones[$j] ?>,<?= $porcentajesOrdenados[$j] ?>)">
                                         </div>
                                         <div class="col-md-2">
                                             %

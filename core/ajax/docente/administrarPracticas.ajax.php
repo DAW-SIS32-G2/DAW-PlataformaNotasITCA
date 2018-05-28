@@ -53,7 +53,43 @@
     }
 
   }
+
+  if(isset($_POST['ConfirmarBorrarPractica']))
+  {
+    session_start();
+    $idTarea=$_REQUEST['idPractica'];
+    $carnetDocente=$_SESSION['usuario'];
+    $idPonderacion=$_REQUEST['idPonderacion'];
+
+    $resultado=$objDocenteControlador->obtenerTareas($idTarea);
+
+
+    $Tareas=$resultado->fetch_assoc();
+
+    $nombreTarea=$Tareas['nombreTarea'];
+    
+    ?>
+        <div class="alert alert-warning">
+            ¿Esta seguro de borrar esta ponderacion?<br>
+            "<?= $nombreTarea ?>"<br>
+            Al borrarla se eliminaran todas los archivos y notas ligadas a esta practica. Tanto archivos, directorios y registros.
+        </div>
+        
+        <form action="" method="post">
+
+            <label for="contra">Contraseña actual de docente:
+                <input type="password" name="contraDocente" id="contraDocente" class="form-control" required>
+            </label><br>
+
+            <input type="hidden" name="idTarea" value="<?= $idTarea ?>">
+            <input type="hidden" name="idPonderacion" value="<?= $idPonderacion ?>">
+            <input type="hidden" name="carnetDocente" id="carnetDocente" value="<?= $carnetDocente ?>">
+            <input type="submit" name="eliminarTarea" value="Eliminar tarea" onclick="return verificarDocente()" class="btn btn-info">
+        </form>
+    <?php
+  }
   
+
   if(isset($_POST['mostrar']))
   {
     $idModulo = $_POST['modulo'];
@@ -111,13 +147,28 @@
               ?>
                 
                 <tr>
-                  <td><?php echo $nombrePonderacionP[$q]; ?></td>
-                  <td><?php echo $nombreTarea[$q]; ?></td>
-                  <td><?php echo $cantidadEjercicios[$q]; ?></td>
-                  <td><a href="" data-toggle="modal" data-target="#editarModal">Editar</a></td>
-                  <td><a href="" data-toggle="modal" data-target="#activarModal">ON</a></td>
-                  <td><a href="" data-toggle="modal" data-target="#borrarModal">Borrar</a></td>
-                  <td><button class="btn btn-info" type="button" onclick="comprimirDirectorio('<?= $ruta ?>','<?=  $archivo ?>')">Descargar Archivos de esta prácticas</button></td>
+                  <td>
+                    <?php echo $nombrePonderacionP[$q]; ?>
+                  </td>
+                  <td>
+                    <?php echo $nombreTarea[$q]; ?>
+                  </td>
+                  <td>
+                    <?php echo $cantidadEjercicios[$q]; ?>
+                  </td>
+                  <td>
+                    <a href="" data-toggle="modal" data-target="#editarModal">Editar</a>
+                  </td>
+                  <td>
+                    <a href="" data-toggle="modal" data-target="#activarModal">ON</a>
+                  </td>
+                  <td>
+                    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#borrarModal" data-mod="<?= $idTarea[$q] ?>" data-ponde="<?= $idPonderacion[$q] ?>">Borrar</button>
+                  </td>
+
+                  <td>
+                    <button class="btn btn-info" type="button" onclick="comprimirDirectorio('<?= $ruta ?>','<?=  $archivo ?>')">Descargar Archivos de esta prácticas</button>
+                  </td>
                 </tr>
 
               <?php
@@ -179,11 +230,12 @@
                 </button>
               </div>
               <div class="modal-body">
-                ...
+                <div class="container" id="divBorrarPractica">
+                  
+                </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>

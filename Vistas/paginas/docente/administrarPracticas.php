@@ -60,6 +60,49 @@
 
 
 	}
+
+	if(isset($_REQUEST['eliminarTarea']))
+	{
+		$idTarea=$_REQUEST['idTarea'];
+		$idPonderacion=$_REQUEST['idPonderacion'];
+
+		$resultado=$objDocenteControlador->obtenerTareas($idTarea);
+
+		$aux=$resultado->fetch_assoc();
+
+		$ruta=$aux['directorio'];
+
+		$resultado=$objDocenteControlador->borrarDirectorio($ruta."/");
+
+		if($resultado)
+		{
+			$resultado=$objDocenteControlador->eliminarTarea($idTarea);
+
+			if(gettype($resultado)=="string")
+			{
+				echo "<div class='alert alert-danger'>".$resultado."</div>";
+			}
+			else
+			{
+				$resultado=$objDocenteControlador->reasignarPorcentajes($idPonderacion);
+
+				if(gettype($resultado)=="string")
+				{
+					echo "<div class='alert alert-danger'>".$resultado."</div>";
+				}
+				else
+				{
+					echo "<div class='alert alert-success'>Tarea eliminada.</div>";
+				}
+			}
+		}
+		else
+		{
+			echo "<div class='alert alert-danger'>".$resultado."</div>";
+		}
+
+	}
+	
 ?>
 	<div class="container">
 
@@ -189,7 +232,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-						<button class="btn btn-secondary" name="guardarPracticas">Guardar practica</button>
+						<button class="btn btn-info" name="guardarPracticas">Guardar practica</button>
 					</td>
 				</tr>
 			</table>

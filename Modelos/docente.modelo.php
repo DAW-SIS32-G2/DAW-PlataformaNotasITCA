@@ -12,15 +12,6 @@ require_once(__ROOT__ . '/core/funcionesbd.php');
  */
 class docenteModelo
 {
-    # almacena el valor de la pagina a mostrar
-    private $pagina;
-
-
-    function __construct()
-    {
-        @$this->pagina = $pagina;
-    }
-
     public function renderView()
     {
         require_once 'Vistas/paginas/docente/index.php';
@@ -98,9 +89,12 @@ class docenteModelo
 
         $resultado = $conex->ConsultaGeneral('Tarea', "idPonderacion=$idPonderacion");
 
-        if (gettype($resultado) == "string") {
+        if (gettype($resultado) == "string")
+        {
             return $resultado;
-        } else {
+        }
+        else
+        {
             $resultadoFinal = $resultado->num_rows;
 
             return $resultadoFinal;
@@ -493,6 +487,25 @@ class docenteModelo
 
         return $resultado;
     }
+
+    public function obtenerTareas($idTarea)
+    {
+        $conex = new funcionesBD();
+
+        $resultado = $conex->ConsultaGeneral('Tarea', "idTarea=$idTarea");
+
+        return $resultado;
+    }
+
+    public function eliminarTarea($idTarea)
+    {
+        $conex = new funcionesBD();
+
+        $resultado = $conex->EliminarRegistro('Tarea', "idTarea=$idTarea");
+
+        return $resultado;
+    }
+
 }
 
 ?>

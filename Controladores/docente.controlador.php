@@ -38,14 +38,16 @@ class docenteControlador
         $nombreTemporal = $file['tmp_name'];
 
         # se comprueba si existe el archivo subido
-        if (file_exists($nombreTemporal)) {
+        if (file_exists($nombreTemporal))
+        {
             # en caso de que exista
 
             # se obtiene los datos del modulo especificado
             $resultado = $this->model->CargarGrupoIndividual($idModulo);
 
             # se recuperan las columnas siglas del grupo y el año respectivo
-            while ($arrayGrupos = $resultado->fetch_array(MYSQLI_ASSOC)) {
+            while ($arrayGrupos = $resultado->fetch_array(MYSQLI_ASSOC))
+            {
                 $siglasModulos = $arrayGrupos['siglas'];
                 $anyosModulos = $arrayGrupos['anyo'];
             }
@@ -60,14 +62,16 @@ class docenteControlador
             $contador = 2;
 
             # se verifica la existencia del archivo
-            while (file_exists($rutaArchivo)) {
+            while (file_exists($rutaArchivo))
+            {
                 $rutaArchivo = "Archivos/Guias/" . $siglasModulos . "-" . $anyosModulos . "/($contador)" . $nombre;
                 $yaExiste = "Ya existe un archivo con ese nombre. El archivo fue guardado como: ($contador)" . $nombre;
                 $contador++;
             }
 
             # se crea la carpeta contenedora en caso de no existir
-            if (!file_exists("Archivos/Guias/" . $siglasModulos . "-" . $anyosModulos)) {
+            if (!file_exists("Archivos/Guias/" . $siglasModulos . "-" . $anyosModulos))
+            {
                 mkdir("Archivos/Guias/" . $siglasModulos . "-" . $anyosModulos, 0777, true);
             }
 
@@ -88,7 +92,9 @@ class docenteControlador
                 })
             </script>
             <?php
-        } else {
+        }
+        else
+        {
             # se devuelve un mensaje de error error
             $estado = "Ocurrio un error al subir el archivo: El error es el numero " . $file['error'];
 
@@ -199,14 +205,22 @@ class docenteControlador
 
         $conteo = count($resultado);
 
-        if ($conteo == 1) {
+        if ($conteo == 1)
+        {
             return $resultado;
-        } else {
-            if (gettype($resultado[0]) == "string") {
+        }
+        else
+        {
+            if (gettype($resultado[0]) == "string")
+            {
                 return $resultado[0];
-            } elseif (gettype($resultado[1]) == "string") {
+            }
+            elseif(gettype($resultado[1]) == "string")
+            {
                 return $resultado[1];
-            } else {
+            }
+            else
+            {
                 return $resultado[1];
             }
         }
@@ -243,16 +257,20 @@ class docenteControlador
     {
         $resultado = $this->model->obtenerClaveDocente($carnetDocente);
 
-        if (gettype($resultado) == "string") {
+        if (gettype($resultado) == "string")
+        {
             return $resultado;
         }
 
         $arrayContra = $resultado->fetch_assoc();
         $contraDocenteCifrada = $arrayContra['contra'];
 
-        if ($contraDocente == descifrar($contraDocenteCifrada)) {
+        if ($contraDocente == descifrar($contraDocenteCifrada))
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return "Las claves no coinciden";
         }
     }
@@ -278,7 +296,8 @@ class docenteControlador
     {
         $resultado = $this->model->CargarGrupoIndividual($idModulo);
 
-        if ($arrayGrupos = $resultado->fetch_array(MYSQLI_ASSOC)) {
+        if ($arrayGrupos = $resultado->fetch_array(MYSQLI_ASSOC))
+        {
             $siglasModulos = $arrayGrupos['siglas'];
             $anyosModulos = $arrayGrupos['anyo'];
 
@@ -290,11 +309,13 @@ class docenteControlador
 
             $ruta = "Archivos/Practicas/" . $siglasModulos . "-" . $anyosModulos . "/Ponderacion_" . $nombrePonderacion . "_" . $idPonderacion . "/";
 
-            if (file_exists($ruta)) {
+            if (file_exists($ruta))
+            {
                 $resultado = $this->borrarDirectorio($ruta);
             }
 
-            if ($resultado) {
+            if ($resultado)
+            {
                 return $resultado;
             }
         }
@@ -307,18 +328,32 @@ class docenteControlador
      */
     public function borrarDirectorio($ruta)
     {
-        $resultados = scandir($ruta);
+        if(file_exists($ruta))
+        {
+            $resultados = scandir($ruta);
 
-        foreach ($resultados as $resultado) {
-            if (!($resultado == "." or $resultado == "..")) {
-                if (is_dir($ruta . $resultado)) {
-                    $this->borrarDirectorio($ruta . $resultado . "/");
-                } elseif (is_file($ruta . $resultado)) {
-                    unlink($ruta . $resultado);
+            foreach($resultados as $resultado)
+            {
+                if(!($resultado == "." or $resultado == ".."))
+                {
+                    if (is_dir($ruta . $resultado))
+                    {
+                        $this->borrarDirectorio($ruta . $resultado . "/");
+                    }
+                    elseif (is_file($ruta . $resultado))
+                    {
+                        unlink($ruta . $resultado);
+                    }
                 }
             }
+
+            if (rmdir($ruta))
+            {
+                return true;
+            }
         }
-        if (rmdir($ruta)) {
+        else
+        {
             return true;
         }
     }
@@ -411,6 +446,37 @@ class docenteControlador
     {
         $resultado = $this->model->CargarGrupos();
         return $resultado;
+    }
+
+    public function obtenerTareas($idTarea)
+    {
+        $resultado=$this->model->obtenerTareas($idTarea);
+        return $resultado;
+    }
+
+    public function eliminarTarea($idTarea)
+    {
+        $resultado = $this->model->eliminarTarea($idTarea);
+        return $resultado;
+    }
+
+    public function reasignarPorcentajes($idPonderacion)
+    {
+       $resultado=$this->model->obtenerPorcentajePonderacion($idPonderacion);
+
+       $aux=$resultado->fetch_assoc();
+
+       $porcentajeTotal=$aux['porcentaje'];
+
+       $resultado=$this->model->obtenerCantidadTareas($idPonderacion);
+
+       $cantidadTareas=$resultado;
+
+       $PorcentajeNuevo=($porcentajeTotal/$cantidadTareas);
+
+       $resultado=$this->model->actualizarPorcentajesPracticas($idPonderacion, number_format($PorcentajeNuevo,2));
+
+       return $resultado;
     }
 }
 

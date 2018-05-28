@@ -18,7 +18,7 @@ class Zip
     }
 
     //nombre del archivo de guias
-    $archivo = "Archivos/temp/$usuario/".$nombreArchivo."ZIP_guias.zip";
+    $archivo = "Archivos/temp/$usuario/".$nombreArchivo."autoZIP_guias.zip";
 
     if(file_exists($folderGuias))
     {
@@ -77,7 +77,7 @@ class Zip
     
 
     //nombre del archivo de practicas
-    $archivo = "Archivos/temp/$usuario/".$nombreArchivo."ZIP_practicas.zip";
+    $archivo = "Archivos/temp/$usuario/".$nombreArchivo."autoZIP_practicas.zip";
 
     if(file_exists($folderPracticas))
     {
@@ -150,7 +150,7 @@ class Zip
         // instanciando ZipArchive para la segunda compresion; la de las practicas
         $zip = new ZipArchive();
 
-        $archivo = "Archivos/temp/$usuario/".$nombreArchivo."ZIP_TodosLosArchivos.zip";
+        $archivo = "Archivos/temp/$usuario/".$nombreArchivo."autoZIP_TodosLosArchivos.zip";
 
         $zip->open($archivo, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
@@ -185,7 +185,7 @@ class Zip
     }
 
     //nombre del archivo de guias
-    $archivo = "Archivos/temp/$usuario/".$arcivo."-ZIP.zip";
+    $archivo = "Archivos/temp/$usuario/".$arcivo."-autoZIP.zip";
 
     if(file_exists($rutaArchivo))
     {
