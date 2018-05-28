@@ -31,6 +31,11 @@ class ajaxVista
     {
         require(BaseDir . '/core/ajax/' . $seccion . '/' . $pagina . '.ajax.php');
     }
+
+    function nav()
+    {
+        require(BaseDir . '/core/ajax/alumno/nav.ajax.php');  
+    }
 }
 
 ?>

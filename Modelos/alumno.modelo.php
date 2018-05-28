@@ -44,13 +44,65 @@
       }
 
       public function ObtenerSiglas($idModulo)
-        {
-            $conex = new funcionesBD();
+      {
+          $conex = new funcionesBD();
 
-            $resultado=$conex->ConsultaPersonalizada("SELECT M.siglas,M.anyo FROM Modulo AS M WHERE M.idModulo= '$idModulo'");
+          $resultado=$conex->ConsultaPersonalizada("SELECT M.siglas,M.anyo FROM Modulo AS M WHERE M.idModulo= '$idModulo'");
 
-            return $resultado;
-        }
+          return $resultado;
+      }
       
+      public function BuscarBuzon($carnet)
+      {
+          $objControlador = new alumnoControlador('alumnoModelo');
+          $resultado = $objControlador->cargarBuzon($carnet);
+      }
+
+      public function compartirArchivo($id)
+      {
+          $objControlador = new alumnoControlador('alumnoModelo');
+          $resultado = $objControlador->compartirArc($id);  
+      }
+
+      public function tokens($accion,$dato,$destinatario)
+      {
+          $objControlador = new alumnoControlador('alumnoModelo');
+          switch($accion)
+          {
+            case "generar":
+            $objControlador->generarToken($dato);
+            break;
+            case "renovar":
+            $objControlador->renovarToken($dato);
+            break;
+            case "eliminar":
+            $objControlador->eliminarToken($dato);
+            break;
+            case "enviar":
+            $objControlador->enviarToken($dato,$destinatario);
+            break;
+          }
+      }
+
+      public function buscarDest($destinatario)
+      {
+          if($destinatario == $_SESSION['usuario'])
+          {
+            echo "No se puede compartir un archivo a sí mismo";
+          }
+          else
+          {
+            $conex = new funcionesBD();
+            $res = $conex->ConsultaPersonalizada("SELECT * from Usuario WHERE carnet = '$destinatario'");
+            if(mysqli_num_rows($res) == 1)
+            {
+               echo 1;
+            }
+            else
+            {
+              echo "No se ha encontrado a nadie con ese carnet";
+            }
+          }
+      }
   }
 ?>

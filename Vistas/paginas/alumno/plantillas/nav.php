@@ -27,15 +27,8 @@
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/buzon_archivos">Buz&oacute;n de Archivos</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/html5">HTML5</a>
-            </li>
-            <li class="nav-item dropdown active">
-                <a class="nav-link nav-but dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    <i class="material-icons">book</i>&nbsp;Servicios Estudiantiles
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/editor">Editor Web Html</a>
-                </div>
             </li>
             <li class="nav-item dropdown active">
                 <a class="nav-link nav-but dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -53,10 +46,10 @@
             <li class="nav-item dropdown active">
                 <a class="nav-link nav-but dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    <i class="material-icons">mail</i>&nbsp;Notificaciones
+                    <i class="material-icons">mail</i>&nbsp;Notificaciones&nbsp;<span class="badge badge-pill badge-light" id="cont"></span>
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item nav-but disabled" href="#">No hay notificaciones nuevas</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="notificaciones">
+                               
                 </div>
             </li>
             <li class="nav-item active">
@@ -73,3 +66,36 @@
         </ul>
     </div>
 </nav>
+<script type="text/javascript">
+    $(document).ready(function(){
+        verificarNotificaciones();
+        setInterval(verificarNotificaciones(),5000);
+    })
+
+    function verificarNotificaciones()
+    {
+        $.ajax({
+            type    : "post",
+            url     : "ajax/nav",
+            data    : {"cont" : true},
+            success : function(contador)
+                      {
+                         $("#cont").text(contador);
+                      }
+        })
+
+        $.ajax({
+            type    : "post",
+            url     : "ajax/nav",
+            data    : {"noti" : true},
+            success : function(notificaciones)
+                      {
+                         $("#notificaciones").html(notificaciones);
+                      },
+            complete: function()
+                      {
+                         setTimeout(verificarNotificaciones, 5000);
+                      }
+        })
+    }
+</script>
