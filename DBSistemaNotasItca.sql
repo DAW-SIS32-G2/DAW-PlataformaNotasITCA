@@ -23,7 +23,7 @@ idCarrera int auto_increment not null,
 nombreCarrera varchar(60) not null,
 idDepartamento int not null,
 primary key pkCarrera(idCarrera),
-foreign key fkCarreraXDepartamento(idDepartamento) references Departamento(idDepartamento)
+foreign key fkCarreraXDepartamento(idDepartamento) references Departamento(idDepartamento) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Insercion de carreras*/
@@ -32,13 +32,6 @@ INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Ingenierí
 INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Mantenimiento de Computadoras','2');
 INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Técnico en Gestión Tecnológica del Patrimonio Cultural','5');
 INSERT INTO Carrera(nombreCarrera,idDepartamento) VALUES('Cursos libres','6');
-
-create table BuzonArchivos(
-idBuzonArchivos int auto_increment not null,
-carnet varchar(6) not null,
-estado boolean not null,
-primary key pkBuzonArchivos(idBuzonArchivos)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Grupo(
 idGrupo int auto_increment not null,
@@ -73,10 +66,35 @@ permiteModificacion boolean not null comment 'campo para verificar si el usuario
 idCarrera int not null comment 'foranea',
 idGrupo int not null comment 'foranea',
 primary key pkUsuario(carnet),
-foreign key fkUsuarioXCarrera(idCarrera) references Carrera(idCarrera),
-foreign key fkUsuarioXGrupo(idGrupo) references Grupo(idGrupo)
+foreign key fkUsuarioXCarrera(idCarrera) references Carrera(idCarrera) ON UPDATE CASCADE ON DELETE CASCADE,
+foreign key fkUsuarioXGrupo(idGrupo) references Grupo(idGrupo) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table BuzonArchivo(
+idBuzon int auto_increment not null,
+idGrupo int not null comment 'foranea del grupo',
+estado int not null  comment 'define si un archivo está disponible o no, sirve para la activación del buzón || 1 => disponible 0 => no disponible',
+primary key pkbuzon(idBuzon)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table Archivo(
+idArchivo int auto_increment not null,
+nombreArchivo varchar(256) not null,
+ruta varchar(256) not null,
+carnet varchar(6) not null comment 'foranea',
+idBuzon int not null comment 'foranea del buzon',
+primary key pkArchivo(idArchivo),
+foreign key fkArchivoXUsuario(carnet) references Usuario(carnet),
+foreign key fkbuzon(idBuzon) references BuzonArchivo(idBuzon)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table ArchivoCompartido(
+idArchivoCompartido int auto_increment not null,
+token varchar(50) not null comment 'token para acceder a este archivo',
+idArchivo int not null comment 'foranea',
+primary key pkarch(idArchivoCompartido),
+foreign key fkArchivoCompartidoXArchivo(idArchivo) references Archivo(idArchivo) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 create table Docente(
 carnet varchar(20) NOT NULL,
 nombres varchar(50) not null,
@@ -88,7 +106,7 @@ email varchar(50) null,
 contra varchar(100) not null,
 idDepartamento int not null,
 primary key pkDocente(carnet),
-foreign key fkDocenteXDepartamento(idDepartamento) references Departamento(idDepartamento)
+foreign key fkDocenteXDepartamento(idDepartamento) references Departamento(idDepartamento) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('funes', 'Roberto Enrique', 'Funes Rivera', 'administrador', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
@@ -103,29 +121,7 @@ idInsercion int auto_increment not null,
 carnetAlumno varchar(6) not null comment 'Carnet del alumno registrado', 
 carnet varchar(20) NOT NULL comment 'foranea, carnet del docente que lo registro',
 primary key pkInserDoc(idInsercion),
-foreign key fkInsercionDocenteXDocente(carnet) references Docente(carnet)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-create table Archivo(
-idArchivo int auto_increment not null,
-nombreArchivo varchar(256) not null,
-ruta varchar(256) not null,
-tamanyo int not null comment 'Tamaño reflejado en MB',
-compartido boolean not null comment 'Campo para saber si el archivo ha sido compartido con otro alumno',
-carnet varchar(6) not null comment 'foranea',
-idBuzonArchivos int not null comment 'foranea',
-primary key pkArchivo(idArchivo),
-foreign key fkArchivoXUsuario(carnet) references Usuario(carnet),
-foreign key fkArchivoXBuzonArchivos(idBuzonArchivos) references BuzonArchivos(idBuzonArchivos)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-create table ArchivoCompartido(
-idArchivoCompartido int auto_increment not null,
-carnet varchar(6) not null,
-fechaCompartido date not null,
-idArchivo int not null comment 'foranea',
-primary key pkArchivoCompartido(idArchivoCompartido),
-foreign key fkArchivoCompartidoXArchivo(idArchivo) references Archivo(idArchivo)
+foreign key fkInsercionDocenteXDocente(carnet) references Docente(carnet) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Horario(
@@ -134,7 +130,7 @@ anyo int not null,
 periodo int not null,
 idGrupo int not null comment 'foranea',
 primary key pkHorario(idHorario),
-foreign key fkHorarioXGrupo(idGrupo) references Grupo(idGrupo)
+foreign key fkHorarioXGrupo(idGrupo) references Grupo(idGrupo) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Inserción de horarios*/
@@ -168,7 +164,7 @@ contraModulo varchar(200) null comment 'Sirve para proteger las inscripciones de
 idHorario int not null comment 'Hace referencia al ID de cada Horario por grupo',
 carnet varchar(20) NULL,
 primary key pkModulo(idModulo),
-foreign key fkModuloXHorario(idHorario) references Horario(idHorario)
+foreign key fkModuloXHorario(idHorario) references Horario(idHorario) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 insert into Modulo(nombreModulo, siglas, tipoModulo, anyo, activo, estado, protegidoPorContra, idHorario, carnet) values('Desarrollo de Aplicaciones para la Web','DAW-SIS32A','practico','2018',1,1,0,'4','quintanilla');
@@ -194,7 +190,7 @@ idGrupo int not null comment 'Foranea de Grupo',
 horas int not null comment 'Cantidad de horas | Se divide por bloques de 2 horas',
 idModulo int not null comment 'Hace referencia al modulo al que pertenece',
 primary key pkdetmod(id_detalle),
-foreign key fkmodulo(idModulo) references Modulo(idModulo)
+foreign key fkmodulo(idModulo) references Modulo(idModulo) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Inserción de detalles de modulo*/
@@ -228,7 +224,7 @@ nombreGuia varchar(200) not null,
 ruta varchar(200) not null,
 idModulo int not null comment 'foranea',
 primary key pkGuiaModulo(idGuiaModulo),
-foreign key fkGuiaModuloXModulo(idModulo) references Modulo(idModulo)
+foreign key fkGuiaModuloXModulo(idModulo) references Modulo(idModulo) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table UsuarioActivo(
@@ -236,7 +232,7 @@ idUsuarioActivo int auto_increment not null,
 carnet varchar(6) not null,
 idModulo int not null comment 'foranea',
 primary key pkUsuarioActivo(idUsuarioActivo),
-foreign key fkUsuarioActivoXModulo(idModulo) references Modulo(idModulo)
+foreign key fkUsuarioActivoXModulo(idModulo) references Modulo(idModulo) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table ArchivoSubido(
@@ -246,7 +242,7 @@ ruta varchar(200) not null,
 carnet varchar(6) not null,
 idModulo int not null comment 'foranea',
 primary key pkArchivoSubido(idArchivoSubido),
-foreign key fkArchivoSubidoXModulo(idModulo) references Modulo(idModulo)
+foreign key fkArchivoSubidoXModulo(idModulo) references Modulo(idModulo) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Ponderacion(
@@ -255,7 +251,7 @@ nombrePonderacion varchar(20) not null,
 porcentaje int not null,
 idModulo int not null comment 'foranea',
 primary key pkPonderacion(idPonderacion),
-foreign key fkPonderacionXModulo(idModulo) references Modulo(idModulo)
+foreign key fkPonderacionXModulo(idModulo) references Modulo(idModulo) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Insercion de ponderaciones*/
@@ -303,6 +299,16 @@ valor int not null,
 idTarea int not null comment 'foranea',
 primary key pkNota(idNota),
 foreign key fkNotaXTarea(idTarea) references Tarea(idTarea)  on update cascade on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+Create table Notificacion(
+idNotificacion int auto_increment not null,
+emisor varchar(100) not null comment 'persona que manda la notificacion',
+destinatario varchar(100) not null comment 'persona que recibirá la notificacion',
+titulo varchar(100) not null, 
+descripcion varchar(250) not null
+estado int not null comment '1=> sin leer, 2=>no leída';
+primary key fkNotificacion(idNotificacion)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 delimiter //
@@ -409,6 +415,18 @@ INSERT INTO
 Usuario (carnet,nombres,apellidos,telefonoMovil,jornada,sexo,foto,email,contra,anyoIngreso,permiteModificacion,idCarrera,idGrupo)
 VALUES
 ('108117', 'José Marcelo', 'Hernández Cerritos', NULL, NULL, NULL, NULL, NULL, 'RXFORUJ2QmVsK3AvUVh1cTNyTm95Zz09OjqOQIbAqUHX3H7SAu45mQMh', 2018, 1, 1, 5);
+
+/*Buzones para los grupos existentes*/
+insert into BuzonArchivo(idGrupo,estado) values (1,1);
+insert into BuzonArchivo(idGrupo,estado) values (2,1);
+insert into BuzonArchivo(idGrupo,estado) values (3,1);
+insert into BuzonArchivo(idGrupo,estado) values (4,1);
+insert into BuzonArchivo(idGrupo,estado) values (5,1);
+insert into BuzonArchivo(idGrupo,estado) values (6,1);
+insert into BuzonArchivo(idGrupo,estado) values (7,1);
+insert into BuzonArchivo(idGrupo,estado) values (100,1);
+insert into BuzonArchivo(idGrupo,estado) values (101,1);
+insert into BuzonArchivo(idGrupo,estado) values (102,1);
 
 /****************Insercion de registros de prueba Daniel****************/
 /****************Insercion de registros de prueba Joaquin****************/
