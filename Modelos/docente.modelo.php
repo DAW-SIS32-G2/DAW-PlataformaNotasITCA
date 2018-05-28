@@ -128,7 +128,7 @@ class docenteModelo
 
         $conex = new funcionesBD();
 
-        $resultado=$conex->ConsultaGeneral("Tarea","nombreTarea='".str_replace(" ", "_", $nombreTarea)."'");
+        $resultado=$conex->ConsultaGeneral("Tarea","nombreTarea='".str_replace(" ", "_", $nombreTarea)."' and idPonderacion=$idPonderacion");
 
         if(gettype($resultado)=="string")
         {

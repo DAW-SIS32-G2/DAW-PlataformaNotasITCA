@@ -470,13 +470,20 @@ class docenteControlador
 
        $resultado=$this->model->obtenerCantidadTareas($idPonderacion);
 
-       $cantidadTareas=$resultado;
+       if($resultado==0)
+       {
+        return true;
+       }
+       else
+       {
+           $cantidadTareas=$resultado;
 
-       $PorcentajeNuevo=($porcentajeTotal/$cantidadTareas);
+           $PorcentajeNuevo=($porcentajeTotal/$cantidadTareas);
 
-       $resultado=$this->model->actualizarPorcentajesPracticas($idPonderacion, number_format($PorcentajeNuevo,2));
+           $resultado=$this->model->actualizarPorcentajesPracticas($idPonderacion, number_format($PorcentajeNuevo,2));
 
-       return $resultado;
+           return $resultado;
+       }
     }
 }
 
