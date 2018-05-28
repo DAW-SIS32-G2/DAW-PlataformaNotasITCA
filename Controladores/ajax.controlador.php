@@ -3,12 +3,19 @@
   {
     private $model;
 
-    function __construct($model)
+      /**
+       * ajaxControlador constructor.
+       * @param $model
+       */
+      function __construct($model)
     {
       $this->model = $model;
     }
 
-    function loadView()
+      /**
+       * @return mixed
+       */
+      function loadView()
     {
        return $this->model->renderView();
     }

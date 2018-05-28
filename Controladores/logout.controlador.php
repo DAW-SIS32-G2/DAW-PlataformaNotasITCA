@@ -1,8 +1,5 @@
 <?php
 
-    /**
-    * The home page controller
-    */
     class logoutControlador
     {
         private $model;

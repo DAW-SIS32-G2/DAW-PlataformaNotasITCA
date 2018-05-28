@@ -21,14 +21,16 @@ class docenteModelo
         @$this->pagina = $pagina;
     }
 
-    /**
-     * Metodos para cada una de las paginas
-     */
     public function renderView()
     {
         require_once 'Vistas/paginas/docente/index.php';
     }
 
+    /**
+     * Busca todas las ponderaciones existentes
+     * @param $idModulo
+     * @return bool|mysqli_result|string
+     */
     public function BuscarPonderaciones($idModulo)
     {
         @$conex = new funcionesBD();
@@ -38,6 +40,10 @@ class docenteModelo
         return $resultado;
     }
 
+    /**
+     * Selecciona todos los grupos encontrados en la BD
+     * @return bool|mysqli_result|string
+     */
     public function CargarGrupos()
     {
         $conex = new funcionesBD();
@@ -47,6 +53,10 @@ class docenteModelo
         return $resultado;
     }
 
+    /**
+     * Selecciona todos los grupos que esten activos en la BD
+     * @return bool|mysqli_result|string
+     */
     public function CargarGruposActivos()
     {
         $conex = new funcionesBD();
@@ -56,7 +66,13 @@ class docenteModelo
         return $resultado;
     }
 
-
+    /**
+     * Actualiza una ponderacion asignada a un modulo
+     * @param $nombrePonderacion
+     * @param $valor
+     * @param $idPonderacion
+     * @return bool|mysqli_result|string
+     */
     public function actualizarPonderaciones($nombrePonderacion, $valor, $idPonderacion)
     {
         @$conex = new funcionesBD();
@@ -71,6 +87,11 @@ class docenteModelo
         return $resultado;
     }
 
+    /**
+     * Retorna el numero de tareas de una ponderación
+     * @param $idPonderacion
+     * @return bool|int|mysqli_result|string
+     */
     public function obtenerCantidadTareas($idPonderacion)
     {
         $conex = new funcionesBD();
@@ -86,6 +107,16 @@ class docenteModelo
         }
     }
 
+    /**
+     * Inserta una practica para un modulo
+     * @param $nombreTarea
+     * @param $porcentaje
+     * @param $cantidadEjercicios
+     * @param $idPonderacion
+     * @param $carpetaMod
+     * @param $anyoModulo
+     * @return bool|mysqli_result|string
+     */
     public function InsertarPracticas($nombreTarea, $porcentaje, $cantidadEjercicios, $idPonderacion, $carpetaMod, $anyoModulo)
     {
         $conex = new funcionesBD();
@@ -115,6 +146,11 @@ class docenteModelo
         }
     }
 
+    /**
+     * Obtiene el porcentaje asignado a una ponderacion
+     * @param $idPonderacion
+     * @return bool|mysqli_result|string
+     */
     public function obtenerPorcentajePonderacion($idPonderacion)
     {
         $conex = new funcionesBD();
@@ -125,6 +161,12 @@ class docenteModelo
 
     }
 
+    /**
+     * Actualiza el porcentaje aignado a una practica
+     * @param $idPonderacion
+     * @param $porcentaje
+     * @return bool|mysqli_result|string
+     */
     public function actualizarPorcentajesPracticas($idPonderacion, $porcentaje)
     {
         $conex = new funcionesBD();
@@ -134,7 +176,11 @@ class docenteModelo
         return $resultado;
     }
 
-
+    /**
+     * Muestra todas las practicas diponibles para un modulo inscrito
+     * @param $idModulo
+     * @return bool|mysqli_result|string
+     */
     public function mostrarPracticas($idModulo)
     {
         $conex = new funcionesBD();
@@ -144,6 +190,14 @@ class docenteModelo
         return $resultado;
     }
 
+
+    /**
+     * Guarda la informacion de las tareas subidas por los alumnos en la BD
+     * @param $nombreArchivo
+     * @param $ruta
+     * @param $idModulo
+     * @return bool|mysqli_result|string
+     */
     public function GuardarGuiasBaseDatos($nombreArchivo, $ruta, $idModulo)
     {
         $conex = new funcionesBD();
@@ -153,6 +207,11 @@ class docenteModelo
         return $resultado;
     }
 
+    /**
+     * Carga la informacion de un gruo selecionado
+     * @param $idModulo
+     * @return bool|mysqli_result|string
+     */
     public function CargarGrupoIndividual($idModulo)
     {
         $conex = new funcionesBD();
@@ -162,6 +221,11 @@ class docenteModelo
         return $resultado;
     }
 
+    /**
+     * Obtiene las siglas de un modulo
+     * @param $idModulo
+     * @return bool|mysqli_result|string
+     */
     public function ObtenerSiglas($idModulo)
     {
         $conex = new funcionesBD();
@@ -171,6 +235,11 @@ class docenteModelo
         return $resultado;
     }
 
+    /**
+     * Seleciona los datos de seguridad de la BD
+     * @param $idModulo
+     * @return bool|mysqli_result|string
+     */
     public function obtenerInfoSeguridadModulo($idModulo)
     {
         $conex = new funcionesBD();
@@ -180,6 +249,12 @@ class docenteModelo
         return $resultado;
     }
 
+    /**
+     * Asigna una contraseña a un grupo
+     * @param $idModulo
+     * @param $contra
+     * @return array|bool|mysqli_result|string
+     */
     public function asignarContra($idModulo, $contra)
     {
         $conex = new funcionesBD();
@@ -207,6 +282,11 @@ class docenteModelo
         return $resultado = [$resultado1, $resultado2];
     }
 
+    /**
+     * Seleciona la contraseña de un docente selecionado
+     * @param $carnetDocente
+     * @return bool|mysqli_result|string
+     */
     public function obtenerClaveDocente($carnetDocente)
     {
         $conex = new funcionesBD();
@@ -216,6 +296,11 @@ class docenteModelo
         return $resultado;
     }
 
+    /**
+     * Modifica la contraseña de un modulo
+     * @param $idModulo
+     * @param $contra
+     */
     public function modificarContra($idModulo, $contra)
     {
         $conex = new funcionesBD();
@@ -225,6 +310,10 @@ class docenteModelo
         $resultado = $conex->ActualizarRegistro('Modulo', 'contraModulo', "$contraCifrada", "idModulo=$idModulo");
     }
 
+    /**
+     * Elimina la contraseña de un modulo
+     * @param $idModulo
+     */
     public function eliminarContra($idModulo)
     {
         $conex = new funcionesBD();
@@ -236,7 +325,11 @@ class docenteModelo
         $resultado2 = $conex->ActualizarRegistro('Modulo', 'contraModulo', "", "idModulo=$idModulo");
     }
 
-
+    /**
+     * Obtiene el nombre asignado a una ponderacion
+     * @param $idPonderacion
+     * @return bool|mysqli_result|string
+     */
     public function obtenerNombrePonderacion($idPonderacion)
     {
         $conex = new funcionesBD();
@@ -246,6 +339,11 @@ class docenteModelo
         return $resultado;
     }
 
+    /**
+     * Elimina una ponderacion indicada
+     * @param $idPonderacion
+     * @return bool|mysqli_result|string
+     */
     public function eliminarPonderacion($idPonderacion)
     {
         $conex = new funcionesBD();
@@ -255,6 +353,14 @@ class docenteModelo
         return $resultado;
     }
 
+    /**
+     * Inscribi un alumno en un modulo
+     * @param $carnet
+     * @param $modulo
+     * @param $pass
+     * @param $carnetDoc
+     * @return bool|int|mysqli_result|string
+     */
     public function inscribirAlumno($carnet, $modulo, $pass, $carnetDoc)
     {
         $objBD = new funcionesBD();
@@ -290,6 +396,14 @@ class docenteModelo
         }
     }
 
+    /**
+     * 
+     * @param $carnet
+     * @param $passOrig
+     * @param $pass1
+     * @param $pass2
+     * @return bool|mysqli_result|string
+     */
     public function cambiarPassDocente($carnet, $passOrig, $pass1, $pass2)
     {
         $objBD = new funcionesBD();

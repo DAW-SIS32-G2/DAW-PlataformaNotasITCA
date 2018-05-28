@@ -1,0 +1,13 @@
+Ubicacion: /Vistas/paginas/alumno/plantillas/head.php
+
+// $bd = new funcionesBD();
+	// //La condicion luego se actualizará conforme a los docentes que impartan en cada grupo
+	// $res = $bd->SelectArray('Usuario','permiteModificacion','carnet="'.$_SESSION['usuario'].'"');
+	// while($fila = $res->fetch_assoc())
+	// {
+	// 	if($fila['permiteModificacion'] == 1)
+	// 	{
+	// 		//Si es igual a 1 es decir que permite modificaciones, entonces habrá que redireccionar
+	// 		header("location: ".urlBase."alumno/modificar");
+	// 	}
+	// }

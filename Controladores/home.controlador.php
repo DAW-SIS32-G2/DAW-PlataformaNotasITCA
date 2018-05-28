@@ -1,7 +1,7 @@
 <?php
 
     /**
-    * The home page controller
+    * Pagina de inicio o tunel
     */
     class HomeControlador
     {
