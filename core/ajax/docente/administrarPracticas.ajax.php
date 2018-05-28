@@ -1,5 +1,8 @@
 <?php
-  define('__ROOT__',dirname(__FILE__,3));
+  define("__ROOT__", dirname(__FILE__,3));
+  require_once(__ROOT__.'/controladores/docente.controlador.php');
+  $objDocenteControlador=new DocenteControlador('DocenteModelo');
+
   require_once(__ROOT__.'/core/funcionesbd.php');
   $objDocenteModelo=new docenteModelo();
 
@@ -33,7 +36,7 @@
 
         $conteo=count($ponderacionesOrdenadas);
 
-        echo '<select name="ponderacion">';
+        echo '<select class="form-control" name="ponderacion">';
 
         for ($i=0;$i<$conteo;$i++)
         { 
@@ -63,6 +66,8 @@
     }
     else
     {
+      require_once(__ROOT__.'/core/criptografia.php');
+
       ?>
         
         <table class="table table-bordered table-light table-hover">
@@ -75,21 +80,34 @@
           </tr>
 
           <?php 
-
-            $i=0;
             while($arrayPracticas=$resultado->fetch_array(MYSQLI_ASSOC))
             {
               $nombrePonderacionP[]=$arrayPracticas['nombrePonderacion'];
               $nombreTarea[]=$arrayPracticas['nombreTarea'];
               $cantidadEjercicios[]=$arrayPracticas['cantidadEjercicios'];
               $idTarea[]=$arrayPracticas['idTarea'];
-              $i++;
+              $idPonderacion[]=$arrayPracticas['idPonderacion'];
             }
 
             $conteoPracticas=count($nombrePonderacionP);
 
             for($q=0;$q<$conteoPracticas;$q++)
-            { 
+            {
+              $resultado=$objDocenteControlador->obtenerSiglas($idModulo);
+
+              $infoModulo=$resultado->fetch_assoc();
+              $anyo=$infoModulo['anyo'];
+              $siglas=$infoModulo['siglas'];
+
+              $ruta="Archivos/Practicas/".$siglas."-".$anyo."/Ponderacion_".$nombrePonderacionP[$q]."_".$idPonderacion[$q]."/".$nombreTarea[$q]."/";
+
+              $aux=cifrar($ruta);
+              $ruta=$aux;
+
+              $archivo=$siglas."-".$anyo."-".$nombreTarea[$q];
+
+              $aux=cifrar($archivo);
+              $archivo=$aux;
               ?>
                 
                 <tr>
@@ -99,7 +117,7 @@
                   <td><a href="" data-toggle="modal" data-target="#editarModal">Editar</a></td>
                   <td><a href="" data-toggle="modal" data-target="#activarModal">ON</a></td>
                   <td><a href="" data-toggle="modal" data-target="#borrarModal">Borrar</a></td>
-                  <td><a href="descargar/<?= $idTarea[$q]?>" >Descargar Archivos de esta prácticas</a></td>
+                  <td><button class="btn btn-info" type="button" onclick="comprimirDirectorio('<?= $ruta ?>','<?=  $archivo ?>')">Descargar Archivos de esta prácticas</button></td>
                 </tr>
 
               <?php

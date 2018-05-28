@@ -351,6 +351,13 @@ select * from GuiaModulo;
 
 select P.nombrePonderacion from Ponderacion as P where idPonderacion=11;
 
+select * from tarea where nombreTarea="examenPractico01";
+
+SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios, T.idTarea 
+from Ponderacion as P 
+inner join Tarea as T on P.idPonderacion=T.idPonderacion 
+where P.idModulo=100;
+
 select *
 from Modulo as M
 inner join Horario as H
@@ -362,7 +369,7 @@ where M.carnet='funes';
 select * from Ponderacion as P
 inner join Modulo as M
 on M.idModulo=P.idModulo
-where P.idModulo='1';
+where P.idModulo='100';
 
 SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios
 from Ponderacion as P

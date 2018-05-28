@@ -14,6 +14,26 @@ function descargar(archivo)
 	  });
 	
 }
+
+function comprimirDirectorio(ruta,archivo)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/zip',
+	      data      : {ruta : ruta, archivo : archivo, comprimirDirectorio : true},
+	      success   : function(respuesta)
+	      {
+	      	if(!respuesta)
+	      	{
+	      		alert("No hay archivos en este directorio.");
+	      	}
+	      	else
+	      	{
+		        descargar(respuesta);
+	      	}
+	      }
+	  });
+}
 /*Fuera de uso*/
 /*
 function borrarZip(ruta)

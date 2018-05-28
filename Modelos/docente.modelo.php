@@ -127,21 +127,34 @@ class docenteModelo
 
         $directorio = "Archivos/Practicas/" . $carpetaMod . "-$anyoModulo/Ponderacion_" . $nombrePonderacion['nombrePonderacion'] . "_$idPonderacion/" . str_replace(" ", "_", $nombreTarea);
 
-        if (file_exists($directorio)) {
-            return "Error. El directorio ya existe";
-        } else {
-            $conex = new funcionesBD();
+        if (!file_exists($directorio))
+        {
+            mkdir($directorio, 0777, true);
+        }
 
-            $resultado = $conex->insertar("Tarea", "nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo", "'" . str_replace(" ", "_", $nombreTarea) . "',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',1");
+        $conex = new funcionesBD();
 
-            if ($resultado) {
-                if (mkdir($directorio, 0777, true)) {
-                    return $resultado;
-                } else {
-                    return "Falló al crear el directorio";
-                }
-            } else {
-                return $resultado;
+        $resultado=$conex->ConsultaGeneral("Tarea","nombreTarea='".str_replace(" ", "_", $nombreTarea)."'");
+
+        if(gettype($resultado)=="string")
+        {
+            return $resultado;
+        }
+        else
+        {
+            $numeroRespuestas=$resultado->num_rows;
+
+            if($numeroRespuestas>0)
+            {
+                return "Error. Ya existe una practica llamada: ".$nombreTarea.". Por favor ingrese uno distinto.";
+            }
+            else
+            {
+                $conex = new funcionesBD();
+
+                $resultado = $conex->insertar("Tarea", "nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo", "'" . str_replace(" ", "_", $nombreTarea) . "',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',1");
+
+                return $resultado; 
             }
         }
     }
@@ -185,7 +198,7 @@ class docenteModelo
     {
         $conex = new funcionesBD();
 
-        $resultado = $conex->ConsultaPersonalizada("SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios, T.idTarea from Ponderacion as P inner join Tarea as T on P.idPonderacion=T.idPonderacion where P.idModulo=$idModulo");
+        $resultado = $conex->ConsultaPersonalizada("SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios, T.idTarea, P.idPonderacion from Ponderacion as P inner join Tarea as T on P.idPonderacion=T.idPonderacion where P.idModulo=$idModulo");
 
         return $resultado;
     }

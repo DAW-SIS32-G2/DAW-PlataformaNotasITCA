@@ -185,7 +185,7 @@ class Zip
     }
 
     //nombre del archivo de guias
-    $archivo = "Archivos/temp/$usuario/".$arcivo."-ZIP_guias.zip";
+    $archivo = "Archivos/temp/$usuario/".$arcivo."-ZIP.zip";
 
     if(file_exists($rutaArchivo))
     {
@@ -282,6 +282,27 @@ if(isset($_REQUEST['comprimirPracticasPonderacion']))
   $objZip=new Zip();
 
   $resultado=$objZip->comprimirDirectorio(descifrar($rutaArchivo),descifrar($archivo));
+
+  if(!$resultado)
+  {
+    echo false;
+  }
+  else
+  {
+    echo cifrar($resultado);
+  }
+}
+
+if(isset($_REQUEST['comprimirDirectorio']))
+{
+  $ruta=$_REQUEST['ruta'];
+
+  $archivo=$_REQUEST['archivo'];
+
+  $objZip=new Zip();
+
+  $resultado=$objZip->comprimirDirectorio(descifrar($ruta),descifrar($archivo));
+
 
   if(!$resultado)
   {
