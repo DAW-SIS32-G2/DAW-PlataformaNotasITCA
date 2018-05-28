@@ -336,6 +336,11 @@ class funcionesBD
 
 	}
 
+    public function buscarNotificaciones($carnet)
+    {
+        $resultado=$this->bd->query("SELECT * FROM Notificacion WHERE destinatario='$carnet' AND estado='1'");
+        return $resultado;
+    }
 
 
 }

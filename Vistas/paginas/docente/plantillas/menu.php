@@ -64,9 +64,9 @@
         </div>
       </li>
       <li class="nav-item active dropdown">
-        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons">mail</i>&nbsp;Notificaciones</a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">No hay notificaciones nuevas</a>
+        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons">mail</i>&nbsp;Notificaciones&nbsp;<span class="badge badge-pill badge-light" id="cont"></a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="notificaciones">
+          
         </div>
       </li>
       <li class="nav-item active">
@@ -83,3 +83,36 @@
     </ul>
   </div>
 </nav>
+<script type="text/javascript">
+    $(document).ready(function(){
+        verificarNotificaciones();
+        setInterval(verificarNotificaciones(),5000);
+    })
+
+    function verificarNotificaciones()
+    {
+        $.ajax({
+            type    : "post",
+            url     : "ajax/nav",
+            data    : {"cont" : true},
+            success : function(contador)
+                      {
+                         $("#cont").text(contador);
+                      }
+        })
+
+        $.ajax({
+            type    : "post",
+            url     : "ajax/nav",
+            data    : {"noti" : true},
+            success : function(notificaciones)
+                      {
+                         $("#notificaciones").html(notificaciones);
+                      },
+            complete: function()
+                      {
+                         setTimeout(verificarNotificaciones, 5000);
+                      }
+        })
+    }
+</script>

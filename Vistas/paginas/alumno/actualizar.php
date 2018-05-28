@@ -1,3 +1,92 @@
+<script type="text/javascript">
+    $(document).on('hidden.bs.modal','#mod', function(event) {
+        $("#claveOrig").val("");
+        $("#clave1").val("");
+        $("#clave2").val("");
+    })
+
+    function cambiarClave()
+    {
+        var passOrig = $("#claveOrig").val();
+        var pass1 = $("#clave1").val();
+        var pass2 = $("#clave2").val();
+        var contador = 0;
+
+        if(passOrig == "")
+        {
+            $("#passOrig").html("<p><small style='color: red'>Ingrese su contraseña actual</small></p>");
+            contador++;
+        }
+        else
+        {
+            $("#passOrig").html("");
+        }
+
+        if(pass1 == "")
+        {
+            $("#pass1").html("<p><small style='color: red'>Ingrese su nueva contraseña</small></p>");
+            contador++;
+        }
+        else
+        {
+            $("#pass1").html("");
+        }
+
+        if(pass2 == "")
+        {
+            $("#pass2").html("<p><small style='color: red'>Repita su nueva contraseña</small></p>");
+            contador++;
+        }
+        else
+        {
+            $("#pass2").html("");
+        }
+
+        if(pass1 != pass2)
+        {
+            $("#pass2").html("<p><small style='color: red'>Las claves no coinciden</small></p>");
+            contador++;
+        }
+        else
+        {
+            $("#pass2").html("");
+        }
+
+        if(contador == 0)
+        {
+            $.ajax({
+                type    : "post",
+                url     : "ajax/actualizarDatos",
+                data    : {
+                            "funcion"  : 2,
+                            "passOrig" : passOrig,
+                            "pass1"    : pass1,
+                            "pass2"    : pass2
+                          },
+                success : function(mensaje)
+                {
+                    if(mensaje == 1)
+                    {
+                        swal({
+                            text   : "Su contraseña ha sido cambiada correctamente",
+                            icon   : "success",
+                            button : "Aceptar"
+                        });
+                        $("#mod").modal('hide');
+                    }
+                    else
+                    {
+                        swal({
+                            text   : "Ha ocurrido un error:\n"+mensaje,
+                            icon   : "error",
+                            button : "Aceptar"
+                        })
+                    }
+                }
+            });
+        }
+    }
+</script>
 <?php
 
 # se inclye la clase con los metodos de conexón a la DB
@@ -54,10 +143,9 @@ while ($fila = mysqli_fetch_assoc($datosAlumno)) {
                 </div>
             </div>
             <div class="col-md-10">
-                <i>NOTA: Los datos que no se pueden editar son sólo para verificación, si existe algún error en ellos,
-                    notifique a su docente para que puedan ser cambiados</i>
-                # se le presentan sus datos al usuario algunos de ellos seran de solo lectura
-                # otros se podran editar de forma normal
+                <i>NOTA: Los datos que no se pueden editar son sólo para verificación, si existe algún error en ellos, notifique a su docente para que puedan ser cambiados</i>
+                <!--  se le presentan sus datos al usuario algunos de ellos seran de solo lectura -->
+                 <!-- otros se podran editar de forma normal -->
                 <form action="">
                     <div class="row">
                         <label class="col-md-6">Carnet
@@ -163,7 +251,7 @@ while ($fila = mysqli_fetch_assoc($datosAlumno)) {
     </div>
 </div>
 
-# modal para cambio de contraseña
+<!-- modal para cambio de contraseña -->
 <div class="modal fade" id="mod" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -177,21 +265,27 @@ while ($fila = mysqli_fetch_assoc($datosAlumno)) {
 
                     <div class="container-fluid">
                         <div class="form-group row">
-                            <input class="form-control" type="password" placeholder="Clave actual" required>
+                            <label class="form-label">Clave Actual</label>
+                            <input class="form-control" type="password" id="claveOrig" required>
+                            <div id="passOrig"></div>
                         </div>
                         <div class="form-group row">
-                            <input class="form-control" type="password" placeholder="Nueva Clave" required>
+                            <label class="form-label">Ingrese su nueva clave</label>
+                            <input class="form-control" type="password" id="clave1" required>
+                            <div id="pass1"></div>
                         </div>
                         <div class="form-group row">
-                            <input class="form-control" type="password" placeholder="Repetir Nueva Clave" required>
+                            <label class="form-label">Repita su nueva clave</label>
+                            <input class="form-control" type="password" id="clave2" required>
+                            <div id="pass2"></div>
                         </div>
                     </div>
                 </div>
 
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">Enviar</button>
-                    <button type="button" class="btn btn-primary">Cerrar</button>
+                    <button type="button" onclick="cambiarClave()" class="btn btn-primary">Actualizar Contraseña</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>
         </div>
