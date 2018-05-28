@@ -306,8 +306,8 @@ idNotificacion int auto_increment not null,
 emisor varchar(100) not null comment 'persona que manda la notificacion',
 destinatario varchar(100) not null comment 'persona que recibirá la notificacion',
 titulo varchar(100) not null, 
-descripcion varchar(250) not null
-estado int not null comment '1=> sin leer, 2=>no leída';
+descripcion varchar(250) not null,
+estado int not null comment '1=> sin leer, 2=>no leída',
 primary key fkNotificacion(idNotificacion)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
