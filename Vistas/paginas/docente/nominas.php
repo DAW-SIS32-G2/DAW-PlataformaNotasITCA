@@ -20,6 +20,7 @@ $carnet = $_SESSION['usuario'];
 <body style="padding-top:65px;">
 <div class="container">
     <div class="text-center">
+        <h1>Ver alumnos según grupo</h1>
         <form class="form-group" method="post">
             <div class="form-inline">
                 <label for="grupo" class="col-lg-4">Seleccione un grupo</label>

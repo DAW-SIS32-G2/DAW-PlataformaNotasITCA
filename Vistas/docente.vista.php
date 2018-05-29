@@ -140,5 +140,11 @@
           require_once 'Vistas/paginas/docente/nominas.php';
         }
             
+        function actBuzon()
+        {
+          include 'paginas/docente/plantillas/cabecera.php';
+          include 'paginas/docente/plantillas/menu.php';
+          require_once 'Vistas/paginas/docente/actBuzon.php';
+        }
     }
 ?>
