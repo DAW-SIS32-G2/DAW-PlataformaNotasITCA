@@ -56,6 +56,7 @@ if(isset($_REQUEST['mostrarGuias']))
 
             ?>
                     <button class="btn btn-info" onclick='descargar(<?php echo '"'.$archivoAux.'"';?>)'>Descargar</button>
+                    <button class="btn btn-info" type="button" onclick='eliminarGuia(<?php echo '"'.$archivoAux.'"';?>)'>Eliminar</button>
             <?php 
             echo "</td></tr>";
         }
@@ -129,6 +130,24 @@ if(isset($_REQUEST['adminSeguridad']))
     }
     
             
+}
+
+if(isset($_REQUEST['eliminarGuia']))
+{
+    $ruta=$_POST['ruta'];
+
+    $aux=descifrar($ruta);
+
+    $ruta=$aux;
+
+    if(unlink($ruta))
+    {
+        echo true;
+    }
+    else
+    {
+        echo false;
+    }
 }
 
 if(isset($_REQUEST['mostrarModificarContra']))

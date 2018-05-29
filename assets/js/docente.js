@@ -114,6 +114,28 @@ $(document).on('show.bs.modal',"#administracionModal", function(event) {
 
 /*Funciones para admin grupo*/
 
+function eliminarGuia(archivo)
+{
+	$.ajax({
+	      type      : 'post',
+	      url       : 'ajax/adminGrupo',
+	      data      : {ruta: archivo, eliminarGuia : true},
+	      success   : function(respuesta)
+	      {
+	        if(respuesta)
+	        {
+	        	alert("Guia eliminada.");
+	        	window.location.href="adminGrupo";
+	        }
+	        else
+	        {
+	        	alert("Error al eliminar la guia.");
+	        }
+	      }
+	  });
+	
+}
+
 function mostrarGuias(idModulo)
 {
   $.ajax({
