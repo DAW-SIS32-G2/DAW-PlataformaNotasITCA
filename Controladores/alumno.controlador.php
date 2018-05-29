@@ -62,7 +62,7 @@
         $archivos = array();
         $contadorArch = 0;
         $objBD = new funcionesBD();
-        $sql = "Select Archivo.idArchivo, Archivo.nombreArchivo, Archivo.ruta FROM Archivo INNER JOIN BuzonArchivo ON Archivo.idBuzon = BuzonArchivo.idBuzon INNER JOIN Grupo ON BuzonArchivo.idGrupo = Grupo.idGrupo INNER JOIN Usuario ON Grupo.idGrupo = Usuario.idGrupo WHERE Usuario.carnet = '".$carnet."'";
+        $sql = "Select Archivo.idArchivo, Archivo.nombreArchivo, Archivo.ruta FROM Archivo INNER JOIN BuzonArchivo ON Archivo.idBuzon = BuzonArchivo.idBuzon INNER JOIN Grupo ON BuzonArchivo.idGrupo = Grupo.idGrupo INNER JOIN Usuario ON Grupo.idGrupo = Usuario.idGrupo WHERE Usuario.carnet = '".$carnet."' AND Archivo.carnet = '".$carnet."'";
         $res = $objBD->ConsultaPersonalizada($sql);
 
 

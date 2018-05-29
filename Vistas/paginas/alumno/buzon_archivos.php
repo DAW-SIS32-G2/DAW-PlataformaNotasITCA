@@ -53,7 +53,6 @@ $objModelo = new alumnoModelo();
                             </div>
                         </form>
                     </div>
-                    <br>
                     <div class="row">
                         <div class="card col-md-12">
                             <div class="card-header">
@@ -65,6 +64,24 @@ $objModelo = new alumnoModelo();
                                 ?>
                             </div>
                             <span></span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="container">
+                        <div class="row">
+                            <div class="card col-md-12">
+                                <div class="card-header">
+                                    <h5>Buscar un archivo compartido</h5>
+                                </div>
+                                <div class="card-body">
+                                    <label for="buscarToken" class="form-label">Buscar Token</label>
+                                    <input type="text" name="buscarToken" id="buscarToken" class="form-control" maxlength="9" autocomplete="off">
+                                    <div id="respBuscToken"></div>
+                                    <br>
+                                    <button class="btn btn-info" onclick="buscarToken()">Buscar Archivo</button><br><br>
+                                    <div id="archivosToken"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -349,5 +366,28 @@ $objModelo = new alumnoModelo();
                         }
                       }
         })
+    }
+
+    function buscarToken()
+    {
+        var token = $("#buscarToken").val();
+
+        if(token == "")
+        {
+            $("#respBuscToken").html("<small style='color: red'>Ingrese un token para buscar</small>");
+        }
+        else
+        {
+            $("#respBuscToken").html("");
+            $.ajax({
+                type    : "post",
+                url     : "ajax/buzon",
+                data    : {"token" : token, "buscarToken" : true},
+                success : function(archivo)
+                          {
+                            $("#archivosToken").html(archivo)
+                          }
+            })
+        }
     }
 </script>

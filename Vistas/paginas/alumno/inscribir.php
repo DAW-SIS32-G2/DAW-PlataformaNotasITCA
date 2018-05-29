@@ -13,8 +13,6 @@ while ($fila2 = mysqli_fetch_assoc($inscritos)) {
     $modulosInscritos[$i] = $fila2['idModulo'];
     $i++;
 }
-
-print_r($modulosInscritos);
 ?>
 <div class="container" style="padding-top: 65px;">
 
@@ -89,7 +87,7 @@ print_r($modulosInscritos);
             } else {
                 # En caso de que no exista una contraseña establecida solo se establecera la funcion escribir
                 $modal = "";
-                $clave = "onclick='inscribirSinClave(" . $idModulos[$cant] . ",'" . $_SESSION['usuario'] . "')'";
+                $clave = "onclick=\"inscribirSinClave(" . $idModulos[$cant] . ",'" . $_SESSION['usuario'] . "')\"";
             }
             echo "<tr>";
             echo "<td>" . $docentes[$cant] . "</td>";
@@ -126,6 +124,16 @@ print_r($modulosInscritos);
         var recipient = button.data('') // extraer los datos del atributo data-*
         var modal = $(this)
         modal.find("#nombre").html(recipient)
+    })
+
+    $(document).on("hidden.bs.modal","#inscribirSinClave",function(e) {
+      document.location.reload();
+    })
+
+    $("#inscribirModal").on("hidden.bs.modal", function(e) {
+      $("#inscribirModal").modal('dispose')
+      $("#resspass").html("")
+      $("#pass").val("")
     })
 </script>
 <div class="modal fade" id="inscribirModal" tabindex="-1" role="dialog" aria-labelledby="passModalCenterTitle"

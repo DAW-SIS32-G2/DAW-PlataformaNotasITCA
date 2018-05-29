@@ -1,4 +1,5 @@
 <?php
+require_once("config/variables.php");
 @session_start();
 if(isset($_POST['cont']))
 {
@@ -32,7 +33,7 @@ else if(isset($_POST['noti']))
 	if($contador == 0)
 	{
 	    ?>
-	    <a class="dropdown-item nav-but disabled" href="#">No hay notificaciones nuevas</a>
+	    <a class="dropdown-item nav-but disabled" href="<?= urlBase ?><?= $_SESSION['tipo'] ?>/notificaciones">No hay notificaciones nuevas</a>
 	    <?php
 	}
 	else
@@ -55,7 +56,7 @@ else if(isset($_POST['noti']))
 	            <small><?= $notis['desc'][$contador-1] ?></small>
 	        </a>
 	        <div class="dropdown-divider"></div>
-	        <a class="dropdown-item nav-but" href="#">
+	        <a class="dropdown-item nav-but" href="<?= urlBase ?><?= $_SESSION['tipo'] ?>/notificaciones">
 	            <strong clas="text-center">Ver todas las notificaciones</strong>
 	        </a>
 	        <?php
@@ -78,7 +79,7 @@ else if(isset($_POST['noti']))
 	            <small><?= $notis['desc'][5] ?></small>
 	        </a>
 	        <div class="dropdown-divider"></div>
-	        <a class="dropdown-item nav-but" href="#">
+	        <a class="dropdown-item nav-but" href="<?= urlBase ?><?= $_SESSION['tipo'] ?>/notificaciones">
 	            <strong clas="text-center">Ver todas las notificaciones</strong>
 	        </a>
 	        <?php

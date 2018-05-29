@@ -372,7 +372,11 @@ class funcionesBD
         }
     }
 
-
+    public function notificacionesAntiguas($carnet)
+    {
+        $resultado=$this->bd->query("SELECT * FROM Notificacion WHERE destinatario='$carnet' AND estado='0'");
+        return $resultado;
+    }
 }
 
 ?>

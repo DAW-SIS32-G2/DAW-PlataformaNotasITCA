@@ -87,16 +87,6 @@ function visualizar()
   })
 }
 
-$("#inscribirSinClave").on("hidden.bs.modal", function(e) {
-  location.reload();
-})
-
-$("#inscribirModal").on("hidden.bs.modal", function(e) {
-  $("#inscribirModal").modal('dispose')
-  $("#resspass").html("")
-  $("#pass").val("")
-})
-
 function mandarModulo(valor)
 {
   $("#idenModulo").attr("value",valor)

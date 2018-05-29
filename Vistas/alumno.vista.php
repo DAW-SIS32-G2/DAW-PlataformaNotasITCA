@@ -115,6 +115,20 @@ class alumnoVista
         include 'paginas/alumno/html5.php';
     }
 
+    function notificaciones()
+    {
+        include 'paginas/alumno/plantillas/head.php';
+        include 'paginas/alumno/plantillas/nav.php';
+        include 'paginas/alumno/notificaciones.php';   
+    }
+
+    function programas()
+    {
+        include 'paginas/alumno/plantillas/head.php';
+        include 'paginas/alumno/plantillas/nav.php';
+        include 'paginas/alumno/programas.php';   
+    }
+
 }
 
 ?>
