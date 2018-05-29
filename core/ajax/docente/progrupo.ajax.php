@@ -1,4 +1,4 @@
- <?php
+<?php
   //Acá se va a cargar la tabLa según la BD
   define("RAIZ",dirname(__FILE__,3));
   require_once(RAIZ."/funcionesbd.php");
@@ -74,9 +74,32 @@ else
       modal.find('#apellidos').val(apellido)
       })
 
+      $('#notasModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var nombre = button.data('nombre')+" "+button.data('apellido');
+        var carnet = button.data('whatever');
+        var idModulo = button.data('modulo');
+        var modal = $(this);
+        cargarNotasAlumno(carnet,idModulo);
+        modal.find("#nombreAlumno").text("Alumno: "+nombre);
+      })
+
       $("#respuestaForm").on('hidden.bs.modal', function (event) {
         consultarNotas(<?= $idModulo ?>)
       })
+
+      function cargarNotasAlumno(carnet,idModulo)
+      {
+        $.ajax({
+          type    : "post",
+          url     : "ajax/notasindividual",
+          data    : {"carnet": carnet, "idmodulo" : idModulo},
+          success : function(mensaje)
+                    {
+                      $("#notasIndividual").html(mensaje);
+                    }
+        })
+      }
     </script>
     <?php
     $objeto = new funcionesBD();
@@ -119,7 +142,9 @@ else
                         <a href=\"#\" data-toggle=\"modal\" data-target=\"#eliminarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\" data-modulo=\"".$idModulo."\"><i class='material-icons'>backspace</i><small> Eliminar</small></a><br>                   
                         <a href=\"#\" data-toggle=\"modal\" data-target=\"#modificarModal\" data-whatever=\"".$fila['carnet']."\" data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\"><i class='material-icons'>create</i><small> Editar</small></a>
                       </td>
-                      <td>".$fila['carnet']."</td>
+                      <!-- Carnet del alumno -->
+                      <td><a href='#' data-toggle='modal' data-target='#notasModal' data-whatever='".$fila['carnet']."' data-nombre=\"".$fila['nombres']."\" data-apellido=\"".$fila['apellidos']."\" data-modulo=\"".$idModulo."\">".$fila['carnet']."</td>
+                      <!-- Fin -->
                       <td>".$fila['nombres']."</td>
                       <td>".$fila['apellidos']."</td>
                   ";
@@ -236,39 +261,9 @@ else
                     <form class="form-group" method="post">
                       <div class="container">
                         <div class="row">
-                            <p>Nombre de prueba</p>
+                            <h4 id="nombreAlumno"></h4>
                         </div>
-                        <div class="row">
-                          <p>Módulo: <?php echo $grupo ?></p>
-                        </div>
-                        <div class="row">
-                          <div class="col-lg-4 h-100">
-                            <!-- Acá debe cargar cada evaluación-->
-                            <h4 class="align-middle">EV1</h4>
-                          </div>
-                          <div class="col-lg-8">
-                              <!-- Acá debe cargar las notas por prácticas -->
-                              <p>Promedio: 10.00</p>
-                              <table class="table table-bordered">
-                                  <thead class="thead-dark">
-                                    <tr>
-                                      <th>Practica</th>
-                                      <th>Nota</th>
-                                      <th>Hechos</th>
-                                      <th>Ejercicios</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td>Practica 01</td>
-                                      <td>10.00</td>
-                                      <td>100</td>
-                                      <td>100</td>
-                                    </tr>
-                                  </tbody>
-                              </table>
-                          </div>
-                        </div>
+                        <div id="notasIndividual"></div>
                       </div>
                     </form>
                 </div>

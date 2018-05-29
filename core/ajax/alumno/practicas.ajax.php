@@ -171,6 +171,8 @@ if(isset($_POST['idModulo']))
 		      text: res,
 		      icon: "success",
 		      button: "Aceptar"
+		    }).then((value)=>{
+		    	document.location.reload();
 		    })
 		  });
 		});

@@ -544,6 +544,36 @@ class docenteModelo
         return $resultado;
     }
 
+    public function borrarPrac($ruta,$idTareaSubidaPor,$idTarea,$carnet)
+    {
+        require_once("core/criptografia.php");
+        $conex = new funcionesBD();
+        $resultado = $conex->EliminarRegistro('TareaSubidaPor',"idTareaSubidaPor='$idTareaSubidaPor' AND idTarea='$idTarea'");
+        if($resultado === TRUE)
+        {
+            $conex = new funcionesBD();
+            $resultado = $conex->EliminarRegistro("Nota","idTarea='$idTarea' AND carnet='$carnet'");
+            if($resultado === TRUE)
+            {
+                if(unlink(descifrar($ruta)))
+                {
+                    echo 1;
+                }
+                else
+                {
+                    echo "No se pudo borrar el archivo";
+                }
+            }
+            else
+            {
+                echo "No se pudo borrar la nota";
+            }
+        }
+        else
+        {
+            echo "No se pudo borrar el registro de la práctica";
+        }
+    }
 }
 
 ?>

@@ -524,6 +524,7 @@ class docenteControlador
         $resultado=$this->model->actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios);
         return $resultado;
     }
+
 }
 
 ?>
