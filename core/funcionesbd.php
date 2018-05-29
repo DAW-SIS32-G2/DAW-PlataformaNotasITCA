@@ -249,17 +249,23 @@ class funcionesBD
      */
     public function ConsultaGeneral($tabla, $condicion)
     {
-        if ($condicion != "") {
+        if($condicion != "")
+        {
             $resultado = $this->bd->query("select * from $tabla where $condicion");
-        } else {
+        }
+        else
+        {
             $resultado = $this->bd->query("select * from $tabla");
         }
 
-        if ($resultado) {
+        if($resultado)
+        {
             //Cerrando conexión
             $this->bd->close();
             return $resultado;
-        } else {
+        }
+        else
+        {
             $error = $this->bd->error;
             //Cerrando conexión
             $this->bd->close();

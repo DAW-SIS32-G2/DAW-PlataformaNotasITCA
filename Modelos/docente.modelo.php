@@ -146,7 +146,7 @@ class docenteModelo
             {
                 $conex = new funcionesBD();
 
-                $resultado = $conex->insertar("Tarea", "nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo", "'" . str_replace(" ", "_", $nombreTarea) . "',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',1");
+                $resultado = $conex->insertar("Tarea", "nombreTarea,porcentaje,cantidadEjercicios,idPonderacion,directorio,activo", "'" . str_replace(" ", "_", $nombreTarea) . "',$porcentaje,$cantidadEjercicios,$idPonderacion,'$directorio',0");
 
                 return $resultado; 
             }
@@ -524,6 +524,24 @@ class docenteModelo
 
             return $resultado;
         }
+    }
+
+    public function obtenerNombreTareas($idTarea,$nombreTarea,$idPonderacion)
+    {
+        $conex=new funcionesBD();
+
+        $resultado=$conex->ConsultaGeneral('Tarea',"nombreTarea='".trim($nombreTarea)."' and idPonderacion=$idPonderacion");
+
+        return $resultado;
+    }
+
+    public function actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios)
+    {
+        $conex=new funcionesBD();
+
+        $resultado=$conex->ActualizarRegistros('Tarea',"nombreTarea='$nombreTarea', cantidadEjercicios=$cantidadEjercicios","idTarea=$idTarea");
+
+        return $resultado;
     }
 
 }

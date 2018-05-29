@@ -499,6 +499,31 @@ class docenteControlador
             return $resultado;
         }
     }
+
+    public function obtenerNombreTareas($idTarea,$nombreTarea)
+    {
+        $resultado=$this->obtenerTareas($idTarea);
+
+        if (gettype($resultado)=="string")
+        {
+            return $resultado;
+        }
+        else
+        {
+            $aux=$resultado->fetch_assoc();
+
+            $idPonderacion=$aux['idPonderacion'];
+
+            $resultado = $this->model->obtenerNombreTareas($idTarea,$nombreTarea,$idPonderacion);
+            return $resultado;
+        }
+    }
+
+    public function actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios)
+    {
+        $resultado=$this->model->actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios);
+        return $resultado;
+    }
 }
 
 ?>

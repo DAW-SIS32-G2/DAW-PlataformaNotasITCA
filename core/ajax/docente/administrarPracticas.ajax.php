@@ -128,6 +128,28 @@
       <?php
     }
   }
+
+  if(isset($_POST['editarTarea']))
+  {
+    $idTarea=$_POST['idTarea'];
+    $idModulo=$_POST['idModulo'];
+    $idPonderacion=$_POST['idPonderacion'];
+
+    ?>
+      <form action="" method="post">
+        <label for="nombre">Nuevo nombre de la practica:
+          <input type="text" name="nombre" class="form-control" required>
+        </label><br>
+        <label for="cantidadEjercicios">Cantidad de ejercicios:
+          <input type="number" name="cantidadEjercicios" min="1" class="form-control" required>
+        </label><br>
+        <input type="hidden" name="idTarea" value="<?= $idTarea ?>">
+        <input type="hidden" name="idModulo" value="<?= $idModulo ?>">
+        <input type="hidden" name="idPonderacion" value="<?= $idPonderacion ?>">
+        <button class="btn btn-info" name="editarTarea">Editar practica</button>
+      </form>
+      <?php
+  }
   
 
   if(isset($_POST['mostrar']))
@@ -230,7 +252,7 @@
                     ?>
                   </td>
                   <td>
-                    <a href="" data-toggle="modal" data-target="#editarModal">Editar</a>
+                    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#editarModal" data-mod="<?= $idTarea[$q] ?>" data-idmodulo="<?= $idModulo ?>" data-idponderacion="<?= $idPonderacion[$q] ?>">Editar</button>
                   
                     <?php 
                       if($estadoTarea[$q]==1)
@@ -275,11 +297,10 @@
                 </button>
               </div>
               <div class="modal-body">
-                ...
+                <div class="container" id="divEditarPractica"></div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
               </div>
             </div>
           </div>
@@ -321,7 +342,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
               </div>
             </div>
           </div>

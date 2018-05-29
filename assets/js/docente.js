@@ -644,6 +644,14 @@ $(document).on('show.bs.modal',"#activarModal", function(event) {
 	cambiarEstadoTarea(idTarea,estado);
 });
 
+$(document).on('show.bs.modal',"#editarModal", function(event) {
+	var button = $(event.relatedTarget)
+	var idTarea = button.data('mod')
+	var idModulo = button.data('idmodulo')
+	var idPonderacion = button.data('idponderacion')
+	var modal = $(this)
+	editarTarea(idTarea,idModulo,idPonderacion);
+});
 
 
 /*Funciones para administrarPracticas.php*/
@@ -700,6 +708,19 @@ function cambiarEstadoTarea(idTarea,estado)
       success   : function(respuesta)
       {
         document.getElementById('divEstadoTarea').innerHTML = respuesta;
+      }
+  });
+}
+
+function editarTarea(idTarea,idModulo,idPonderacion)
+{
+	$.ajax({
+      type      : 'post',
+      url       : 'ajax/administrarPracticas',
+      data      : {idTarea : idTarea, idModulo : idModulo, idPonderacion : idPonderacion, editarTarea : true},
+      success   : function(respuesta)
+      {
+        document.getElementById('divEditarPractica').innerHTML = respuesta;
       }
   });
 }

@@ -138,6 +138,74 @@
 			}
 		}
 	}
+
+	if(isset($_REQUEST['editarTarea']))
+	{
+		$idTarea=$_POST['idTarea'];
+		$nuevoNombreTarea=$_POST['nombre'];
+		$cantidadEjercicios=$_POST['cantidadEjercicios'];
+		$idModulo=$_POST['idModulo'];
+    	$idPonderacion=$_POST['idPonderacion'];
+
+		$resultado=$objDocenteControlador->obtenerNombreTareas($idTarea,$nombreTarea);
+
+		if (gettype($resultado)=="string")
+		{
+			echo "<div class='alert alert-danger'>".$resultado."</div>";
+		}
+		else
+		{
+			if($resultado->num_rows > 0)
+			{
+				echo "<div class='alert alert-danger'>Error. Ya existe una practica llamada asi.</div>";
+			}
+			else
+			{
+				$resultado=$objDocenteControlador->ObtenerSiglas($idModulo);
+
+				if($arrayModulo=$resultado->fetch_array(MYSQLI_ASSOC))
+		        {
+		            $siglas = $arrayModulo['siglas'];
+		            $anyoModulo=$arrayModulo['anyo'];
+		        }
+
+		        $resultado=$objDocenteControlador->obtenerNombrePonderacion($idPonderacion);
+
+		        if($arrayPonderaciones=$resultado->fetch_array(MYSQLI_ASSOC))
+		        {
+		            $nombrePonderacion = $arrayPonderaciones['nombrePonderacion'];
+		        }
+
+		        $resultado=$objDocenteControlador->obtenerTareas($idTarea);
+
+		        $aux=$resultado->fetch_assoc();
+
+		        $nombreTarea=$aux['nombreTarea'];
+
+		        $rutaVieja="Archivos/Practicas/$siglas-$anyoModulo/Ponderacion_".$nombrePonderacion."_".$idPonderacion."/".$nombreTarea."";
+
+		        $rutaNueva="Archivos/Practicas/$siglas-$anyoModulo/Ponderacion_".$nombrePonderacion."_".$idPonderacion."/".str_replace(" ", "_", $nuevoNombreTarea)."";
+
+		        if(!$resultado=rename($rutaVieja,$rutaNueva))
+		        {
+		        	echo "<div class='alert alert-danger'>Error al renombrar el directorio.". $resultado."</div>";
+		        }
+		        else
+		        {
+		        	$resultado=$objDocenteControlador->actualizarTarea($idTarea,str_replace(" ", "_", $nuevoNombreTarea),$cantidadEjercicios);
+
+		        	if (gettype($resultado)=="string")
+					{
+						echo "<div class='alert alert-danger'>".$resultado."</div>";
+					}
+					else
+					{
+						echo "<div class='alert alert-success'>La practica ha sido actualizada.</div>";
+					}
+		        }
+			}
+		}
+	}
 	
 ?>
 	<div class="container">
