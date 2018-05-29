@@ -104,5 +104,41 @@
             }
           }
       }
+
+      public function buscarArchivo($token)
+      {
+          $conex = new funcionesBD();
+          $res = $conex->ConsultaPersonalizada("SELECT Archivo.nombreArchivo, Archivo.ruta, ArchivoCompartido.token FROM Archivo INNER JOIN ArchivoCompartido ON Archivo.idArchivo = ArchivoCompartido.idArchivo WHERE ArchivoCompartido.token = '$token'");
+          if(mysqli_num_rows($res) == 1)
+            {
+              $fila = mysqli_fetch_assoc($res);
+              $tamano = filesize(descifrar($fila['ruta']));
+              $tamano = $tamano/1048576;
+              $tamano = number_format($tamano,2);
+              ?>
+              <p>Archivo encontrado: </p>
+              <table class="table-hover table-bordered table-responsive d-table w-100">
+              <tr style="background-color: #9f0b06; color: #fff;">
+                <th class="w-50">Nombre </th>
+                <th class="w-20">Tamaño</th>
+                <th class="w-30">Acciones</th>
+              </tr>
+              <tr>
+                <td><?= $fila['nombreArchivo'] ?></td>
+                <td><?= $tamano ?> MB</td>
+                <td>
+                  <button class='btn btn-info' onclick="descargar('<?= $fila['ruta'] ?>')">Descargar</button>
+                </td>
+              </tr>
+        </table>
+        <?php
+        }
+        else
+        {
+          ?>
+          <div class="alert alert-warning"><strong>No se ha encontrado ningún archivo con ese token</strong><br>Esto puede deberse a dos razones:<br>1. El token no es válido<br>2. La persona que compartió el token lo ha renovado, o ha dejado de compartir el archivo</div>
+          <?php
+        }
+      }
   }
 ?>

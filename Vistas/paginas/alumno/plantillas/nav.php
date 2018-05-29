@@ -22,7 +22,7 @@
                     <i class="material-icons">dashboard</i>&nbsp;Servicios
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item nav-but">Programas</a>
+                    <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/programas">Programas</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item nav-but" href="<?= urlBase ?>alumno/buzon_archivos">Buz&oacute;n de Archivos</a>
                     <div class="dropdown-divider"></div>

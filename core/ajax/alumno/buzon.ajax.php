@@ -142,4 +142,17 @@ else if(isset($_POST['buscarDest']))
 	$objModelo = new alumnoModelo();
 	$objModelo->buscarDest($_POST['destinatario']);
 }
+else if(isset($_POST['buscarToken']))
+{
+	$tamano = strlen($_POST['token']);
+	if($tamano < 9 || $tamano > 9)
+	{
+		echo "<div class=\"alert alert-warning\"><strong>El token no cumple el formato válido</strong><br>Un token válido tiene 9 caracteres de la A a la Z y de 0 a 9</div>";
+	}
+	else
+	{
+		$objModelo = new alumnoModelo();
+		$objModelo->buscarArchivo($_POST['token']);
+	}
+}
 ?>

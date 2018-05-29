@@ -125,6 +125,13 @@
           include 'paginas/docente/plantillas/menu.php';
           require_once 'Vistas/paginas/docente/estadoGrupos.php';
         }
+
+        function notificaciones()
+        {
+          include 'paginas/docente/plantillas/cabecera.php';
+          include 'paginas/docente/plantillas/menu.php';
+          require_once 'Vistas/paginas/docente/notificaciones.php';
+        }
         
     }
 ?>
