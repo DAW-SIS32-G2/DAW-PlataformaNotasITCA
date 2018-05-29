@@ -636,6 +636,16 @@ $(document).on('show.bs.modal',"#borrarModal", function(event) {
 	ConfirmarBorrarPractica(idPractica,idPonderacion)
 });
 
+$(document).on('show.bs.modal',"#activarModal", function(event) {
+	var button = $(event.relatedTarget)
+	var idTarea = button.data('mod')
+	var estado = button.data('estado')
+	var modal = $(this)
+	cambiarEstadoTarea(idTarea,estado);
+});
+
+
+
 /*Funciones para administrarPracticas.php*/
 
 function mostrarPonderaciones()
@@ -669,7 +679,7 @@ function mostrarPracticas()
 
 function ConfirmarBorrarPractica(idPractica,idPonderacion)
 {
-  $.ajax({
+	$.ajax({
       type      : 'post',
       url       : 'ajax/administrarPracticas',
       data      : {idPractica : idPractica, idPonderacion : idPonderacion, ConfirmarBorrarPractica : true},
@@ -679,4 +689,17 @@ function ConfirmarBorrarPractica(idPractica,idPonderacion)
       }
   });
 
+}
+
+function cambiarEstadoTarea(idTarea,estado)
+{
+	$.ajax({
+      type      : 'post',
+      url       : 'ajax/administrarPracticas',
+      data      : {idTarea : idTarea, estado : estado, cambiarEstadoTarea : true},
+      success   : function(respuesta)
+      {
+        document.getElementById('divEstadoTarea').innerHTML = respuesta;
+      }
+  });
 }

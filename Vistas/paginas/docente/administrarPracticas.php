@@ -102,6 +102,42 @@
 		}
 
 	}
+
+	if(isset($_REQUEST['actualizarEstadoTarea']))
+	{
+		$idTarea=$_POST['idTarea'];
+		$estado=$_POST['estado'];
+
+		if($estado==0)
+		{
+			$resultado=$objDocenteControlador->actualizarEstadoTarea($idTarea, $estado,"","");
+		}
+		else
+		{
+			$fechaFin=$_POST['fechaFin'];
+			$fechaInicio=$_POST['fechaInicio'];
+
+			$resultado=$objDocenteControlador->actualizarEstadoTarea($idTarea, $estado, $fechaInicio, $fechaFin);
+		}
+
+		
+
+		if(gettype($resultado)=="string")
+		{
+			echo "<div class='alert alert-danger'>".$resultado."</div>";
+		}
+		else
+		{
+			if($estado==0)
+			{
+				echo "<div class='alert alert-success'>Practica cerrada.</div>";
+			}
+			else
+			{
+				echo "<div class='alert alert-success'>Practica abierta.</div>";
+			}
+		}
+	}
 	
 ?>
 	<div class="container">

@@ -192,7 +192,7 @@ class docenteModelo
     {
         $conex = new funcionesBD();
 
-        $resultado = $conex->ConsultaPersonalizada("SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios, T.idTarea, P.idPonderacion from Ponderacion as P inner join Tarea as T on P.idPonderacion=T.idPonderacion where P.idModulo=$idModulo");
+        $resultado = $conex->ConsultaPersonalizada("SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios, T.idTarea, P.idPonderacion, T.activo, T.fechaFin from Ponderacion as P inner join Tarea as T on P.idPonderacion=T.idPonderacion where P.idModulo=$idModulo");
 
         return $resultado;
     }
@@ -504,6 +504,26 @@ class docenteModelo
         $resultado = $conex->EliminarRegistro('Tarea', "idTarea=$idTarea");
 
         return $resultado;
+    }
+
+    public function actualizarEstadoTarea($idTarea, $estado, $fechaInicio, $fechaFin)
+    {
+        if($fechaInicio!="" and $fechaFin!="")
+        {
+            $conex = new funcionesBD();
+
+            $resultado = $conex->ActualizarRegistros('Tarea', "activo=$estado,fechaInicio='$fechaInicio',fechaFin='$fechaFin'", "idTarea=$idTarea");
+
+            return $resultado;
+        }
+        else
+        {
+            $conex = new funcionesBD();
+
+            $resultado = $conex->ActualizarRegistros('Tarea', "activo=$estado,fechaFin='$fechaFin'", "idTarea=$idTarea");
+
+            return $resultado;
+        }
     }
 
 }

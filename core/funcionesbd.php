@@ -224,11 +224,14 @@ class funcionesBD
     public function ActualizarRegistro($tabla, $campo, $valor, $condicion)
     {
         $resultado = $this->bd->query("UPDATE $tabla set $campo='$valor' where $condicion");
-        if ($resultado) {
+        if ($resultado)
+        {
             //Cerrando conexión
             $this->bd->close();
             return $resultado;
-        } else {
+        }
+        else
+        {
             $error = $this->bd->error;
             //Cerrando conexión
             $this->bd->close();
@@ -296,9 +299,12 @@ class funcionesBD
      */
     public function SelectArray($tabla, $campos, $condicion)
     {
-        if ($condicion != "") {
+        if ($condicion != "")
+        {
             $sql = "SELECT $campos FROM $tabla WHERE $condicion";
-        } else {
+        }
+        else
+        {
             $sql = "SELECT $campos FROM $tabla";
         }
         //Hacemos la consulta
@@ -340,6 +346,24 @@ class funcionesBD
     {
         $resultado=$this->bd->query("SELECT * FROM Notificacion WHERE destinatario='$carnet' AND estado='1'");
         return $resultado;
+    }
+
+    public function ActualizarRegistros($tabla, $camposValores, $condicion)
+    {
+        $resultado = $this->bd->query("UPDATE $tabla set $camposValores where $condicion");
+        if ($resultado) 
+        {
+            //Cerrando conexión
+            $this->bd->close();
+            return $resultado;
+        }
+        else 
+        {
+            $error = $this->bd->error;
+            //Cerrando conexión
+            $this->bd->close();
+            return "Error en la actualizacion de campo: " . $error;
+        }
     }
 
 

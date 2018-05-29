@@ -88,6 +88,46 @@
         </form>
     <?php
   }
+
+  if(isset($_POST['cambiarEstadoTarea']))
+  {
+    $idTarea=$_POST['idTarea'];
+    $estado=$_POST['estado'];
+
+    if($estado==0)
+    {
+      ?>
+      <div class='alert alert-warning'>
+        Al cerrar esta tarea ningun alumno podra subir archivos a ella.<br>¿Esta seguro que desea cerrar la Practica?
+      </div>
+      <form action="" method="post">
+        <input type="hidden" name="idTarea" value="<?= $idTarea ?>">
+        <input type="hidden" name="estado" value="<?= $estado ?>">
+        <button class="btn btn-info" name="actualizarEstadoTarea">Cerrar practica</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+      </form>
+      <?php
+    }
+    else
+    {
+
+      ?>
+      <div class='alert alert-warning'>
+        Abriendo tarea. Los alumnos podran subir archivos hasta la fecha limite que establezca o cuando usted cierre la practica.
+      </div>
+      <form action="" method="post">
+        <label for="fecha">Fecha limite para la practica:
+          <input type="date" name="fechaFin" min="<?= date('Y-m-').(date('d')+1) ?>" class="form-control" required>
+        </label><br>
+        <input type="hidden" name="fechaInicio" value="<?= date('Y-m-d') ?>">
+        <input type="hidden" name="idTarea" value="<?= $idTarea ?>">
+        <input type="hidden" name="estado" value="<?= $estado ?>">
+        <button class="btn btn-info" name="actualizarEstadoTarea">Abrir practica</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+      </form>
+      <?php
+    }
+  }
   
 
   if(isset($_POST['mostrar']))
@@ -109,10 +149,12 @@
         <table class="table table-bordered table-light table-hover">
             
           <tr>
-            <th>Evaluación</th>
+            <th>Ponderación</th>
             <th>Práctica</th>
-            <th># de ejercicios</th>
-            <th colspan="4">acciones</th>
+            <th># de<br>ejercicios</th>
+            <th>Estado</th>
+            <th>Fecha limite</th>
+            <th>Opciones</th>
           </tr>
 
           <?php 
@@ -123,6 +165,8 @@
               $cantidadEjercicios[]=$arrayPracticas['cantidadEjercicios'];
               $idTarea[]=$arrayPracticas['idTarea'];
               $idPonderacion[]=$arrayPracticas['idPonderacion'];
+              $estadoTarea[]=$arrayPracticas['activo'];
+              $fechaFinalizacion[]=$arrayPracticas['fechaFin'];
             }
 
             $conteoPracticas=count($nombrePonderacionP);
@@ -157,18 +201,61 @@
                     <?php echo $cantidadEjercicios[$q]; ?>
                   </td>
                   <td>
-                    <a href="" data-toggle="modal" data-target="#editarModal">Editar</a>
-                  </td>
-                  <td>
-                    <a href="" data-toggle="modal" data-target="#activarModal">ON</a>
-                  </td>
-                  <td>
-                    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#borrarModal" data-mod="<?= $idTarea[$q] ?>" data-ponde="<?= $idPonderacion[$q] ?>">Borrar</button>
-                  </td>
+                    <?php 
+                      if($estadoTarea[$q]==1)
+                      {
+                        ?>
+                          Abierta
+                        <?php
+                      }
 
-                  <td>
-                    <button class="btn btn-info" type="button" onclick="comprimirDirectorio('<?= $ruta ?>','<?=  $archivo ?>')">Descargar Archivos de esta prácticas</button>
+                      else
+                      {
+                        ?>
+                          Cerrada
+                        <?php
+                      }
+                    ?>
                   </td>
+                  <td>
+                    <?php
+                      if($fechaFinalizacion[$q]=="0000-00-00")
+                      {
+                        echo "";
+                      }
+                      else
+                      {
+                        echo $fechaFinalizacion[$q]; 
+                      }
+                    ?>
+                  </td>
+                  <td>
+                    <a href="" data-toggle="modal" data-target="#editarModal">Editar</a>
+                  
+                    <?php 
+                      if($estadoTarea[$q]==1)
+                      {
+                        ?>
+                          <button class="btn btn-info" type="button" data-toggle="modal" data-target="#activarModal" data-mod="<?= $idTarea[$q] ?>" data-estado=0>Cerrar</button>
+                        <?php
+                      }
+
+                      else
+                      {
+                        ?>
+                          <button class="btn btn-info" type="button" data-toggle="modal" data-target="#activarModal" data-mod="<?= $idTarea[$q] ?>" data-estado=1>Abrir</button>
+                        <?php
+                      }
+                    ?>
+                    
+                  
+                  
+                    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#borrarModal" data-mod="<?= $idTarea[$q] ?>" data-ponde="<?= $idPonderacion[$q] ?>">Borrar</button>
+                  
+
+                  
+                    <button class="btn btn-info" type="button" onclick="comprimirDirectorio('<?= $ruta ?>','<?=  $archivo ?>')">Descargar Archivos</button>
+                 
                 </tr>
 
               <?php
@@ -209,12 +296,11 @@
                 </button>
               </div>
               <div class="modal-body">
-                ...
+                <div class="container" id="divEstadoTarea">
+                  
+                </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar Cambios</button>
-              </div>
+
             </div>
           </div>
         </div>

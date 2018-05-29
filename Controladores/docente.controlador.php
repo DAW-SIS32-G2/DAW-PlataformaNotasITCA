@@ -485,6 +485,20 @@ class docenteControlador
            return $resultado;
        }
     }
+
+    public function actualizarEstadoTarea($idTarea, $estado, $fechaInicio, $fechaFin)
+    {
+        if($fechaInicio!="" and $fechaFin!="")
+        {
+            $resultado = $this->model->actualizarEstadoTarea($idTarea, $estado, $fechaInicio, $fechaFin);
+            return $resultado;
+        }
+        else
+        {
+            $resultado = $this->model->actualizarEstadoTarea($idTarea, $estado,"","");
+            return $resultado;
+        }
+    }
 }
 
 ?>

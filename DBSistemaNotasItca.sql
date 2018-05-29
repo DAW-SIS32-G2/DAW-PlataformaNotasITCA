@@ -336,7 +336,7 @@ delimiter ;
 
 /****************Select's de las tablas****************/
 /* Descomentar solo cuando se usara el select*/
-/*
+
 select * from Grupo;
 select * from Horario;
 select * from Docente;
@@ -351,7 +351,7 @@ select * from GuiaModulo;
 
 select P.nombrePonderacion from Ponderacion as P where idPonderacion=11;
 
-select * from tarea where nombreTarea="examenPractico01";
+select * from tarea where nombreTarea="examenPractico01" and idPonderacion=12;
 
 SELECT P.nombrePonderacion,T.nombreTarea,T.cantidadEjercicios, T.idTarea 
 from Ponderacion as P 
