@@ -1,3 +1,7 @@
+<?php
+$objAlumnoControlador = new alumnoControlador('alumnoModelo');
+$objAlumnoControlador->verificarDatos();
+?>
 <!-- Se incluyen la cabecera y el menu de navegacion-->
 <?php include_once 'plantillas/head.php'; ?>
 <body>
