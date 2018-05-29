@@ -69,12 +69,82 @@ require_once("core/funcionesbd.php");
                     <?php
                     	$ojbBD = new funcionesBD();
                     	$sql = "SELECT DISTINCT Docente.carnet, CONCAT(Docente.nombres,' ',Docente.apellidos) as 'docente' FROM Docente INNER JOIN Departamento ON Docente.idDepartamento = Departamento.idDepartamento INNER JOIN Carrera ON Carrera.idDepartamento = Departamento.idDepartamento INNER JOIN Usuario ON Usuario.idCarrera = Carrera.idCarrera INNER JOIN Modulo ON Modulo.carnet = Docente.carnet INNER JOIN UsuarioActivo ON UsuarioActivo.idModulo = Modulo.idModulo WHERE Usuario.carnet = '".$_SESSION['usuario']."'";
+                    	$res = $ojbBD->consultaPersonalizada($sql);
+                    	if(mysqli_num_rows($res) == 0)
+                    	{
+                    		?>
+								<div class="alert alert-info">No hay docentes a los que se pueda solicitar este programa, inscríbase en una materia e inténtelo de nuevo</div>
+                    		<?php
+                    	}
+                    	else
+                    	{
+                    		?>
+                    		<input class="form-label" type="hidden" name="carnet" id="carnet" value="<?= $_SESSION['usuario'] ?>">
+                    		<label for="docente"  class="form-label">Programa solicitado</label>
+							<input type="text" name="prog" id="prog" readonly class="form-control">
+                    		<label for="docente" class="form-label">Seleccione un docente:</label>
+                    		<select name="docente" id="docentesSolicitud" class="form-control">
+                    		<?php
+                    		while($fila = mysqli_fetch_assoc($res))
+                    		{
+                    			echo "<option value='".$fila['carnet']."'>".$fila['docente']."</option>";
+                    		}
+                    		?>
+                    		</select>
+                    		<?php
+                    	}
                     ?>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="mandarSolicitud()">Enviar Solicitud</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+	$(document).on("show.bs.modal","#solicitar", function(event) {
+		var button = $(event.relatedTarget);
+		var programa = button.data("programa");
+		var modal = $(this);
+
+		modal.find("#prog").val(programa);
+	})
+
+	function mandarSolicitud()
+	{
+		var programa = $("#prog").val();
+		var docente = $("#docentesSolicitud").val();
+		var carnet = $("#carnet").val();
+
+		$.ajax({
+			type	: "post",
+			url 	: "ajax/programas",
+			data 	: {"programa" : programa, "docente" : docente, "carnet" : carnet},
+			success : function(event) 
+					  {
+					  	if(event == 1)
+					  	{
+					  		swal({
+					  			text   : "Solicitud enviada correctamente",
+					  			icon   : "success",
+					  			button : "Aceptar"
+					  		}).then((value)=>{
+					  			$("#solicitar").modal('hide');
+					  		})
+					  	}
+					  	else
+					  	{
+					  		swal({
+					  			text   : event,
+					  			icon   : "error",
+					  			button : "Aceptar"
+					  		}).then((value)=>{
+					  			$("#solicitar").modal('hide');
+					  		})
+					  	}
+					  }
+		});
+	}
+</script>
