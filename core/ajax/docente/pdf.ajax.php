@@ -1,7 +1,7 @@
 <?php
 require_once("../../../core/funcionesbd.php");
 require_once("../../../core/tcpdf/tcpdf.php");
-
+require_once("../../../Modelos/docente.modelo.php");
 if($_GET['pdf'] == 1)
 {
 	$carnet = $_GET['carnet'];
@@ -576,7 +576,6 @@ elseif($_GET['pdf'] == 2)
       $html.= "</tr>";
     }
     $html.= "</table>";
-}
 // create new PDF document
 	class MYPDF extends TCPDF 
 	{
@@ -653,4 +652,146 @@ elseif($_GET['pdf'] == 2)
 	
 	//Close and output PDF document
 	$pdf->Output('reporteHorario.pdf', 'I');
+}
+else if($_GET['pdf'] == 3)
+{
+$idModulo = $_GET['modulo'];
+$objeto = new funcionesBD();
+$sql = "SELECT Modulo.nombreModulo, Grupo.nombreGrupo, Grupo.seccion FROM Modulo INNER JOIN Horario ON Horario.idHorario = Modulo.idHorario INNER JOIN Grupo ON Horario.idGrupo = Grupo.idGrupo WHERE Modulo.idModulo = $idModulo";
+$res = $objeto->ConsultaPersonalizada($sql);
+$fila = mysqli_fetch_assoc($res);
+$nombreGrupo = $fila['nombreGrupo']." ".$fila['seccion'];
+$modulo = $fila['nombreModulo'];
+
+$objDocenteModelo = new docenteModelo();
+$objeto = new funcionesBD();
+$sql = "Select DISTINCT Usuario.carnet, Usuario.nombres, Usuario.apellidos, Usuario.foto FROM Usuario INNER JOIN Nota ON Nota.carnet = Usuario.carnet INNER JOIN Tarea ON Tarea.idTarea = Nota.idTarea INNER JOIN Ponderacion ON Tarea.idPonderacion = Ponderacion.idPonderacion INNER JOIN Modulo ON Ponderacion.idModulo = Modulo.idModulo INNER JOIN UsuarioActivo ON UsuarioActivo.carnet = Usuario.carnet Where Modulo.idModulo = $idModulo AND UsuarioActivo.idModulo = $idModulo";
+$res = $objeto->ConsultaPersonalizada($sql);
+if(mysqli_num_rows($res) != 0)
+{
+	$html.= '<h1 align="center">Reporte de Notas</h1>';
+	$html.= '<h3 align="center">Módulo: '.$modulo.'</h3>';
+	$html.= '<h3 align="center">Grupo: '.$nombreGrupo.'</h3>';
+      $html.='<table border="1" cellpadding="2" cellspacing="0" width="100%">';
+          $html.='<tr bgcolor="#CCCCCC">';
+            $html.='<th>Carnet</th>';
+            $html.='<th>Nombre</th>';
+            $html.='<th>Apellido</th>';
+            $contponderaciones = 0;
+            $ponderaciones=$objDocenteModelo->BuscarPonderaciones($idModulo);
+            while($arrayPonderaciones=$ponderaciones->fetch_array(MYSQLI_ASSOC))
+            {
+              $html.='<th>'.$arrayPonderaciones['nombrePonderacion'].'</th>';
+              $contponderaciones++;
+            }
+          $html.='</tr>';
+            $objeto = new funcionesBD();
+            $sql = "SELECT DISTINCT Usuario.carnet, Usuario.nombres, Usuario.apellidos, Usuario.foto FROM Usuario INNER JOIN Nota ON Nota.carnet = Usuario.carnet INNER JOIN Tarea ON Tarea.idTarea = Nota.idTarea INNER JOIN Ponderacion ON Tarea.idPonderacion = Ponderacion.idPonderacion INNER JOIN Modulo ON Ponderacion.idModulo = Modulo.idModulo INNER JOIN UsuarioActivo ON Usuario.carnet = UsuarioActivo.carnet Where Modulo.idModulo = $idModulo";
+            $res = $objeto->ConsultaPersonalizada($sql);
+            while($fila = $res->fetch_array(MYSQLI_ASSOC))
+            {
+              $html.= "
+                <tr>
+                  <td>".$fila['carnet']."</td>
+                  <td>".$fila['nombres']."</td>
+                  <td>".$fila['apellidos']."</td>
+              ";
+              $ponderaciones=$objDocenteModelo->BuscarPonderaciones($idModulo);
+              while($fila2=mysqli_fetch_assoc($ponderaciones))
+              {
+                $pond = $fila2['idPonderacion'];
+                $bd = new funcionesBD();
+                $cons = "Select nota.valor, Tarea.porcentaje, Tarea.cantidadEjercicios, Ponderacion.porcentaje as 'porcentTotal' from Nota INNER JOIN Tarea on Tarea.idTarea = Nota.idTarea INNER JOIN ponderacion on Tarea.idPonderacion = Ponderacion.idPonderacion WHERE Nota.carnet = '".$fila['carnet']."' AND ponderacion.idPonderacion = '$pond'";
+                $notas = $bd->ConsultaPersonalizada($cons);
+                $promfinal = 0;
+                while($nota = mysqli_fetch_assoc($notas))
+                {
+                   $not = ($nota['valor']/$nota['cantidadEjercicios'])*10;
+                   $promfinal += (($not*$nota['porcentaje'])/$nota['porcentTotal']);
+                }
+                $html.="<td>".number_format($promfinal,2)."</td>";
+              }
+              $html.= "
+                </tr>";
+            }
+      $html.="</table>";
+    }
+
+    // create new PDF document
+	class MYPDF extends TCPDF 
+	{
+	    //Page header
+	    public function Header() {
+	        // Logo
+	        $image_file = K_PATH_IMAGES.'logo_itca.jpg';
+	        $this->Image($image_file, 10, 10, 50, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+	        // Set font
+	        $this->SetFont('helvetica', 'B', 16);
+	        // Title
+	        $this->MultiCell(150,0,"ESCUELA ESPECIALIZADA EN INGENIERÍA<br>ITCA-FEPADE",0,"C",false,1,'','',true,0,true,true,0,'T',false);
+	    }
+
+	    // Page footer
+	    public function Footer() {
+	        // Position at 15 mm from bottom
+	        $this->SetY(-15);
+	        // Set font
+	        $this->SetFont('helvetica', 'I', 8);
+	        // Page number
+	        $this->Cell(0, 10, 'Página '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+	    }
+	}
+
+	$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+	// set document information
+	$pdf->SetCreator(PDF_CREATOR);
+	$pdf->SetAuthor('Escuela especializada en Ingeniería ITCA FEPADE');
+	$pdf->SetTitle('Notas de '.$nombreGrupo);
+	$pdf->SetSubject('Reporte de Notas');
+	$pdf->SetKeywords('Notas,docentes,itca');
+
+	// set default header data
+	$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 006', PDF_HEADER_STRING);
+
+	// set header and footer fonts
+	$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+	$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+	// set default monospaced font
+	$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+	// set margins
+	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+	$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+	// set auto page breaks
+	$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+	// set image scale factor
+	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+	// set some language-dependent strings (optional)
+	if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+	    require_once(dirname(__FILE__).'/lang/eng.php');
+	    $pdf->setLanguageArray($l);
+	}
+
+	// ---------------------------------------------------------
+
+	// set font
+	$pdf->SetFont('dejavusans', '', 9.5);
+
+	// add a page
+	$pdf->AddPage();
+
+	// writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
+	// writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
+	// output the HTML content
+	$pdf->writeHTML($html, true, false, true, false, '');
+	
+	//Close and output PDF document
+	$pdf->Output('reporteNotas.pdf', 'I');
+}
 ?>
