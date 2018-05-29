@@ -14,6 +14,11 @@
     ?>
     <div class="text-center">
       <h1>Horario de <?php echo $grupo ?></h1>
+      <div class="col-lg-12 text-center">
+        <a class="btn btn-info" href="javascript: w=window.open('<?= urlBase ?>/core/ajax/docente/pdf.ajax.php?pdf=2&grupo=<?= $grupo ?>');">Imprimir este horario</a>
+        <br>
+        <br>
+    </div>
     </div>
     <div class="col-lg-12">
     <?php

@@ -53,7 +53,7 @@ else if(isset($_POST['idTarea']))
   if(!empty($idTarea))
   {
       $bd = new funcionesBD();
-      $sql = "Select Usuario.carnet, CONCAT(Usuario.nombres,' ',Usuario.apellidos) AS Estudiante, Nota.valor, Tarea.nombreTarea, Tarea.cantidadEjercicios, TareaSubidaPor.ruta FROM Usuario INNER JOIN Nota ON Nota.carnet = Usuario.carnet INNER JOIN Tarea ON Tarea.idTarea = Nota.idTarea INNER JOIN Ponderacion ON Tarea.idPonderacion = Ponderacion.idPonderacion INNER JOIN UsuarioActivo ON UsuarioActivo.carnet = Usuario.carnet INNER JOIN TareaSubidaPor ON TareaSubidaPor.idTarea = Tarea.idTarea WHERE Tarea.idTarea = '$idTarea' AND Ponderacion.idModulo = '$idModulo' AND UsuarioActivo.idModulo = '$idModulo'";
+      $sql = "Select distinct Tarea.idTarea, TareaSubidaPor.idTareaSubidaPor, Usuario.carnet, CONCAT(Usuario.nombres,' ',Usuario.apellidos) AS Estudiante, Nota.valor, Tarea.nombreTarea, Tarea.cantidadEjercicios, TareaSubidaPor.ruta FROM Usuario INNER JOIN Nota ON Nota.carnet = Usuario.carnet INNER JOIN Tarea ON Tarea.idTarea = Nota.idTarea INNER JOIN Ponderacion ON Tarea.idPonderacion = Ponderacion.idPonderacion INNER JOIN UsuarioActivo ON UsuarioActivo.carnet = Usuario.carnet INNER JOIN TareaSubidaPor ON TareaSubidaPor.idTarea = Tarea.idTarea WHERE Tarea.idTarea = '$idTarea' AND Ponderacion.idModulo = '$idModulo' AND UsuarioActivo.idModulo = '$idModulo' AND TareaSubidaPor.carnet = Usuario.carnet";
       $resultado = $bd->ConsultaPersonalizada($sql);
       if(mysqli_num_rows($resultado) != 0)
       {
@@ -68,12 +68,14 @@ else if(isset($_POST['idTarea']))
                   <th>Ejercicios</th>
                   <th>Hechos</th>
                   <th>Nota</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
                 while($fila = mysqli_fetch_assoc($resultado))
                 {
+                  $rutaAux = cifrar($fila['ruta']);
                   $i++;
                   $nota = number_format(($fila['valor']/$fila['cantidadEjercicios'])*10,2);
                   echo "
@@ -86,6 +88,10 @@ else if(isset($_POST['idTarea']))
                         <div id='valid".$i."' ></div>
                       </td>
                       <td><p id='nota".$i."'>$nota</p></td>
+                      <td>
+                        <button class='btn btn-info' onclick=\"descargar('$rutaAux')\">Descargar</button>
+                        <button type=\"button\" class='btn btn-info' onclick=\"eliminarPrac('$rutaAux',".$fila['idTareaSubidaPor'].",'".$fila['idTarea']."','".$fila['carnet']."')\">Eliminar</button>
+                      </td>
                     </tr>
                   ";
                 }
@@ -150,6 +156,16 @@ elseif($_POST['actualizar'])
     <div class="alert alert-danger">No se pueden actualizar las notas</div>
     <?php 
   }
+}
+elseif(isset($_POST['eliminarPrac']))
+{
+  $ruta = $_POST['ruta'];
+  $idTareaSubidaPor = $_POST['idTareaSubidaPor'];
+  $idTarea = $_POST['idTarea2'];
+  $carnet = $_POST['carnet'];
+
+  $objDocenteModelo = new docenteModelo();
+  $objDocenteModelo->borrarPrac($ruta,$idTareaSubidaPor,$idTarea,$carnet);
 }
 ?>
 

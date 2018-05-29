@@ -36,7 +36,7 @@ if (isset($_POST['registrar']))
         # se crea una nueva instancia de la clase funcionesBD
         $conn = new funcionesBD();
         # se guardan los datos del alumno en la BD
-        $mensaje = "<div class=\"alert alert-success\">" . $conn->registroAlumno($carnet, $nombres, $apellidos, $pass, 2018, 1, $carrera, $grupo, $carnetDoc) . "</div>";
+        $mensaje = "<div class=\"alert alert-success\">" . $conn->registroAlumno($carnet, $nombres, $apellidos, $pass, 2018, 0, $carrera, $grupo, $carnetDoc) . "</div>";
     } else {
         # se retorna un mensaje
         $mensaje = "<div class='alert alert-danger'>Su clave es incorrecta, Intente nuevamente</div>";

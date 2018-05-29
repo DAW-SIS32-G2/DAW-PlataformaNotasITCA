@@ -132,12 +132,26 @@
           include 'paginas/docente/plantillas/menu.php';
           require_once 'Vistas/paginas/docente/notificaciones.php';
         }
+
         
         function migrarDatos()
         {
           include 'paginas/docente/plantillas/cabecera.php';
           include 'paginas/docente/plantillas/menu.php';
           require_once 'Vistas/paginas/docente/migrarDatos.php';
+
+        function nominas()
+        {
+          include 'paginas/docente/plantillas/cabecera.php';
+          include 'paginas/docente/plantillas/menu.php';
+          require_once 'Vistas/paginas/docente/nominas.php';
+        }
+            
+        function actBuzon()
+        {
+          include 'paginas/docente/plantillas/cabecera.php';
+          include 'paginas/docente/plantillas/menu.php';
+          require_once 'Vistas/paginas/docente/actBuzon.php';
         }
     }
 ?>

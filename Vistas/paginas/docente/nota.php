@@ -23,7 +23,7 @@ $objDocenteModelo = new DocenteModelo();
                 <form class="form-group" method="post">
                     <div class="form-inline">
                         <label class="form-label" for="grupo">Seleccione un grupo:</label>
-                        <select class="form-control" id="grupo" onchange="cargarPracticas(this.value)">
+                        <select class="form-control" id="grupo2" onchange="cargarPracticas(this.value)">
                             <?php
                             # se cargan los grupos disponibles
                             $resultado = $objDocenteModelo->CargarGrupos();
@@ -81,4 +81,35 @@ $objDocenteModelo = new DocenteModelo();
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function eliminarPrac(ruta,idTareaSubidaPor,idTarea,carnet)
+    {
+        $.ajax({
+            type    : "post",
+            url     : "ajax/nota",
+            data    : {"eliminarPrac" : true, "ruta" : ruta, "idTareaSubidaPor" : idTareaSubidaPor, "idTarea2" : idTarea, "carnet" : carnet},
+            success : function(mensaje) 
+                      {
+                        if(mensaje == 1)
+                        {
+                            swal({
+                                text   : "Se ha borrado la práctica correctamente",
+                                icon   : "success",
+                                button : "Aceptar"
+                            }).then((value)=>{
+                                document.location.reload();
+                            })
+                        }
+                        else
+                        {
+                            swal({
+                                text   : mensaje,
+                                icon   : "error",
+                                button : "Aceptar"
+                            })
+                        }
+                      }
+        })
+    }
+</script>
 </body>

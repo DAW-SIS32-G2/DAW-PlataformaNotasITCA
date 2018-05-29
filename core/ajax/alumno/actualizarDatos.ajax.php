@@ -20,7 +20,7 @@ switch($funcion)
 		}
 		else
 		{
-			$sql = "UPDATE Usuario SET telefonoMovil=$telefono, sexo=$sexo, email=$correo, jornada=$jornada WHERE carnet=$carnet";
+			$sql = "UPDATE Usuario SET telefonoMovil=$telefono, sexo=$sexo, email=$correo, jornada=$jornada, PermiteModificacion = 1 WHERE carnet=$carnet";
 			$objBD = new funcionesBD();
 			$resultado = $objBD->ConsultaPersonalizada($sql);
 			if(gettype($resultado) == "boolean" && $resultado === TRUE)

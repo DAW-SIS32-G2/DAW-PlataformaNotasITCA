@@ -124,12 +124,21 @@ function eliminarGuia(archivo)
 	      {
 	        if(respuesta)
 	        {
-	        	alert("Guia eliminada.");
-	        	window.location.href="adminGrupo";
+	        	swal({
+	        		text: "Se ha eliminado la guía",
+	        		icon: "success",
+	        		button: "Aceptar"
+	        	}).then((value)=>{
+	        		window.location.href="adminGrupo";
+	        	})
 	        }
 	        else
 	        {
-	        	alert("Error al eliminar la guia.");
+	        	swal({
+	        		text: "No se pudo eliminar el archivo",
+	        		icon: "error",
+	        		button: "Aceptar"
+	        	})
 	        }
 	      }
 	  });

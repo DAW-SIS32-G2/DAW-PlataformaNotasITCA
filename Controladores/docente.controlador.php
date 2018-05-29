@@ -525,6 +525,7 @@ class docenteControlador
         return $resultado;
     }
 
+
     /*Migracion de DB*/
     public function migrarDbToSistema($sql,$DB)
     {

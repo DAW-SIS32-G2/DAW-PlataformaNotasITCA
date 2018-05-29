@@ -293,5 +293,20 @@
           echo "Error. no se pudo enviar el token:\n $res";
         }
     }
+
+    public function verificarDatos()
+    {
+      require_once("core/funcionesbd.php");
+      $objBD = new funcionesBD();
+      $sql = "SELECT PermiteModificacion FROM Usuario WHERE carnet='".$_SESSION['usuario']."'";
+      $res = $objBD->ConsultaPersonalizada($sql);
+      $perm = mysqli_fetch_assoc($res);
+      $permite = $perm['PermiteModificacion'];
+
+      if($permite == 0)
+      {
+        header("location: ".urlBase."/alumno/actualizar");
+      }
+    }
   }
 ?>
