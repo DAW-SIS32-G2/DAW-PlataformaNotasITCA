@@ -14,6 +14,11 @@ while ($fila = $res->fetch_assoc()) {
     <div class="text-center">
         <h1>Horario de <?php echo $usuario ?></h1>
     </div>
+    <div class="col-lg-12 text-center">
+        <a class="btn btn-info" href="javascript: w=window.open('<?= urlBase ?>/core/ajax/docente/pdf.ajax.php?pdf=1&carnet=<?= $_SESSION['usuario'] ?>');">Imprimir mi horario</a>
+        <br>
+        <br>
+    </div>
     <div class="col-lg-12">
         <?php
         $conn = new mysqli("localhost", "usuarioItca", "12345", "SistemaNotasItca");
@@ -60,11 +65,11 @@ while ($fila = $res->fetch_assoc()) {
                         switch ($arrayDatos['seccion']) {
                             case "A":
                                 # Si se trata del A, primero va la clase y luego una celda vacía
-                                $horario[$i][$j] = "<td rowspan='$rowspan'><small>" . $arrayDatos['nombreModulo'] . "<br>" . $arrayDatos['encargado'] . "<br>" . $arrayDatos['clase'] . "<br>" . $arrayDatos['aula'] . "</small></td><td rowspan='$rowspan'>$nbsp</td>";
+                                $horario[$i][$j] = "<td width='9%' rowspan='$rowspan'><small>" . $arrayDatos['nombreModulo'] . "<br>" . $arrayDatos['encargado'] . "<br>" . $arrayDatos['clase'] . "<br>" . $arrayDatos['aula'] . "</small></td><td width='9%' rowspan='$rowspan'>$nbsp</td>";
                                 break;
                             case "B":
                                 # Si se trata del B, primero la celda vacía y luego la clase
-                                $horario[$i][$j] = "<td rowspan='$rowspan'>&nbsp;</td><td rowspan='$rowspan'><small>" . $arrayDatos['nombreModulo'] . "<br>" . $arrayDatos['encargado'] . "<br>" . $arrayDatos['clase'] . "<br>" . $arrayDatos['aula'] . "</small></td>";
+                                $horario[$i][$j] = "<td width='9%' rowspan='$rowspan'>&nbsp;</td><td width='9%' rowspan='$rowspan'><small>" . $arrayDatos['nombreModulo'] . "<br>" . $arrayDatos['encargado'] . "<br>" . $arrayDatos['clase'] . "<br>" . $arrayDatos['aula'] . "</small></td>";
                                 break;
                             case "U":
                                 # Si se trata de una sesión teórica, entonces debe ser una sola celda
@@ -89,7 +94,7 @@ while ($fila = $res->fetch_assoc()) {
                             }
                         }
                         # Ahora procedemos a guardar las filas en nuestra tabla
-                        $horario[$i][$j] = "<td rowspan='$rowspan'><small>" . $datos[0]['nombreModulo'] . "<br>" . $datos[0]['encargado'] . "<br>" . $datos[0]['clase'] . "<br>" . $datos[0]['aula'] . "</small></td>" . "<td rowspan='$rowspan'><small>" . $datos[1]['nombreModulo'] . "<br>" . $datos[1]['encargado'] . "<br>" . $datos[1]['clase'] . "<br>" . $datos[1]['aula'] . "</small></td>";
+                        $horario[$i][$j] = "<td width='9%' rowspan='$rowspan'><small>" . $datos[0]['nombreModulo'] . "<br>" . $datos[0]['encargado'] . "<br>" . $datos[0]['clase'] . "<br>" . $datos[0]['aula'] . "</small></td>" . "<td width='9%' rowspan='$rowspan'><small>" . $datos[1]['nombreModulo'] . "<br>" . $datos[1]['encargado'] . "<br>" . $datos[1]['clase'] . "<br>" . $datos[1]['aula'] . "</small></td>";
                     }
 
                 }
@@ -105,7 +110,7 @@ while ($fila = $res->fetch_assoc()) {
                             $horario[$i][$j] = "";
                         } else {
                             # Si no, debemos agregar una, para mantener el orden
-                            $horario[$i][$j] = "<td colspan='2'>&nbsp</td>";
+                            $horario[$i][$j] = "<td colspan='2'>&nbsp;</td>";
                         }
                     } elseif (mysqli_num_rows($res) == 1) {
                         $arrayDatos = mysqli_fetch_assoc($res);
@@ -123,11 +128,11 @@ while ($fila = $res->fetch_assoc()) {
                         switch ($arrayDatos['seccion']) {
                             case "A":
                                 # Si se trata del A, primero va la clase y luego una celda vacía
-                                $horario[$i][$j] = "<td rowspan='$rowspan'><small>" . $arrayDatos['nombreModulo'] . "<br>" . $arrayDatos['encargado'] . "<br>" . $arrayDatos['clase'] . "<br>" . $arrayDatos['aula'] . "</small></td><td rowspan='$rowspan'>$nbsp</td>";
+                                $horario[$i][$j] = "<td width='9%' rowspan='$rowspan'><small>" . $arrayDatos['nombreModulo'] . "<br>" . $arrayDatos['encargado'] . "<br>" . $arrayDatos['clase'] . "<br>" . $arrayDatos['aula'] . "</small></td><td width='9%' rowspan='$rowspan'>$nbsp</td>";
                                 break;
                             case "B":
                                 # Si se trata del B, primero la celda vacía y luego la clase
-                                $horario[$i][$j] = "<td rowspan='$rowspan'>&nbsp;</td><td rowspan='$rowspan'><small>" . $arrayDatos['nombreModulo'] . "<br>" . $arrayDatos['encargado'] . "<br>" . $arrayDatos['clase'] . "<br>" . $arrayDatos['aula'] . "</small></td>";
+                                $horario[$i][$j] = "<td width='9%' rowspan='$rowspan'>&nbsp;</td><td width='9%' rowspan='$rowspan'><small>" . $arrayDatos['nombreModulo'] . "<br>" . $arrayDatos['encargado'] . "<br>" . $arrayDatos['clase'] . "<br>" . $arrayDatos['aula'] . "</small></td>";
                                 break;
                             case "U":
                                 # Si se trata de una sesión teórica, entonces debe ser una sola celda
@@ -152,7 +157,7 @@ while ($fila = $res->fetch_assoc()) {
                             }
                         }
                         # Ahora procedemos a guardar las filas en nuestra tabla
-                        $horario[$i][$j] = "<td rowspan='$rowspan'><small>" . $datos[0]['nombreModulo'] . "<br>" . $datos[0]['encargado'] . "<br>" . $datos[0]['clase'] . "<br>" . $datos[0]['aula'] . "</small></td>" . "<td rowspan='$rowspan'><small>" . $datos[1]['nombreModulo'] . "<br>" . $datos[1]['encargado'] . "<br>" . $datos[1]['clase'] . "<br>" . $datos[1]['aula'] . "</small></td>";
+                        $horario[$i][$j] = "<td width='9%' rowspan='$rowspan'><small>" . $datos[0]['nombreModulo'] . "<br>" . $datos[0]['encargado'] . "<br>" . $datos[0]['clase'] . "<br>" . $datos[0]['aula'] . "</small></td>" . "<td width='9%' rowspan='$rowspan'><small>" . $datos[1]['nombreModulo'] . "<br>" . $datos[1]['encargado'] . "<br>" . $datos[1]['clase'] . "<br>" . $datos[1]['aula'] . "</small></td>";
                     }
 
                 }
@@ -164,12 +169,12 @@ while ($fila = $res->fetch_assoc()) {
     <table class='table table-bordered table-hover'>
       <thead class='thead-dark text-center'>
         <tr>
-          <th class='w-10'>Dia</th>
-          <th colspan='2' class='w-18' >Lunes</th>
-          <th colspan='2' class='w-18' >Martes</th>
-          <th colspan='2' class='w-18' >Miércoles</th>
-          <th colspan='2' class='w-18' >Jueves</th>
-          <th colspan='2' class='w-18' >Viernes</th>
+          <th width='10%'>Dia</th>
+          <th colspan='2'  width='18%'>Lunes</th>
+          <th colspan='2'  width='18%'>Martes</th>
+          <th colspan='2'  width='18%'>Miércoles</th>
+          <th colspan='2'  width='18%'>Jueves</th>
+          <th colspan='2'  width='18%'>Viernes</th>
         </tr>
       </thead>
       <tbody>";

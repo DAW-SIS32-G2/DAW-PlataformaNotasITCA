@@ -2,6 +2,7 @@
   //Acá se va a cargar la tabLa según la BD
   define("RAIZ",dirname(__FILE__,3));
   require_once(RAIZ."/funcionesbd.php");
+  require_once("config/variables.php");
   $idModulo = $_POST['grupo'];
   $objDocenteModelo=new docenteModelo();
 
