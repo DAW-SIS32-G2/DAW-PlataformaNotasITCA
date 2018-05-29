@@ -132,6 +132,13 @@
           include 'paginas/docente/plantillas/menu.php';
           require_once 'Vistas/paginas/docente/notificaciones.php';
         }
-        
+
+        function nominas()
+        {
+          include 'paginas/docente/plantillas/cabecera.php';
+          include 'paginas/docente/plantillas/menu.php';
+          require_once 'Vistas/paginas/docente/nominas.php';
+        }
+            
     }
 ?>

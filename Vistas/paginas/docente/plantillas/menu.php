@@ -37,6 +37,8 @@
           <a class="dropdown-item" href="<?= urlBase ?>docente/inscribir">Inscribir Estudiantes al grupo</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/restablecer">Restablecer clave del alumno</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="<?= urlBase ?>docente/nominas">Nóminas de estudiantes</a>
         </div>
       </li>
       <li class="nav-item active dropdown">
