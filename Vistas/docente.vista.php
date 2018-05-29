@@ -39,7 +39,7 @@
         public function ajax($pagina)
         {
           define('BaseDir', getcwd());
-            require_once BaseDir.'/core/ajax/docente/'.$pagina.'.ajax.php';
+          require_once BaseDir.'/core/ajax/docente/'.$pagina.'.ajax.php';
         }
 
         public function mihorario()
@@ -139,7 +139,7 @@
           include 'paginas/docente/plantillas/cabecera.php';
           include 'paginas/docente/plantillas/menu.php';
           require_once 'Vistas/paginas/docente/migrarDatos.php';
-
+        }
         function nominas()
         {
           include 'paginas/docente/plantillas/cabecera.php';
