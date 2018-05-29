@@ -524,6 +524,13 @@ class docenteControlador
         $resultado=$this->model->actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios);
         return $resultado;
     }
+
+    /*Migracion de DB*/
+    public function migrarDbToSistema($sql,$DB)
+    {
+        $resultado=$this->model->migrarDbToSistema($sql,$DB);
+        return $resultado;
+    }
 }
 
 ?>

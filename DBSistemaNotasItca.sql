@@ -51,6 +51,7 @@ insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS32','U','2018');
 insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS33','A','2018');
 insert into Grupo(nombreGrupo,seccion,anyo) values ('SIS33','U','2018');
 
+
 create table Usuario(
 carnet varchar(6) not null,
 nombres varchar(50) not null,
@@ -69,6 +70,8 @@ primary key pkUsuario(carnet),
 foreign key fkUsuarioXCarrera(idCarrera) references Carrera(idCarrera) ON UPDATE CASCADE ON DELETE CASCADE,
 foreign key fkUsuarioXGrupo(idGrupo) references Grupo(idGrupo) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 create table BuzonArchivo(
 idBuzon int auto_increment not null,
@@ -95,6 +98,7 @@ idArchivo int not null comment 'foranea',
 primary key pkarch(idArchivoCompartido),
 foreign key fkArchivoCompartidoXArchivo(idArchivo) references Archivo(idArchivo) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table Docente(
 carnet varchar(20) NOT NULL,
 nombres varchar(50) not null,
@@ -108,6 +112,7 @@ idDepartamento int not null,
 primary key pkDocente(carnet),
 foreign key fkDocenteXDepartamento(idDepartamento) references Departamento(idDepartamento) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('funes', 'Roberto Enrique', 'Funes Rivera', 'administrador', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
 insert into Docente(carnet,nombres,apellidos,tipoUsuario,contra,idDepartamento) VALUES ('vladimir', 'Vladimir Edenilson', 'Aguilar', 'docente', 'elFxdU9yZmErQTdLMDY5NUJkbUcxQT09OjoAiFxAXB89guSpiWWbkSpN', 1);
@@ -132,6 +137,7 @@ idGrupo int not null comment 'foranea',
 primary key pkHorario(idHorario),
 foreign key fkHorarioXGrupo(idGrupo) references Grupo(idGrupo) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 /*Inserción de horarios*/
 /*Horario para SIS31A*/
@@ -158,7 +164,7 @@ siglas varchar(20) not null,
 tipoModulo varchar(10) not null comment 'Practico | teorico',
 anyo int not null,
 activo boolean not null comment '0 => el grupo esta visible unicamente para docentes | 1=> el grupo esta visible para todos los usuarios',
-estado boolean null comment '1 -> Abierto | 0 -> Cerrado (sirve para permitir inscripciones o no a dicho modulo por parte de los alumnos)',
+estado boolean not null comment '1 -> Abierto | 0 -> Cerrado (sirve para permitir inscripciones o no a dicho modulo por parte de los alumnos)',
 protegidoPorContra boolean not null comment '0=> el modulo no esta protegido por clave | 1 => el modulo require de calve para inscribirse',
 contraModulo varchar(200) null comment 'Sirve para proteger las inscripciones de los alumnos al modulo',
 idHorario int not null comment 'Hace referencia al ID de cada Horario por grupo',
@@ -336,18 +342,27 @@ delimiter ;
 
 /****************Select's de las tablas****************/
 /* Descomentar solo cuando se usara el select*/
-
+/*
+select * from Departamento;
+select * from Carrera;
 select * from Grupo;
+select * from Usuario;
+
+SELECT H.idHorario from Horario as H inner join Grupo as G on H.idGrupo=G.idGrupo where G.idGrupo=26;
+
 select * from Horario;
 select * from Docente;
 select * from Ponderacion;
 select * from Modulo;
-select * from Carrera;
-select * from Usuario;
+
+
 select * from Tarea;
 select * from TareaSubidaPor;
 select * from ArchivoSubido;
 select * from GuiaModulo;
+
+
+update Tarea set porcentaje=12,activo=1,fechaInicio='2018-05-29' where idTarea=1;
 
 select P.nombrePonderacion from Ponderacion as P where idPonderacion=11;
 

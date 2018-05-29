@@ -544,6 +544,27 @@ class docenteModelo
         return $resultado;
     }
 
+    /*Migracion de DB*/
+    public function migrarDbToSistema($sql,$DB)
+    {
+        if($DB==0)
+        {
+            $conex=new funcionesBD();
+
+            $resultado=$conex->ConsultaPersonalizada($sql);
+
+            return $resultado;
+        }
+        elseif($DB==1)
+        {
+            $conex=new funcionesBD('migrar');
+
+            $resultado=$conex->ConsultaPersonalizada($sql);
+
+            return $resultado;
+        } 
+    }
+
 }
 
 ?>

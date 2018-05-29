@@ -16,19 +16,37 @@ class funcionesBD
 
     public function __CONSTRUCT()
     {
-        try {
-            $this->bd = BaseDatos::conexion();
-            if (gettype($this->bd) == "string") {
-                echo "<br><br><br>Error en la conexión: " . utf8_encode($this->bd);
-                exit();
-                /**
-                 * Se crea la conexión con la BD
-                 */
-            }
-        } catch (Exception $e) {
-            die($e->getMessage());
-        }
-
+    	$cantidadArgumentos=func_num_args();
+    	if($cantidadArgumentos==1)
+    	{
+    		try {
+	            $this->bd = new mysqli("localhost","root","mysql","sistemaglobal2");
+	            if (gettype($this->bd) == "string") {
+	                echo "<br><br><br>Error en la conexión: " . utf8_encode($this->bd);
+	                exit();
+	                /**
+	                 * Se crea la conexión con la BD
+	                 */
+	            }
+	        } catch (Exception $e) {
+	            die($e->getMessage());
+	        }
+    	}
+    	else
+    	{
+    		 try {
+	            $this->bd = BaseDatos::conexion();
+	            if (gettype($this->bd) == "string") {
+	                echo "<br><br><br>Error en la conexión: " . utf8_encode($this->bd);
+	                exit();
+	                /**
+	                 * Se crea la conexión con la BD
+	                 */
+	            }
+	        } catch (Exception $e) {
+	            die($e->getMessage());
+	        }
+    	}
     }
 
     /**

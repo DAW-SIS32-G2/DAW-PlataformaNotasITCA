@@ -51,6 +51,8 @@
           <a class="dropdown-item" href="<?= urlBase ?>docente/adminarchivo">Administrar archivos</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/cambiarclave">Cambiar clave docente</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="<?= urlBase ?>docente/migrarDatos">Migrar datos</a>
         </div>
       </li>
       <li class="nav-item active dropdown">
