@@ -1,6 +1,6 @@
 <?php
 # se definen la constante __ROOT__
-@define("__ROOT__", dirname(dirname(dirname(dirname(__FILE__)))));
+define("__ROOT__", dirname(dirname(dirname(dirname(__FILE__)))));
 
 # se incluye la clase funcionesBD
 require_once(__ROOT__ . "/core/funcionesbd.php");
@@ -26,7 +26,7 @@ $objDocenteModelo = new DocenteModelo();
                         <select class="form-control" id="grupo2" onchange="cargarPracticas(this.value)">
                             <?php
                             # se cargan los grupos disponibles
-                            $resultado = $objDocenteModelo->CargarGrupos();
+                            $resultado = $objDocenteModelo->CargarGruposActivos();
 
                             # se verivica el resultado
                             if (gettype($resultado) == "string") {
@@ -88,7 +88,7 @@ $objDocenteModelo = new DocenteModelo();
             type    : "post",
             url     : "ajax/nota",
             data    : {"eliminarPrac" : true, "ruta" : ruta, "idTareaSubidaPor" : idTareaSubidaPor, "idTarea2" : idTarea, "carnet" : carnet},
-            success : function(mensaje)
+            success : function(mensaje) 
                       {
                         if(mensaje == 1)
                         {

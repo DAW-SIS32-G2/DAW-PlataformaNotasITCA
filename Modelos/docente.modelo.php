@@ -535,11 +535,11 @@ class docenteModelo
         return $resultado;
     }
 
-    public function actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios)
+    public function actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios,$rutaNueva)
     {
         $conex=new funcionesBD();
 
-        $resultado=$conex->ActualizarRegistros('Tarea',"nombreTarea='$nombreTarea', cantidadEjercicios=$cantidadEjercicios","idTarea=$idTarea");
+        $resultado=$conex->ActualizarRegistros('Tarea',"nombreTarea='$nombreTarea', cantidadEjercicios=$cantidadEjercicios,directorio='$rutaNueva'","idTarea=$idTarea");
 
         return $resultado;
     }
@@ -596,6 +596,15 @@ class docenteModelo
         {
             echo "No se pudo borrar el registro de la práctica";
         }
+    }
+
+    public function verificarVencimientoPracticas()
+    {
+        $conex=new funcionesBD();
+
+        $resultado=$conex->ConsultaGeneral('Tarea',"nombreTarea='".trim($nombreTarea)."' and idPonderacion=$idPonderacion");
+
+        return $resultado;
     }
 }
 

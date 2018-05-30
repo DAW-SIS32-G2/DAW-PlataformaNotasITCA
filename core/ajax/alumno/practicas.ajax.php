@@ -3,11 +3,12 @@ session_start();
 require_once("core/funcionesbd.php");
 require_once("core/criptografia.php");
 $idModulo = $_POST['idModulo'];
+$fechaActual = getdate("Y-m-d");
 if(isset($_POST['idModulo']))
 {
 	if($idModulo != "")
 	{
-		$sql = "SELECT Tarea.nombreTarea, Tarea.cantidadEjercicios, Tarea.directorio, Tarea.idTarea, Tarea.activo from Tarea INNER JOIN Ponderacion ON Ponderacion.idPonderacion = Tarea.idPonderacion INNER JOIN Modulo ON Modulo.idModulo = Ponderacion.idModulo WHERE Modulo.idModulo = $idModulo";
+		$sql = "SELECT Tarea.fechaFin, Tarea.nombreTarea, Tarea.cantidadEjercicios, Tarea.directorio, Tarea.idTarea, Tarea.activo from Tarea INNER JOIN Ponderacion ON Ponderacion.idPonderacion = Tarea.idPonderacion INNER JOIN Modulo ON Modulo.idModulo = Ponderacion.idModulo WHERE Modulo.idModulo = $idModulo";
 		$objBD = new funcionesBD();
 		$respuesta = $objBD->ConsultaPersonalizada($sql);
 		if(mysqli_num_rows($respuesta) > 0)

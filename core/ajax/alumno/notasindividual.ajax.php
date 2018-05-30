@@ -4,13 +4,13 @@ $idModulo = $_POST['idmodulo'];
 $carnet = $_POST['carnet'];
 
 //PRIMERO SELECCIONAREMOS TODAS LAS PONDERACIÓNES DE UN ARCHIVO Y LAS PONDREMOS EN UN ARRAY
-$objDocenteModelo = new docenteModelo();
+$objAlumnoModelo = new alumnoModelo();
 $contponderaciones = 0;
 $ponderaciones = array();
 $idPonderaciones = array();
 $porcentajesPonderacion = array();
 
-$pond=$objDocenteModelo->BuscarPonderaciones($idModulo);
+$pond=$objAlumnoModelo->BuscarPonderaciones($idModulo);
 while($fila=$pond->fetch_array(MYSQLI_ASSOC))
 {
   $idPonderaciones[$contponderaciones] = $fila['idPonderacion'];

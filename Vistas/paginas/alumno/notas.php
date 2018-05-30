@@ -1,5 +1,5 @@
 <?php
-
+@session_start();
 # se incluye la clase funcionesBD
 require_once("core/funcionesbd.php");
 
@@ -18,6 +18,22 @@ while ($fila = mysqli_fetch_assoc($res)) {
     $foto = $fila['foto'];
 }
 ?>
+<script type="text/javascript">
+    function cargarNotasAlumno()
+    {
+        var idModulo = $("#materia").val();
+        var carnet = "<?= $_SESSION['usuario'] ?>";
+        $.ajax({
+          type    : "post",
+          url     : "ajax/notasindividual",
+          data    : {"carnet": carnet, "idmodulo" : idModulo},
+          success : function(mensaje)
+                    {
+                      $("#notasIndividual").html(mensaje);
+                    }
+        });
+    }
+</script>
 <div class="container" style="padding-top:65px;">
     <div class="row">
         <div class="col-md-2">
@@ -44,7 +60,7 @@ while ($fila = mysqli_fetch_assoc($res)) {
             <h4>Carnet: <?= $_SESSION['usuario'] ?></h4>
             <form action="">
                 <label>Materia:
-                    <select name="materia" id="materia" class="form-control">
+                    <select name="materia" id="materia" class="form-control" onchange="cargarNotasAlumno()">
                         <option value="">--Seleccione Uno--</option>
                         <?php
                         # se almacenada la consulta para obtener los modulos a los que esta inscrito el alumno
@@ -65,5 +81,9 @@ while ($fila = mysqli_fetch_assoc($res)) {
                 </label>
             </form>
         </div>
+        <div class="col-md-10">
+            <div id="notasIndividual"></div>
+        </div>
     </div>
 </div>
+

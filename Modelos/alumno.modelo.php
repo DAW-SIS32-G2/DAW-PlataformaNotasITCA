@@ -140,5 +140,14 @@
           <?php
         }
       }
+
+      public function BuscarPonderaciones($idModulo)
+      {
+          @$conex = new funcionesBD();
+
+          @$resultado = $conex->ConsultaPersonalizada("select * from Ponderacion as P inner join Modulo as M on M.idModulo=P.idModulo where P.idModulo='$idModulo'");
+
+          return $resultado;
+      }
   }
 ?>

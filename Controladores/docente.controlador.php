@@ -28,6 +28,11 @@ class docenteControlador
         return $this->model->renderView();
     }
 
+    public function CargarGruposActivos()
+    {
+        $resultado = $this->model->CargarGruposActivos();
+        return $resultado;
+    }
     /**
      * @param $file : Archivo subido
      * @param $idModulo : Identificador del modulo al cual se piensa entregar la guia
@@ -519,9 +524,15 @@ class docenteControlador
         }
     }
 
-    public function actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios)
+    public function actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios,$rutaNueva)
     {
-        $resultado=$this->model->actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios);
+        $resultado=$this->model->actualizarTarea($idTarea,$nombreTarea,$cantidadEjercicios,$rutaNueva);
+        return $resultado;
+    }
+
+    public function verificarVencimientoPracticas()
+    {
+        $resultado=$this->model->verificarVencimientoPracticas();
         return $resultado;
     }
 

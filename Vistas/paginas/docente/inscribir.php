@@ -17,7 +17,7 @@ $objDocenteModelo = new DocenteModelo();
                 <select class="form-control" name="grupo" required>
                     <?php
                     # se cargan todos los grupos disponibles
-                    $resultado = $objDocenteModelo->CargarGrupos();
+                    $resultado = $objDocenteModelo->CargarGruposActivos();
                     # se verifica el resultado
                     if (gettype($resultado) == "string") {
                         echo "Error al cargar los grupos...";

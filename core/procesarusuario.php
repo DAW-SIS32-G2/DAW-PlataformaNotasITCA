@@ -8,10 +8,11 @@
 session_start();
 
 # Se redefine la constante root
-@define("__ROOT__", dirname(dirname(__FILE__)));
+@define("__ROOT__", dirname(__FILE__,2));
 require_once __ROOT__ . "/config/variables.php";
 require_once __ROOT__ . "/config/bd.php";
 require_once __ROOT__ . "/core/funcionesbd.php";
+
 
 
 //Carnet que servirá para hacer la consulta en la BD

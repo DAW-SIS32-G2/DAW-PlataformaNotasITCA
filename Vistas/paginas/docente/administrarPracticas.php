@@ -1,6 +1,6 @@
 <?php
 	echo '<div class="container" style="padding-top: 65px">';
-	@define("__ROOT__", dirname(__FILE__,4));
+	define("__ROOT__", dirname(__FILE__,4));
 	require_once(__ROOT__.'/controladores/docente.controlador.php');
 	$objDocenteControlador=new DocenteControlador('DocenteModelo');
 
@@ -86,12 +86,14 @@
 			{
 				$resultado=$objDocenteControlador->reasignarPorcentajes($idPonderacion);
 
+
 				if(gettype($resultado)=="string")
 				{
 					echo "<div class='alert alert-danger'>".$resultado."</div>";
 				}
 				else
 				{
+
 					echo "<div class='alert alert-success'>Tarea eliminada.</div>";
 				}
 			}
@@ -120,7 +122,7 @@
 			$resultado=$objDocenteControlador->actualizarEstadoTarea($idTarea, $estado, $fechaInicio, $fechaFin);
 		}
 
-
+		
 
 		if(gettype($resultado)=="string")
 		{
@@ -192,7 +194,7 @@
 		        }
 		        else
 		        {
-		        	$resultado=$objDocenteControlador->actualizarTarea($idTarea,str_replace(" ", "_", $nuevoNombreTarea),$cantidadEjercicios);
+		        	$resultado=$objDocenteControlador->actualizarTarea($idTarea,str_replace(" ", "_", $nuevoNombreTarea),$cantidadEjercicios,$rutaNueva);
 
 		        	if (gettype($resultado)=="string")
 					{
@@ -206,7 +208,7 @@
 			}
 		}
 	}
-
+	
 ?>
 	<div class="container">
 
@@ -216,7 +218,7 @@
 
 				<?php
 
-					$resultado=$objDocenteControlador->CargarGrupos();
+					$resultado=$objDocenteControlador->CargarGruposActivos();
 
 					if (gettype($resultado)=="string")
 					{
@@ -273,7 +275,7 @@
 						<select name="modulo" class="form-control" id="moduloIngresar" onchange="mostrarPonderaciones()">
 
 							<?php
-								$resultado=$objDocenteControlador->CargarGrupos();
+								$resultado=$objDocenteControlador->CargarGruposActivos();
 
 								if (gettype($resultado)=="string")
 								{

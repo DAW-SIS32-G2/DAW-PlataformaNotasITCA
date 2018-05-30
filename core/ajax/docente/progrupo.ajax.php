@@ -109,6 +109,8 @@ else
     if(mysqli_num_rows($res) != 0)
     {
         ?>
+          <a class="btn btn-info" href="javascript: w=window.open('<?= urlBase ?>/core/ajax/docente/pdf.ajax.php?pdf=3&modulo=<?= $idModulo ?>');">Imprimir Reporte de notas</a>
+          <br><br>
           <table class="table table-bordered">
             <thead class="thead-dark">
               <tr>

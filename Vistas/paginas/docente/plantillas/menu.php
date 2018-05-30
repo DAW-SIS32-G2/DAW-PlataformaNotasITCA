@@ -33,6 +33,7 @@
           <i class="material-icons">verified_user</i>&nbsp;Estudiantes
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+           <a class="dropdown-item" href="<?= urlBase ?>docente/actBuzon">Activar/Desactivar Buzón</a><div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/registrar">Registrar Estudiantes</a><div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/inscribir">Inscribir Estudiantes al grupo</a>
           <div class="dropdown-divider"></div>
@@ -49,8 +50,6 @@
           <a class="dropdown-item" href="<?= urlBase ?>docente/admingrupo">Administrar grupos activos</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/estadoGrupos">Activar grupos asignados</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="<?= urlBase ?>docente/adminarchivo">Administrar archivos</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?= urlBase ?>docente/cambiarclave">Cambiar clave docente</a>
           <div class="dropdown-divider"></div>

@@ -23,7 +23,7 @@ $objDocenteModelo = new DocenteModelo();
                     <select class="form-control" name="grupo" onchange="consultarNotas(this.value)">
                         <?php
                         # se cargan los gupos disponibles
-                        $resultado = $objDocenteModelo->CargarGrupos();
+                        $resultado = $objDocenteModelo->CargarGruposActivos();
 
                         # se verifican los resultados
                         if (gettype($resultado) == "string") {

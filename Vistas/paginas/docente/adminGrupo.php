@@ -6,6 +6,7 @@ define("__ROOT__", dirname(__FILE__, 4));
 
 # se crea una instancia del modelo de docente
 $objDocenteModelo = new docenteModelo();
+$objDocenteControlador = new docenteControlador($objDocenteModelo);
 
 # se verifica la opcion a trabajar
 if (isset($_REQUEST['guardarPonderaciones'])) {
@@ -45,11 +46,34 @@ if (isset($_REQUEST['guardarPonderaciones'])) {
         for ($i = 0; $i < $cantidadG; $i++) {
 
             $resultado = $objDocenteModelo->actualizarPonderaciones($nombrePonderacionesG[$i], $porcentajePonderacionesG[$i], $idPonderacionesG[$i]);
-
+ 
             if (gettype($resultado) == "string") {
                 echo "<br>" . $resultado;
             } else {
                 $funcionoActualizacion = true;
+                $cantidadTareas = $objDocenteControlador->obtenerCantidadTareas($idPonderacionesG[$i]);
+
+                if($cantidadTareas > 0)
+                {
+                    $resultado=$objDocenteControlador->obtenerPorcentajePonderacion($idPonderacionesG[$i]);
+                    $porcentajePonderacion=$resultado->fetch_array(MYSQLI_ASSOC);
+                    $porcentajeTarea=number_format(($porcentajePonderacion['porcentaje']/$cantidadTareas),2);
+                    $resultado=$objDocenteControlador->actualizarPorcentajesPracticas($idPonderacionesG[$i],$porcentajeTarea);
+
+                    if(gettype($resultado)=="string")
+                    {
+                        echo "<br>" . $resultado;
+                    }
+                    else
+                    {
+                        $funcionoActualizacion = true;
+                    }
+                }
+                else
+                {
+                    $funcionoActualizacion = true;
+                }
+
             }
 
         }

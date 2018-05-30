@@ -8,9 +8,12 @@ if(isset($_POST['cont']))
 	$notificaciones = $objBD->buscarNotificaciones($_SESSION['usuario']);
 	$contador = 0;
 
-	while($fila = mysqli_fetch_assoc($notificaciones))
+	if(gettype($notificaciones) != "boolean")
 	{
-	    $contador++;
+		while($fila = mysqli_fetch_assoc($notificaciones))
+		{
+		    $contador++;
+		}
 	}
 
 	echo $contador;
@@ -23,11 +26,14 @@ else if(isset($_POST['noti']))
 	$contador = 0;
 	$notis = array();
 
-	while($fila = mysqli_fetch_assoc($notificaciones))
+	if(gettype($notificaciones) != "boolean")
 	{
-	    $notis['titulos'][$contador] = substr($fila['titulo'],0,50)."...";
-	    $notis['desc'][$contador] = substr($fila['descripcion'],0,50)."...";
-	    $contador++;
+		while($fila = mysqli_fetch_assoc($notificaciones))
+		{
+		    $notis['titulos'][$contador] = substr($fila['titulo'],0,50)."...";
+		    $notis['desc'][$contador] = substr($fila['descripcion'],0,50)."...";
+		    $contador++;
+		}
 	}
 
 	if($contador == 0)

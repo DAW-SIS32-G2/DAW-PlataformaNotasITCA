@@ -1,5 +1,5 @@
 <?php
-@define("__ROOT__", dirname(dirname(dirname(dirname(__FILE__)))));
+define("__ROOT__", dirname(dirname(dirname(dirname(__FILE__)))));
 require_once(__ROOT__ . "/core/funcionesbd.php");
 $bd = new funcionesBD();
 $carnet = $_SESSION['usuario'];
