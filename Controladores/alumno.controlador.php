@@ -85,7 +85,7 @@
       }
       else
       {
-        mkdir($ruta);
+        mkdir($ruta, 0777, true);
         $verificador = 0;
       }
             if($verificador == 2)

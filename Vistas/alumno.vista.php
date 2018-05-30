@@ -103,7 +103,7 @@ class alumnoVista
     function res()
     {
         @include "./Archivos/Editor/resultado" . $_SESSION['usuario'] . ".html";
-        $archivo = fopen("./Archivos/Editor/resultado" . $_SESSION['usuario'] . ".html", "w");
+        $archivo = fopen("./Archivos/Editor/resultado" . $_SESSION['usuario'] . ".html", "w+");
         fputs($archivo, "");
         fclose($archivo);
     }
