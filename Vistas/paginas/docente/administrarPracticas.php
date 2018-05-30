@@ -1,6 +1,6 @@
 <?php
 	echo '<div class="container" style="padding-top: 65px">';
-	define("__ROOT__", dirname(__FILE__,4));
+	@define("__ROOT__", dirname(__FILE__,4));
 	require_once(__ROOT__.'/controladores/docente.controlador.php');
 	$objDocenteControlador=new DocenteControlador('DocenteModelo');
 
@@ -120,7 +120,7 @@
 			$resultado=$objDocenteControlador->actualizarEstadoTarea($idTarea, $estado, $fechaInicio, $fechaFin);
 		}
 
-		
+
 
 		if(gettype($resultado)=="string")
 		{
@@ -206,7 +206,7 @@
 			}
 		}
 	}
-	
+
 ?>
 	<div class="container">
 
